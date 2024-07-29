@@ -5,5 +5,5 @@ inline: true
 related_posts: false
 ---
 
-Check out our new preprint [Unifying 3D Representation and Control of Diverse Robots with a Single Camera](https://arxiv.org/abs/2407.08722)
+Check out our new [preprint](https://arxiv.org/abs/2407.08722) on learning representation of robotic embodiment!
 
