@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="description" content="Unifying 3D Representation and Control of Diverse Robots with a Single Camera" />
+  <meta property="og:image" content="./static/images/teaser.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>
+    Unifying 3D Representation and Control of Diverse Robots with a Single
+    Camera
+  </title>
+
+  <!--TWITTER TODO-->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Unifying 3D Representation and Control of Diverse Robots with a Single Camera" />
+  <meta name="twitter:image" content="./static/images/teaser.png" />
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet" />
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css" />
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css" />
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css" />
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
+  <link rel="stylesheet" href="./static/css/index.css" />
+  <link rel="icon" href="./static/images/favicon.svg" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">
+              Unifying 3D Representation and Control of Diverse Robots with a
+              Single Camera
+            </h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://sizhe-li.github.io/">Sizhe Lester Li</a>,</span>
+              <span class="author-block">
+                <a href="https://www.annanzhang.com/">Annan Zhang</a>,</span>
+              <span class="author-block">
+                <a href="https://boyuan.space">Boyuan Chen</a>,</span>
+              <span class="author-block">
+                <a href="https://dblp.org/pid/345/2163.html"> Hanna Matusik</a>,</span>
+              <span class="author-block"><a href="https://chaoliu.tech/">Chao Liu</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://danielarus.csail.mit.edu/">Daniela Rus</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.vincentsitzmann.com/">Vincent Sitzmann</a>
+              </span>
+            </div>
+
+            <br />
+
+            <div class="is-size-5 publication-authors">
+              <ul class="affiliation-list">
+                <li class="affiliation">
+                  <img src="./static/images/mit_logo_std_rgb_black.png" alt="MIT Logo" class="logo" />
+                  <img src="./static/images/csail_logo.png" alt="MIT Logo" class="logo" />
+                  <img src="./static/images/scene_rep_logo.png" alt="MIT Logo" class="logo" />
+                </li>
+              </ul>
+            </div>
+            <br />
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2407.08722v1"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <!-- Video Link. -->
+                <span class="link-block">
+                  <a href="https://www.youtube.com/watch?v=dFZ1RvJMN7A"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="todo" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-code"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+            <!-- <div class="is-size-5 mt-3">
+              <span class="has-text-weight-bold">TL;DR:</span> We introduce
+              Neural Jacobian Fields for closed-loop robot control from
+              vision. We learn both the robot’s 3D morphology and how its 3D
+              points move under any command by observing the robot execute
+              random actions from multi-view video. We show control of both
+              bio-inspired soft/multi-material and conventional piecewise
+              rigid robots using just a single video camera.
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <video id="teaser" autoplay muted loop playsinline height="100%">
+          <source src="./static/videos/teaser.mp4" type="video/mp4">
+        </video>
+        <h2 class="subtitle is-4 has-text-centered">
+          <span class="dnerf">Neural Jacobian Fields</span> are kinematic representation of robots learned from vision.
+        </h2>
+      </div>
+    </div>
+
+  </section>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <!-- Paper video. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Technical Summary Video</h2>
+          <div class="publication-video">
+            <iframe src="https://www.youtube.com/embed/dFZ1RvJMN7A?rel=0&amp;showinfo=0" frameborder="0"
+              allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+      <!--/ Paper video. -->
+      <!-- <div class="columns is-centered has-text-centered"> -->
+      <!-- <div>
+        <div class="is-size-5 mt-3">
+          <span class="has-text-weight-bold">(TL;DR)</span>
+          Neural Jacobian Fields are
+          kinematic representation of robots learned from vision.
+        </div>
+      </div> -->
+
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            Mirroring the complex structures and diverse functions of natural
+            organisms is a long-standing challenge in robotics. Modern
+            fabrication techniques have dramatically expanded feasible
+            hardware, yet deploying these systems requires control software to
+            translate desired motions into actuator commands. While
+            conventional robots can easily be modeled as rigid links connected
+            via joints, it remains an open challenge to model and control
+            bio-inspired robots that are often multi-material or soft, lack
+            sensing capabilities, and may change their material properties
+            with use. Here, we introduce Neural Jacobian Fields, an
+            architecture that autonomously learns to model and control robots
+            from vision alone. Our approach makes no assumptions about the
+            robot's materials, actuation, or sensing, requires only a single
+            camera for control, and learns to control the robot without expert
+            intervention by observing the execution of random commands. We
+            demonstrate our method on a diverse set of robot manipulators,
+            varying in actuation, materials, fabrication, and cost. Our
+            approach achieves accurate closed-loop control and recovers the
+            causal dynamic structure of each robot. By enabling robot control
+            with a generic camera as the only sensor, we anticipate our work
+            will dramatically broaden the design space of robotic systems and
+            serve as a starting point for lowering the barrier to robotic
+            automation.
+            <!--/ Abstract. -->
+          </div>
+        </div>
+      </div>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Supplementary Result</h2>
+          <div class="publication-video">
+            <iframe src="https://www.youtube.com/embed/VC6U0aAwC54?rel=0&amp;showinfo=0" frameborder="0"
+              allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="content has-text-centered">
+        <h2 class="title is-3">Technical Summary Video</h2>
+        <video id="replay-video" controls muted preload playsinline width="75%">
+          <source src="./static/videos/.mp4" type="video/mp4">
+        </video>
+      </div> -->
+
+    </div>
+  </section>
+
+  <div class="hr"></div>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width has-text-justified">
+          <h2 class="title is-3 has-text-centered">
+            Controlling robots from vision alone
+          </h2>
+          <div class="content has-text-justified">
+            <p>
+              Our model only requires multi-view video of the robot executing
+              random actions to learn both its 3D morphology as well as its
+              control via the Neural Jacobian Field. The learned model can
+              then be used to plan control commands from desired motion.
+            </p>
+          </div>
+          <br />
+          <div class="content has-text-centered">
+            <img src="./static/images/data.png" class="inline-figure-six" alt="Neural Jacobian Field Data." />
+          </div>
+          <div class="content has-text-justified">
+            <p>
+              First, we sample random control commands to be executed on the
+              robot. Using a setup of 12 RGB-D cameras, we record multi-view
+              captures before each command is executed and after each command
+              has settled to the steady state as our dataset.
+            </p>
+          </div>
+          <div class="content has-text-centered">
+            <img src="./static/images/training.png" class="inline-figure-six" alt="Neural Jacobian Field Training." />
+          </div>
+          <div class="content has-text-justified">
+            <p>
+              Given the above dataset, our method learns a mapping from single
+              RGB image to a neural scene representation. The scene
+              representation is a combination of Radiance Field and Jacobian
+              Field - where the former contains visual and geometric
+              information and the later contains the kinematics information of
+              the scene. We name this Neural Jacobian Field.
+            </p>
+          </div>
+          <br />
+          <div class="content has-text-centered">
+            <img src="./static/images/teaser.png" class="inline-figure-six" alt="Neural Jacobian Field." />
+          </div>
+          <br />
+          <div class="content has-text-justified">
+            <p>
+              Neural Jacobian Field can be used to query the kinematics
+              jacobian at every coordinate in the 3d scene with repect to
+              robot control command. This not only allows us to identify
+              kinematics chain visually, but also allows us to plan a sequence
+              of control commands given desired motion with optimization based
+              methods.
+            </p>
+          </div>
+          <br />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hr"></div>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full-width has-text-justified">
+          <h2 class="title is-3 has-text-centered">Results</h2>
+          <div class="content has-text-justified">
+            <p>
+              With Neural Jacobian Field, we can visualize the robot geometry
+              and kinematics inferred from a single image. The figure below
+              shows the depth and segmented kinematics chain from Neural
+              Jacobian Field.
+            </p>
+          </div>
+
+          <div class="content has-text-centered">
+            <img src="./static/images/kinematics.jpg" class="inline-figure-six" height="auto" width="100%" />
+
+            <hr />
+          </div>
+
+          <div class="content has-text-justified">
+            <p>
+              One can use our method to perform closed-loop control of diverse
+              robots from vision, including soft robots that are traditionally
+              hard to model. In each set of the visualizations below, we show
+              a different robot executing a control command, spanning
+              3D-printed soft-rigid pneumatic hands to low-cost inaccurate toy
+              manipulators.
+            </p>
+          </div>
+          <div class="content has-text-centered">
+            <img src="./static/images/control.png" class="inline-figure-six" height="auto" width="100%" />
+          </div>
+
+          <div class="content has-text-justified">
+            <p>
+              Quantitatively, our controller can effectively drive down the
+              distance-to-goal given specified motion in the form of point
+              movement, providing a viable way to control robots that are
+              traditionally impossible to control due to lack of kinematics
+              structure.
+            </p>
+          </div>
+          <div class="content has-text-centered">
+            <img src="./static/images/quantitative.png" class="inline-figure-six" height="auto" width="100%" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title has-text-centered">BibTeX</h2>
+      <pre><code>
+@misc{li2024unifying3drepresentationcontrol,
+    title={Unifying 3D Representation and Control of Diverse Robots with a Single Camera}, 
+    author={Sizhe Lester Li and Annan Zhang and Boyuan Chen and Hanna Matusik and Chao Liu and Daniela Rus and Vincent Sitzmann},
+    year={2024},
+    eprint={2407.08722},
+    archivePrefix={arXiv},
+    primaryClass={cs.RO},
+    url={https://arxiv.org/abs/2407.08722}, 
+}
+        </code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a class="icon-link" href="https://arxiv.org/abs/2407.08722v1">
+          <i class="fas fa-file-pdf"></i>
+        </a>
+        <a class="icon-link" href="todo" class="external-link" disabled>
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              Website template is modified from
+              <a href="https://github.com/nerfies/nerfies.github.io">nerfies</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
