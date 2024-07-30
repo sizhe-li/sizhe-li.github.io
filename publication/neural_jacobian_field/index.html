@@ -128,7 +128,8 @@
           <source src="./static/videos/teaser.mp4" type="video/mp4">
         </video>
         <h2 class="subtitle is-4 has-text-centered">
-          <span class="dnerf">Neural Jacobian Fields</span> are kinematic representation of robots learned from vision.
+          <span class="dnerf">Neural Jacobian Fields</span> are a kinematic representation of robots learned from
+          vision.
         </h2>
       </div>
     </div>
@@ -192,15 +193,15 @@
         </div>
       </div>
 
-      <div class="columns is-centered has-text-centered">
+      <!-- <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
-          <h2 class="title is-3">Supplementary Result</h2>
+          <h2 class="title is-3">Supplmentary Result</h2>
           <div class="publication-video">
             <iframe src="https://www.youtube.com/embed/VC6U0aAwC54?rel=0&amp;showinfo=0" frameborder="0"
               allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- <div class="content has-text-centered">
         <h2 class="title is-3">Technical Summary Video</h2>
         <video id="replay-video" controls muted preload playsinline width="75%">
@@ -222,10 +223,9 @@
           </h2>
           <div class="content has-text-justified">
             <p>
-              Our model only requires multi-view video of the robot executing
-              random actions to learn both its 3D morphology as well as its
-              control via the Neural Jacobian Field. The learned model can
-              then be used to plan control commands from desired motion.
+              Our model requires only multi-view video of the robot performing random actions to learn
+              both its 3D morphology and control through the Neural Jacobian Field.
+              The learned model can then be used to plan control commands for desired motions.
             </p>
           </div>
           <br />
@@ -234,10 +234,9 @@
           </div>
           <div class="content has-text-justified">
             <p>
-              First, we sample random control commands to be executed on the
-              robot. Using a setup of 12 RGB-D cameras, we record multi-view
-              captures before each command is executed and after each command
-              has settled to the steady state as our dataset.
+              First, we sample random control commands to be executed on the robot. Using a setup of 12 RGB-D cameras,
+              we record multi-view captures both before each command is executed and after each command has settled into
+              a steady state, forming our dataset.
             </p>
           </div>
           <div class="content has-text-centered">
@@ -245,12 +244,10 @@
           </div>
           <div class="content has-text-justified">
             <p>
-              Given the above dataset, our method learns a mapping from single
-              RGB image to a neural scene representation. The scene
-              representation is a combination of Radiance Field and Jacobian
-              Field - where the former contains visual and geometric
-              information and the later contains the kinematics information of
-              the scene. We name this Neural Jacobian Field.
+              Using the above dataset, our method learns a mapping from a single RGB image to a neural scene
+              representation. This scene representation combines a Radiance Field, which contains visual and geometric
+              information, with a Jacobian Field, which contains the kinematics information of the scene. We refer to
+              this combined representation as the Neural Jacobian Field.
             </p>
           </div>
           <br />
@@ -260,12 +257,10 @@
           <br />
           <div class="content has-text-justified">
             <p>
-              Neural Jacobian Field can be used to query the kinematics
-              jacobian at every coordinate in the 3d scene with repect to
-              robot control command. This not only allows us to identify
-              kinematics chain visually, but also allows us to plan a sequence
-              of control commands given desired motion with optimization based
-              methods.
+              The Neural Jacobian Field can be used to query the kinematics Jacobian at every coordinate in the 3D scene
+              with respect to the robot's control commands. This capability allows us to visually identify the
+              kinematics chain and plan a sequence of control commands for a desired motion using gradient-based
+              optimization.
             </p>
           </div>
           <br />
@@ -283,10 +278,10 @@
           <h2 class="title is-3 has-text-centered">Results</h2>
           <div class="content has-text-justified">
             <p>
-              With Neural Jacobian Field, we can visualize the robot geometry
-              and kinematics inferred from a single image. The figure below
-              shows the depth and segmented kinematics chain from Neural
-              Jacobian Field.
+              With the Neural Jacobian Field, we can visualize the robot's geometry and kinematics inferred from a
+              single image. The figure below shows the predicted depth and colorized kinematics chain as derived from
+              the Neural
+              Jacobian Field. <b> The colorization is completely learned and not labeled by a human. </b>
             </p>
           </div>
 
@@ -298,12 +293,9 @@
 
           <div class="content has-text-justified">
             <p>
-              One can use our method to perform closed-loop control of diverse
+              Our method can perform closed-loop control of diverse
               robots from vision, including soft robots that are traditionally
-              hard to model. In each set of the visualizations below, we show
-              a different robot executing a control command, spanning
-              3D-printed soft-rigid pneumatic hands to low-cost inaccurate toy
-              manipulators.
+              hard to model, and a $220 3D-printed janky robot arm.
             </p>
           </div>
           <div class="content has-text-centered">
@@ -312,11 +304,9 @@
 
           <div class="content has-text-justified">
             <p>
-              Quantitatively, our controller can effectively drive down the
-              distance-to-goal given specified motion in the form of point
-              movement, providing a viable way to control robots that are
-              traditionally impossible to control due to lack of kinematics
-              structure.
+              Quantitatively, our controller can effectively reduce the distance-to-goal for specified motion in the
+              form of point movement, providing a viable method to control robots that are traditionally impossible to
+              control, due to challenges in estimating their kinematic structures.
             </p>
           </div>
           <div class="content has-text-centered">

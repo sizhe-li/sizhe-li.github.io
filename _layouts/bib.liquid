@@ -323,6 +323,13 @@
       </div>
     {% endif %}
 
+    {% if entry.award2 %}
+      <!-- Hidden Award block -->
+      <div class="award hidden d-print-inline">
+        <p>{{ entry.award2 | markdownify }}</p>
+      </div>
+    {% endif %}
+
     {% if entry.abstract %}
       <!-- Hidden abstract block -->
       <div class="abstract hidden">
