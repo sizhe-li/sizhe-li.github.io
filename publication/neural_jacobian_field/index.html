@@ -31,6 +31,28 @@
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+  <style>
+    .alert {
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      font-family: Arial, sans-serif;
+    }
+
+    .alert-primary {
+      background-color: #cce5ff;
+      color: #004085;
+      border: 1px solid #b8daff;
+    }
+
+    .tldr {
+      font-weight: bold;
+    }
+
+    .mb-4 {
+      margin-bottom: 1.5rem;
+    }
+  </style>
 </head>
 
 <body>
@@ -125,13 +147,12 @@
   <section class="hero teaser">
     <div class="container is-max-desktop">
       <div class="hero-body">
+        <div class="alert alert-primary tldr mb-4">
+          [TL;DR] Neural Jacobian Fields are a kinematic representation of robots learned from vision.
+        </div>
         <video id="teaser" autoplay muted loop playsinline height="100%">
           <source src="./static/videos/teaser.mp4" type="video/mp4">
         </video>
-        <h2 class="subtitle is-4 has-text-centered">
-          <span class="dnerf">Neural Jacobian Fields</span> are a kinematic representation of robots learned from
-          vision.
-        </h2>
       </div>
     </div>
 
