@@ -22,7 +22,7 @@ I am a PhD student at [MIT CSAIL](https://csail.mit.edu/) working with [Vincent 
 
 I am interested in building models that capture the rich and *structured representation* of the physical world from *unstructured observation*. To this end, my research draws ideas from machine learning, physics, and cognitive science. The applications of my research span across robotics, computer vision, and computer graphics. 
 
-**Prospective students & visitors**: If you would like to chat about research, feel free to email me. I encourage students from [underrepresented groups]() to reach out and will prioritize replying to these messages. For students interested in working with me, the minimum time commitment is 20 hours per week for six months. Please email me with your CV and highlight one of your favorite accomplishments.
+**Prospective students & visitors**: Thank you for your interest! I encourage students from [underrepresented groups]() to reach out and will prioritize replying to these messages. For students interested in working with me, the minimum time commitment is 20 hours per week for six months. Please email me with your CV and highlight your favorite accomplishments.
 
 <!-- Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
 
