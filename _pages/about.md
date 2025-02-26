@@ -18,11 +18,11 @@ news: true # includes a list of news items
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
-I am a PhD student at [MIT CSAIL](https://csail.mit.edu/) working with [Vincent Sitzmann](https://www.vincentsitzmann.com/) and [Josh Tenenbaum](http://web.mit.edu/cocosci/josh.html). Previously, I completed my B.S. in Computer Science at the University of Rochester. My research is partly supported by the [MIT Presidential Fellowship](https://oge.mit.edu/fellowships/presidential-graduate-fellowship-program/).
+I am a PhD student at [MIT CSAIL](https://csail.mit.edu/) working with [Vincent Sitzmann](https://www.vincentsitzmann.com/) and [Josh Tenenbaum](http://web.mit.edu/cocosci/josh.html). My research is supported by the [MIT Presidential Fellowship](https://oge.mit.edu/fellowships/presidential-graduate-fellowship-program/).
 
-I am interested in building inverse models that capture the rich and *structured representation* of the physical world from *unstructured observation*. To this end, my research draws ideas from robotics, vision+graphics, and computational cognitive science.
+I am interested in building models that capture the rich and *structured representation* of the physical world from *unstructured observation*. To this end, my research draws ideas from machine learning, physics, and cognitive science. The applications of my research span across robotics, computer vision, and computer graphics. 
 
-**To master/undergraduate students**: If you would like to chat about life, career, or AI/ML research, feel free to email me. I encourage students from [underrepresented groups]() to reach out and will prioritize replying to these messages.
+**Prospective students & visitors**: If you would like to chat about research, feel free to email me. I encourage students from [underrepresented groups]() to reach out and will prioritize replying to these messages. For students interested in working with me, the minimum time commitment is 20 hours per week for six months. Please email me with your CV and highlight one of your favorite accomplishments.
 
 <!-- Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
 
