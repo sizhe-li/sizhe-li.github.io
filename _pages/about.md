@@ -28,7 +28,7 @@ I am a PhD student at [MIT CSAIL](https://csail.mit.edu/), advised by [Vincent S
 
 I am interested in developing models that capture the rich, *structured representations* of the physical world from *unstructured observations*. My research draws ideas from machine learning, physics, and cognitive science, with applications in robotics, computer vision, and computer graphics.
 
-**Prospective students & visitors**: Thank you for your interest! I encourage students from [underrepresented groups]() to reach out and will prioritize responding to these messages. For those interested in working with me, please email me your CV and highlight your favorite accomplishments.
+**Prospective students & visitors**: Thank you for your interest! I strongly encourage students from [underrepresented groups]() to reach out and will prioritize responding to these messages. For those interested in working with me, please email me your CV and highlight your favorite accomplishments.
 
 <!-- Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
 
