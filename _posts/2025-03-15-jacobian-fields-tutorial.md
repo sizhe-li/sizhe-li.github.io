@@ -1,8 +1,8 @@
 ---
 layout: post
-title: a post with bibliography
-date: 2023-07-12 09:56:00-0400
-description: an example of a blog post with bibliography
+title: "Neural Jacobian Fields: A Unified Representation of Robotic Systems"
+date: 2025-03-15 09:00:00-0400
+description: tutorials
 tags: formatting bib
 categories: sample-posts
 giscus_comments: true
