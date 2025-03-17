@@ -4,7 +4,7 @@ services:
     image: amirpourmand/al-folio:latest
     build: .
     ports:
-      - 5123:5123
+      - 8080:8080
       - 35729:35729
     volumes:
       - .:/srv/jekyll
