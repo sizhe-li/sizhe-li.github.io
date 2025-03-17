@@ -303,7 +303,7 @@ The idea of Jacobian Fields extends to capture dynamics with environment variabl
 <figure style="display: flex; flex-direction: column; align-items: center;">
     <!-- <video width="70%" controls> -->
     <video controls class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-        <source src="/assets/video/njf/two_finger/output.mp4" type="video/mp4">
+        <source src="/assets/video/njf/two_finger/control_example.mp4" type="video/mp4">
     </video>
     <figcaption style="margin-top: 8px; font-style: italic; text-align: center;">
       Control Illustration
