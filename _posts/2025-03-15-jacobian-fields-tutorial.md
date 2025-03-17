@@ -403,6 +403,22 @@ We see in order to move and we move in order to see. We are interested in buildi
 ### Acknowledgement
 Sizhe Lester Li is presenting on behalf of the team in the 2024 paper "Unifying 3D Representation and Control of Diverse Robots with a Single Camera." We would like to thank Isabella Yu for the visualizations of two finger jacobian fields.
 
+### Bibtex
+
+If you find this blog helpful, please consider citing our work
+```
+@misc{li2024unifying3drepresentationcontrol,
+      title={Unifying 3D Representation and Control of Diverse Robots with a Single Camera}, 
+      author={Sizhe Lester Li and Annan Zhang and Boyuan Chen and Hanna Matusik and Chao Liu and Daniela Rus and Vincent Sitzmann},
+      year={2024},
+      eprint={2407.08722},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2407.08722}, 
+}
+```
+
+
 
 
 
