@@ -150,7 +150,7 @@ We now use a simle 2D example to illustrate the idea of Jacobian Fields. Please 
 
 How can we learn Jacobian Fields from visual perception to "explain away" our observed optical flow motions? We first find that our solid domain here, $\Omega^{t}$, equates the pixel space $\mathbb^{H\times W}$ that we perceive. This is not always the case, as the 3D world induces a projection process to imaging devices and contains occluding and refracting surfaces.
 
-We use a standard fully convolutional network (UNet<d-cite key="ronneberger2015unetconvolutionalnetworksbiomedical"></d-cite>) to parameterize the inference of Jacobian field from image observations. $J_\theta(\cdot \| I(q, u)) \triangleq \frac{\partial \mathbf{\phi}(\cdot \| \mathbf{q}, \mathbf{u})}{\partial \mathbf{u}}$ conditions on an image, and outputs a field of linear operators, i.e., $J_\theta(x \| I) \in \mathbb{R}^{dim(u) \times d}$. 
+We use a standard fully convolutional network (UNet<d-cite key="ronneberger2015unetconvolutionalnetworksbiomedical"></d-cite>) to parameterize the inference of Jacobian field from image observations. $J_\theta(\cdot \| I(q, u)) \triangleq \frac{\partial \mathbf{\phi}(\cdot \| \mathbf{q}, \mathbf{u})}{\partial \mathbf{u}}$ conditions on an image, and outputs a field of linear operators, i.e., $J_\theta(x \| I) \in \mathbb{R}^{N_{u} \times N_{space}}$. 
 
 Given data pair $(I, I^+, \delta u)$, we can set up the following learning problem
 
