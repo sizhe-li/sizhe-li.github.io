@@ -82,8 +82,8 @@ However, these design decisions are difficult to apply to soft robots, and more 
 
 - **Soft and Bio-inspired Robots.** Instead of discrete joints, large parts of the robot might deform. Embedding sensors to measure the continuous state of a deformable system is difficult, both because there is no canonical choice for sensors universally compatible with different robots and because their placement and installation are challenging. 
 - **Designing the state itself is challenging.** In contrast to a piece-wise rigid robot, where the state vector can be a finite-dimensional concatenation of joint angles, the state of a deformable robot is infinite-dimensional due to continuous deformations.  
-- **Contacts, appendages, wear-and-tear can alter the "coordinate system"** Grasping on a screwdriver, the Jacobian of the robotic system extends now to newly appended mechanical system. From an engineering standpoint, it is a bit odd to expect that screwdriver and scissors arrive with sensors reporting their internal states.
-- **Multi-sensory integration requires spatialization** Perceptual signals -- visual, tactile, or auditory -- reveal the same reality of the physical world precisely in the spatial sense. Traditional expert-designed coordinate systems, hand-crafted on a per-robot basis, do not directly present a general solution to integrating different sensory measurements.
+- **Contacts, appendages, wear-and-tear can alter the "coordinate system."** Grasping on a screwdriver, the Jacobian of the robotic system extends now to newly appended mechanical system. From an engineering standpoint, it is a bit odd to expect that screwdrivers and scissors arrive with sensors reporting their internal states.
+- **Multi-sensory integration requires spatialization.** Perceptual signals -- visual, tactile, or auditory -- reveal the same reality of the physical world precisely in the spatial sense. Traditional expert-designed coordinate systems, hand-crafted on a per-robot basis, do not directly present a general solution to integrating different sensory measurements.
 
 ### Spatialization of system Jacobian
 
