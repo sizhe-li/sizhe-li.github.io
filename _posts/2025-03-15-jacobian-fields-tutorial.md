@@ -259,7 +259,7 @@ Let's train our Jacobian Fields in another environment, but this time more compo
       <source src="{{ site.baseurl }}/assets/video/njf/tutorial2/pred_jacobian_q0_1.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
-      Jac. channel 1 (dx)
+      Jac. channel 1 
     </figcaption>
   </div>
 
@@ -268,7 +268,7 @@ Let's train our Jacobian Fields in another environment, but this time more compo
       <source src="{{ site.baseurl }}/assets/video/njf/tutorial2/pred_jacobian_q1_1.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
-      Jac. channel 2 (dy)
+      Jac. channel 2 
     </figcaption>
   </div>
 </div>
