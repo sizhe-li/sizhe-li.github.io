@@ -2,7 +2,7 @@
 layout: distill
 title: "Rethinking Robot Modeling and Representations"
 date: 2025-03-15
-description: 'An overview of Neural Jacobian Field, an architecture that autonomously learns to represent, model, and control robots in general-purpose way.'
+description: 'An overview of Neural Jacobian Field, an architecture that autonomously learns to represent, model, and control robots in a general-purpose way.'
 
 authors:
   - name: Sizhe Lester Li
