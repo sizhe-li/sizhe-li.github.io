@@ -150,7 +150,9 @@ We now use a simle 2D example to illustrate the idea of Jacobian Fields. Please 
 
 How can we learn Jacobian Fields from visual perception to "explain away" our observed optical flow motions? We first find that our solid domain here, $\Omega^{t}$, equates the pixel space $\mathbb^{H\times W}$ that we perceive. This is not always the case, as the 3D world induces a projection process to imaging devices and contains occluding and refracting surfaces.
 
-We use a standard fully convolutional network (UNet<d-cite key="ronneberger2015unetconvolutionalnetworksbiomedical"></d-cite>) to parameterize the inference of Jacobian field from image observations. $J_\theta(\cdot \| I(q, u)) \triangleq \frac{\partial \mathbf{\phi}(\cdot \| \mathbf{q}, \mathbf{u})}{\partial \mathbf{u}}$ conditions on an image, and outputs a field of linear operators, i.e., $J_\theta(x \| I) \in \mathbb{R}^{N_{u} \times N_{space}}$. 
+We use a standard fully convolutional network (UNet<d-cite key="ronneberger2015unetconvolutionalnetworksbiomedical"></d-cite>) to parameterize the inference of Jacobian field from image observations. $J_\theta(\cdot \| I(\mathbf{q})) \triangleq \frac{\partial \mathbf{\phi}(\cdot \| \mathbf{q})}{\partial \mathbf{u}}$ conditions on an image, and outputs a field of linear operators, i.e., $J_\theta(x \| I) \in \mathbb{R}^{N_{u} \times N_{space}}$. 
+
+> One of our core insights is that visual perceptual signals $I(\mathbf{q})$ are functions of latent variable $\mathbf{q}$ that might be hard to directly parameterize, but can be encoded implicitly by a neural network. Indeed, perceptual signals such as images are physical artifacts of lights.
 
 Given data pair $(I, I^+, \delta u)$, we can set up the following learning problem
 
@@ -158,9 +160,9 @@ $$
 \begin{equation}
     \arg\min_{\theta} \ 
     \left\lVert J_\theta \big(x \mid I \big)^\top \delta u
-    - V \big(x \mid I, I^+ \big) \right\rVert
+    - V \big(x \mid I, I^+ \big) \right\rVert,
 \end{equation}
-$$,
+$$
 where $V$ is the optical flow field computed by a state-of-the-art approach (e.g.,RAFT<d-cite key="teed2020raftrecurrentallpairsfield"></d-cite>).
 
 
@@ -393,12 +395,15 @@ Robot commands often result in highly localized spatial motion. Consider the two
 
 ### 3. Spatial Compositionality of Mechanical Systems
 
-Robot commands often result in spatial motions composed by the influences of individual command channels. The two linkage robot finger we experiment with above is a great example. For a material point inside the second segment, its motion is computed as the integral over individual command channels in the Jacobian tensor field. Indeed, our predicted 2D motion is the summation over two Jacobian channels.
+Robot commands often result in spatial motions composed by the influences of individual command channels. The two linkage robot finger we experiment with above is a great example. For a point inside the second segment, its motion is the integral over individual command channels in the Jacobian tensor field. Indeed, our predicted 2D motion is the summation over two Jacobian channels.
 
 <!-- # Connections with Spatial and Physical Intelligence, and Cognitive Science
 
 We see in order to move and we move in order to see. We are interested in building AI systems that learn from self-play and do not require special human-in-the-loop data annotations.  -->
 
+### Project Website
+
+For more information about our project, please check out our [project website](https://sizhe-li.github.io/publication/neural_jacobian_field/). Feel free to email [sizheli@mit.edu]() or create an issue on our github repo for any questions!
 
 ### Acknowledgement
 Sizhe Lester Li is presenting on behalf of the team in the 2024 paper "Unifying 3D Representation and Control of Diverse Robots with a Single Camera." We would like to thank Isabella Yu for the visualizations of two finger jacobian fields.
