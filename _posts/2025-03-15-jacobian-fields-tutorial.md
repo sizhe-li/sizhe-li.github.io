@@ -54,7 +54,7 @@ Design of actuated systems -->
 
 # Jacobian Fields
 
-Jacobian Fields is an approach that aims to address problems we posed above. The core idea is to spatialize the conventional end-effector Jacobian in robot dynamics, and compuute a field of such operators in the Euclidean space. We encourage the readers to refer to Chapter 5 of Modern Robotics <d-cite key="lynch2017modern"></d-cite> for details on manipulator Jacobians.
+Jacobian Fields is an approach that aims to address problems we posed above. The core idea is to spatialize the conventional end-effector Jacobian in robot dynamics, and compute a field of such operators in the Euclidean space. We encourage the readers to refer to Chapter 5 of Modern Robotics <d-cite key="lynch2017modern"></d-cite> for details on manipulator Jacobians.
 
 ### Background: system Jacobian
 
@@ -89,7 +89,7 @@ However, these design decisions are difficult to apply to soft robots, and more 
 
 We have argued for the importance of spatialization to overcome modeling challenges. For a solid domain<d-cite key="bonet1997nonlinear"></d-cite>, we can spatialize our differential quantity system Jacobian. This lifts our representation from reduced or minimal coordinates to the Eulidean space and draws deep connections with recent advances in computational perception.
 
-To formally describe this idea using continuum mechanics, we consider the spatial dynamics paramterized by a deformation map $\phi(\cdot \| \mathbf{q}, \mathbf{u}: \Omega^{0} \mapsto \Omega^{1})$, where $\Omega^{t} \subset \mathbb{R}^{d}$ and $d$ = 2 or 3 is the dimension of our domain. $\mathbf{x} = \phi(\mathbf{X} \| \mathbf{q}, \mathbf{u})$ is a flow map that transports the coordinate $\mathbf{X}\in \mathbb{R}^{d}$ in the initial configuration to the configuration achieved at $\mathbf{q}$ and $\mathbf{u}$.
+To formally describe this idea using continuum mechanics, we consider the spatial dynamics paramterized by a deformation map $\phi(\cdot \| \mathbf{q}, \mathbf{u}): \Omega^{0} \mapsto \Omega^{1}$, where $\Omega^{t} \subset \mathbb{R}^{d}$ and $d$ = 2 or 3 is the dimension of our domain. $\mathbf{x} = \phi(\mathbf{X} \| \mathbf{q}, \mathbf{u})$ is a flow map that transports the coordinate $\mathbf{X}\in \mathbb{R}^{d}$ in the initial configuration to the configuration achieved at $\mathbf{q}$ and $\mathbf{u}$.
 
 Now, similar to the differential relationship, we have the spatial system Jacobian as follows
 
