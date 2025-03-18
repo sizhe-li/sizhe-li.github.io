@@ -91,7 +91,7 @@ We have argued for the importance of spatialization to overcome modeling challen
 
 To formally describe this idea using continuum mechanics, we consider the spatial dynamics paramterized by a deformation map $\phi(\cdot \| \mathbf{q}, \mathbf{u}): \Omega^{0} \mapsto \Omega^{1}$, where $\Omega^{t} \subset \mathbb{R}^{d}$ and $d$ = 2 or 3 is the dimension of our domain. $\mathbf{x} = \phi(\mathbf{X} \| \mathbf{q}, \mathbf{u})$ is a flow map that transports the coordinate $\mathbf{X}\in \mathbb{R}^{d}$ in the initial configuration to the configuration achieved at $\mathbf{q}$ and $\mathbf{u}$.
 
-Now, similar to the differential relationship, we have the spatial system Jacobian as follows
+Now, similar to the differential relationship above in generalized coordinates, we have the spatial system Jacobian as follows
 
 $$
 \begin{equation}
