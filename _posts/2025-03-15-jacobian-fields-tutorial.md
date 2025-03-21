@@ -279,28 +279,7 @@ Fantastic! The same idea can spatially disentangle the different components of m
 
 ### Unified representation with environment variables
 
-The idea of Jacobian Fields extends to capture dynamics with environment variables, such as contacts with continuum bodies. Here are some work-in-progress results my team is building on! Please stay tuned!!
-
-
-<figure style="display: flex; flex-direction: column; align-items: center;">
-    <!-- <video width="40%" controls> -->
-    <video  controls class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-        <source src="/assets/video/njf/two_finger/sample_example.mp4" type="video/mp4">
-    </video>
-    <figcaption style="margin-top: 8px; font-style: italic; text-align: center;">
-      Training Sample Illustration
-    </figcaption>
-</figure>
-
-<figure style="display: flex; flex-direction: column; align-items: center;">
-    <!-- <video width="70%" controls> -->
-    <video width="60%" controls class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-        <source src="/assets/video/njf/two_finger/dataset_example.mp4" type="video/mp4">
-    </video>
-    <figcaption style="margin-top: 8px; font-style: italic; text-align: center;">
-      Dataset Illustration
-    </figcaption>
-</figure>
+The idea of Jacobian Fields extends to capture dynamics with environment variables, such as contacts with continuum bodies. 
 
 <figure style="display: flex; flex-direction: column; align-items: center;">
     <!-- <video width="70%" controls> -->
