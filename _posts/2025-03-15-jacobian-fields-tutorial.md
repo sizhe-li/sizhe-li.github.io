@@ -21,11 +21,12 @@ Was Du ererbt von Deinen Vätern hast, erwirb es, um es zu besitzen. (Goethe)
 
 # Motivation
 
+<!-- Have you ever wondered why robots today are so costly?  -->
 Conventional robots -- rigid links, discrete joints, and precise sensors -— are a historical artifact of control and planning approaches. We want to understand an elusive aspect of robotics: **how can robots with diverse morphologies, mechanisms, and sensors be represented, modeled, and controlled in a general-purpose way?** 
 
 Achieving this vision requires new algorithms that go beyond precise sensor feedback and idealized dynamics. Conventional methods struggle with soft and bio-inspired robots, which lack internal sensors and well-defined states. Further, standard definitions of robot actions, such as end-effector pose changes, may not capture the contact-rich and whole-body motions. Finally, general-purpose robot representations could offer new perspectives on appendages and tool use, as scissors and hammers function without embedded sensors but can be considered extensions to the robot dynamics upon contacts.
 
-Achieving this vision carries values to our society. Imprecise, flexible, and unconventional robots can perform as safely and effectively as traditional designs, paving the way for more affordable, adaptable, and mass-produced robots.
+Achieving this vision carries values to our society. Imprecise, flexible, and unconventional robots<d-cite key="gealy2019quasidirectdrivelowcostcompliant"></d-cite> can perform as safely and effectively as traditional designs, paving the way for more affordable, adaptable, and mass-produced robots.
 
 <div class="row l-body">
 	<div class="col-sm">
@@ -56,9 +57,14 @@ Design of actuated systems -->
 
 Jacobian Fields is an approach that aims to address problems we posed above. The core idea is to spatialize the conventional end-effector Jacobian in robot dynamics, and compute a field of such operators in the Euclidean space. We encourage the readers to refer to Chapter 5 of Modern Robotics <d-cite key="lynch2017modern"></d-cite> for details on manipulator Jacobians.
 
-### Background: system Jacobian
+### System Jacobian: an intuitive example
 
-We first derive the conventional system Jacobian <d-cite key="pang2023globalplanningcontactrichmanipulation"></d-cite>. Consider a dynamical system with state $\mathbf{q} \in \mathbb{R}^{m}$, input command $\mathbf{u} \in \mathbb{R}^{n}$, and dynamics $\mathbf{f}: \mathbb{R}^{m} \times \mathbb{R}^{n} \mapsto \mathbb{R}^{m}$. Upon reaching a steady state, the state of the next timestep $\mathbf{q}^{+}$, is given by
+Look at this image of the robot, for a spatial location (pixel in this case), the system Jacobian is the linear operator that tells you how that point moves given a small linearized robot action.
+
+
+
+### System Jacobian: a more formal introduction
+We first derive the conventional system Jacobian<d-cite key="pang2023globalplanningcontactrichmanipulation"></d-cite>. Consider a dynamical system with state $\mathbf{q} \in \mathbb{R}^{m}$, input command $\mathbf{u} \in \mathbb{R}^{n}$, and dynamics $\mathbf{f}: \mathbb{R}^{m} \times \mathbb{R}^{n} \mapsto \mathbb{R}^{m}$. Upon reaching a steady state, the state of the next timestep $\mathbf{q}^{+}$, is given by
 
 $$
 \begin{equation}
@@ -104,7 +110,7 @@ $$
 
 ### Learning and measuring Jacobian Fields from perceptual inputs 
 
-We now use a simle 2D example to illustrate the idea of Jacobian Fields. Please check out the pytorch implementation of [tutorial 1](https://github.com/sizhe-li/neural-jacobian-field) to reproduce our results in this section.
+We now use a simple 2D example to illustrate the idea of Jacobian Fields. Please check out the pytorch implementation of [tutorial 1](https://github.com/sizhe-li/neural-jacobian-field/blob/main/notebooks/tutorial/1_training_pusher_jacobian_in_2D.ipynb) to reproduce our results in this section.
 
 **2D Pusher Environment.** The environment contains a spherical robotic pusher. The robot can move freely in 2D space and is steered by a 2D velocity command $\delta u \triangleq (x, y)$, where $x, y \in \mathbb{R}$.
 
@@ -223,7 +229,7 @@ How are we visualizing the Jacobians? We simply assign color component to each c
 
 ### A second example in 2D.
 
-Let's train our Jacobian Fields in another environment, but this time more compositional and dexterous! Please check out the pytorch implementation of [tutorial 2](https://github.com/sizhe-li/neural-jacobian-field) to reproduce our results in this section.
+Let's train our Jacobian Fields in another environment, but this time more compositional and dexterous! Please check out the pytorch implementation of [tutorial 2](https://github.com/sizhe-li/neural-jacobian-field/blob/main/notebooks/tutorial/2_training_finger_jacobian_in_2D.ipynb) to reproduce our results in this section.
 
 **Finger Environment.** The environment contains a 2 degrees-of-freedom robot finger. The robot finger is commanded by a 2D joint velocity command $\delta u \triangleq (u_1, u_2)$, where $u_1, u_2 \in \mathbb{R}$ control the rotations of each motor respectively. 
 
@@ -294,7 +300,7 @@ The idea of Jacobian Fields extends to capture dynamics with environment variabl
 ### Real-world Examples.
 Amazingly, the same exact idea extends to the real-world and to 3D. By incorporating the image formation model and neural rendering, we can use optical flows observed with 2D cameras to explain away the underlying flow field in the 3D world. 
 
-Here are a few examples, please check out the pytorch implementation of [tutorial 3](https://github.com/sizhe-li/neural-jacobian-field) to reproduce our results in this section.
+Here are a few examples, please check out the pytorch implementation of [tutorial 3](https://github.com/sizhe-li/neural-jacobian-field/blob/main/notebooks/real_world/1_visualize_jacobian_fields.ipynb) and [tutorial 4](https://github.com/sizhe-li/neural-jacobian-field/blob/main/notebooks/real_world/2_inverse_dynamics.ipynb) to reproduce our results in this section.
 
 <div class="row">
   <div class="col-sm">
