@@ -57,10 +57,20 @@ Design of actuated systems -->
 
 Jacobian Fields is an approach that aims to address problems we posed above. The core idea is to spatialize the conventional end-effector Jacobian in robot dynamics, and compute a field of such operators in the Euclidean space. We encourage the readers to refer to Chapter 5 of Modern Robotics <d-cite key="lynch2017modern"></d-cite> for details on manipulator Jacobians.
 
+<div class="row">
+  <div class="col-sm">
+    <video class="img-fluid z-depth-1" autoplay loop muted playsinline>
+      <source src="{{ site.baseurl }}/assets/img/publication_preview/jacobian_fields_teaser.mp4" type="video/mp4">
+    </video>
+    <figcaption style="text-align: center; margin-top: 10px;">
+     <strong> Teaser Video </strong> 
+    </figcaption>
+  </div>
+</div>
+
 <!-- ### System Jacobian: an intuitive example
 
 Look at this image of the robot, for a spatial location (pixel in this case), the system Jacobian is the linear operator that tells you how that point moves given a small linearized robot action. -->
-
 
 
 ### System Jacobian
