@@ -186,7 +186,7 @@ where $V$ is the optical flow field computed by a state-of-the-art approach (e.g
 
 Training till convergence, using just two samples, our Jacobian Field is able to explain unseen image observations and command directions. We will soon delve deeper into the physics of why Jacobian Fields can generalize here. The short answers are **invariance, locality, and compositionality** of the Jacobians.
 
-How are we visualizing the Jacobians? We simply assign color component to each channel of the Jacobian field. For every spatial coordinate, we compute the norm over spatial channel to derive the total spatial sensitivity vector of the Jacobian. Please check out the pytorch implementation of [tutorial 1](https://github.com/sizhe-li/neural-jacobian-field) to reproduce our results in this section.
+How are we visualizing the Jacobians? We simply assign color component to each channel of the Jacobian field. For every spatial coordinate, we compute the norm over spatial channel to derive the total spatial sensitivity vector of the Jacobian. Please check out the pytorch implementation of [tutorial 1](https://github.com/sizhe-li/neural-jacobian-field/blob/main/notebooks/tutorial/1_training_pusher_jacobian_in_2D.ipynb) to reproduce our results in this section.
 
 <div class="row">
   <div class="col-sm">
