@@ -8,7 +8,7 @@ authors:
   - name: Sizhe Lester Li
     affiliations:
       name: MIT CSAIL
-  - name: Vincent SItzmann
+  - name: Vincent Sitzmann
     affiliations:
       name: MIT CSAIL
 bibliography: blogs.bib
@@ -22,7 +22,7 @@ Was Du ererbt von Deinen Vätern hast, erwirb es, um es zu besitzen. (Goethe)
 {% endquote %}
 
 # TL;DR
-We present a solution that learns a controllable 3D model of any robot, from vision alone. This includes robots that were previously intractable to model by experts. [[Codes]](https://github.com/sizhe-li/neural-jacobian-field) [[Project Page]](https://sizhe-li.github.io/publication/neural_jacobian_field/) [[Video]](https://www.youtube.com/watch?v=dFZ1RvJMN7A)
+We present a solution that learns a controllable 3D model of any robot, from vision alone. This includes robots that were previously intractable to model by experts. [[Code]](https://github.com/sizhe-li/neural-jacobian-field) [[Project Page]](https://sizhe-li.github.io/publication/neural_jacobian_field/) [[Video]](https://www.youtube.com/watch?v=dFZ1RvJMN7A)
 
 
 # Motivation
@@ -46,7 +46,7 @@ Have you ever wondered why robots today are so costly? Why are they almost alway
 
 ### What even is a robot anyways?
 
-Let's take a step back and think about what a robot even is. Slapping a few motors on an IKEA Lamp with a Raspberry Pi, we have mechanical system that we can command to move around in space. Is that a robot? [(This turns out to be a rather difficult question)](https://cs.stanford.edu/people/eroberts/courses/soco/projects/1998-99/robotics/history.html). I would argue that if a machine is capable of solving the physical task you are interested in, then it is a valid robot.
+Let's take a step back and think about what a robot even is. Slapping a few motors on an IKEA Lamp with a Raspberry Pi, we have mechanical system that we can command to move around in space. Is that a robot? [(This turns out to be a rather difficult question)](https://cs.stanford.edu/people/eroberts/courses/soco/projects/1998-99/robotics/history.html). We would argue that if a machine is capable of solving the physical task you are interested in, then it is a valid robot.
 
 <div class="row l-body">
   <div class="col-sm text-center">
