@@ -22,7 +22,7 @@ Was Du ererbt von Deinen Vätern hast, erwirb es, um es zu besitzen. (Goethe)
 {% endquote %}
 
 # TL;DR
-We present a solution that learns a controllable 3D model of any robot, from vision alone. This includes robots that were previously intractable to model by experts.
+We present a solution that learns a controllable 3D model of any robot, from vision alone. This includes robots that were previously intractable to model by experts. [[Codes]](https://github.com/sizhe-li/neural-jacobian-field) [[Project Page]](https://sizhe-li.github.io/publication/neural_jacobian_field/) [[Video]](https://www.youtube.com/watch?v=dFZ1RvJMN7A)
 
 
 # Motivation
