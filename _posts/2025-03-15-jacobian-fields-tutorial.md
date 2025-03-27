@@ -8,6 +8,9 @@ authors:
   - name: Sizhe Lester Li
     affiliations:
       name: MIT CSAIL
+  - name: Vincent SItzmann
+    affiliations:
+      name: MIT CSAIL
 bibliography: blogs.bib
 comments: true
 
@@ -18,40 +21,111 @@ comments: true
 Was Du ererbt von Deinen Vätern hast, erwirb es, um es zu besitzen. (Goethe)
 {% endquote %}
 
+# TL;DR
+We present a solution that learns a controllable 3D model of any robot, from vision alone. This includes robots that were previously intractable to model by experts.
+
 
 # Motivation
 
-<!-- Have you ever wondered why robots today are so costly?  -->
-Conventional robots -- rigid links, discrete joints, and precise sensors -— are a historical artifact of control and planning approaches. We want to understand an elusive aspect of robotics: **how can robots with diverse morphologies, mechanisms, and sensors be represented, modeled, and controlled in a general-purpose way?** 
-
-Achieving this vision requires new algorithms that go beyond precise sensor feedback and idealized dynamics. Conventional methods struggle with soft and bio-inspired robots, which lack internal sensors and well-defined states. Further, standard definitions of robot actions, such as end-effector pose changes, may not capture the contact-rich and whole-body motions. Finally, general-purpose robot representations could offer new perspectives on appendages and tool use, as scissors and hammers function without embedded sensors but can be considered extensions to the robot dynamics upon contacts.
-
-Achieving this vision carries values to our society. Imprecise, flexible, and unconventional robots<d-cite key="gealy2019quasidirectdrivelowcostcompliant"></d-cite> can perform as safely and effectively as traditional designs, paving the way for more affordable, adaptable, and mass-produced robots.
+Have you ever wondered why robots today are so costly? Why are they almost always made of rigidly jointed segments? What if I tell you that this is largely due to challenges in building digital models of these robots, rather than hardware challenges?
 
 <div class="row l-body">
 	<div class="col-sm">
-	  <img class="img-fluid rounded z-depth-1" src="{{ site.baseurl }}/assets/img/njf/rigid_motivation.png">
-   <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;"> Conventional robots have limited our algorithmic thinking </figcaption>
+	  <img class="img-fluid rounded z-depth-1" src="{{ site.baseurl }}/assets/img/njf/allegro_cost.png">
+   <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;"> Allegro Hand  </figcaption>
 	</div>
 	<div class="col-sm">
-  <img class="img-fluid rounded z-depth-1" src="{{ site.baseurl }}/assets/img/njf/new_robot_motivation.png">
-   <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px"> Next-gen robots require a new algorithmic approach. </figcaption>
+	  <img class="img-fluid rounded z-depth-1" src="{{ site.baseurl }}/assets/img/njf/ur5_cost.png">
+   <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;"> UR5 Arm </figcaption>
+	</div>
+	<div class="col-sm">
+  <img class="img-fluid rounded z-depth-1" src="{{ site.baseurl }}/assets/img/njf/shadow_hand_cost.png">
+   <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px"> Shadow Hand </figcaption>
   </div>
 </div>
 
-<!-- These questions demand a multidisciplinary approach. 
+### What even is a robot anyways?
 
-Modeling of physical world
-- multisensory integration
-- spatialization of senses 
-- spatialization of 
+Let's take a step back and think about what a robot even is. Slapping a few motors on an IKEA Lamp with a Raspberry Pi, we have mechanical system that we can command to move around in space. Is that a robot? [(This turns out to be a rather difficult question)](https://cs.stanford.edu/people/eroberts/courses/soco/projects/1998-99/robotics/history.html). I would argue that if a machine is capable of solving the physical task you are interested in, then it is a valid robot.
 
-Design of actuated systems -->
+<div class="row l-body">
+  <div class="col-sm text-center">
+    <img class="img-fluid rounded z-depth-1" 
+         src="{{ site.baseurl }}/assets/img/njf/ikea_robot.png" 
+         style="width: 50%; display: block; margin: 0 auto;">
+    <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
+      <strong><a href="https://community.robotshop.com/forum/t/tertiarm-low-cost-3d-printed-robot-arm-based-on-ikea-lamp/7517">Tertiarm</a></strong>: Low cost, 3D printed, made of IKEA Lamp 
+    </figcaption>
+  </div>
+</div>
 
-<!-- kOur approach. Neural Jacobian Field, combines perception and machine learning with perspetives from the design and fabrication of general-purpose robots.  -->
-<!-- Our approach, Neural Jacobian Field, serves as a general-purpose model of robot dynamics and could inspire the integration of vision, touch, and sound into a unified, spatial representation of actuated systems. -->
 
-<!-- Why do we want a model? What is the scope of a model? What constitutes a good model? I would like to share some of my thoughts, as the same set of questions are disccused in different ways across AI, robotics, computational physics, and cognitive science. -->
+### The minimum requirement -- the ability to control
+
+Perhaps a valid definition of a robot includes a crtierion of *controlability*. We need to be able to control the robot to call it one. That's why many people wouldn't call the motorized IKEA lamp a robot. Because today we do not have an algorithm that can control it effectively. Next, we have a second robot -- a pneumatic hand (**left figure**) -- that shares the same property as our IKEA robot. Namely, today this robot is also not controllable. 
+
+The question of control is -- in order for my robot hand to create desired motions what change of command should I send? (**right figure**)
+<div class="row l-body">
+	<div class="col-sm">
+	  <img class="img-fluid rounded z-depth-1" src="{{ site.baseurl }}/assets/img/njf/control_1.png">
+   <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;"> $300 pneuamtic hand at work </figcaption>
+	</div>
+	<div class="col-sm">
+  <img class="img-fluid rounded z-depth-1" src="{{ site.baseurl }}/assets/img/njf/control_2.png">
+   <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px"> <strong>Desired motions</strong>: arrows; <strong>Commands</strong>: blue air tubes </figcaption>
+  </div>
+</div>
+
+
+Today, most robots look like the UR5 below. These robots inherit a special class of sensors and morphologies for making them controllable.
+
+<!-- Because they need all these sensors to make them controllable -->
+
+<!-- That's why most robots look like the UR5 arm or Allegro Hand shown above. Because they all need 
+Because they need all these sensors to make them controllable
+The most basic requirement for a mechanical system to be robotic is our ability to control it. What does "ability to control" mean? Here is an example:
+Consider a robot hand (**left figure**). The question of control is -- in order for my robot hand to create desired motions what change of command should I send? (**right figure**) -->
+
+<div class="row l-body">
+  <div class="col-sm text-center">
+    <img class="img-fluid rounded z-depth-1" 
+         src="{{ site.baseurl }}/assets/img/njf/rigid_motivation.png"
+         style="width: 85%; display: block; margin: 0 auto;">
+    <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
+      Conventional robots might have limited our algorithmic thinking
+    </figcaption>
+  </div>
+</div>
+
+
+### Why is the past solution no longer adequate
+
+The way we have approached this problem in the past has reached a ceiling. It turns out the past solutions cannot model the robot above. Since these robots lack sensory measurements and experience deformations. 
+
+This is a part of why robotic automation today remains costly. We have cheaper hardware designs that can still perform the same physical tasks, but the conventional software does not support these hardwares. As a result, our robots are often over-engineered to compensate the software limitations.
+
+For mechanical systems like airplanes and trains, it makes sense to design special-purpose sensors that measure the almost exact states. These sensory measurements typically support a model that suits the problem domains. This is because the application domain for these control problem requires extreme modeling accuracy and reaction times.
+
+However, *the conventional modeling spirit doesn't seem suitable for the coming age of general-purpose robotics*. It assumes that the environment and the robot are modeled separately. It assumes that scissors and screwdrivers arrive with internal sensors reporting their states. It assumes that robots and the world have a fixed form of morphology and physical properties.
+
+### A new spirit forward
+
+A new modeling spirit is needed for more accessible robotic automation. One that integrates recent advances in computational perception, with powerful tools from machine learning, mechanics, and control. One that lifts the modeling assumptions to a level suitable for general-purpose robotics. One that requires new algorithms that go beyond precise sensor feedback and idealized dynamics.
+
+Achieving this vision carries values to our society. Imprecise, flexible, and unconventional robots<d-cite key="gealy2019quasidirectdrivelowcostcompliant"></d-cite> can perform as safely and effectively as traditional designs, paving the way for more affordable, adaptable, and mass-produced robots.
+
+
+<div class="row l-body">
+  <div class="col-sm text-center">
+    <img class="img-fluid rounded z-depth-1" 
+         src="{{ site.baseurl }}/assets/img/njf/new_robot_motivation.png"
+         style="width: 85%; display: block; margin: 0 auto;">
+    <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
+      Next-gen robots require a new algorithmic approach.
+    </figcaption>
+  </div>
+</div>
+
 
 # Jacobian Fields
 
@@ -68,46 +142,49 @@ Jacobian Fields is an approach that aims to address problems we posed above. The
   </div>
 </div>
 
-<!-- ### System Jacobian: an intuitive example
+### The Body Jacobian
 
-Look at this image of the robot, for a spatial location (pixel in this case), the system Jacobian is the linear operator that tells you how that point moves given a small linearized robot action. -->
-
-
-### System Jacobian
-We first derive the conventional system Jacobian<d-cite key="pang2023globalplanningcontactrichmanipulation"></d-cite>. Consider a dynamical system with state $\mathbf{q} \in \mathbb{R}^{m}$, input command $\mathbf{u} \in \mathbb{R}^{n}$, and dynamics $\mathbf{f}: \mathbb{R}^{m} \times \mathbb{R}^{n} \mapsto \mathbb{R}^{m}$. Upon reaching a steady state, the state of the next timestep $\mathbf{q}^{+}$, is given by
+Look at this 2D robot arm! For any spatial point $(x, y)$ on the robot. Given a small variation of the joint angles $\delta q$, we can find Jacobian of the following form
 
 $$
-\begin{equation}
-    \mathbf{q}^{+} = \mathbf{f}(\mathbf{q}, \mathbf{u}).
-\end{equation}
+\begin{bmatrix}
+\delta {x} \\ \delta {y}
+\end{bmatrix} = J(q) 
+\begin{bmatrix}
+\delta {q}_1 \\ \delta {q}_2
+\end{bmatrix}.
 $$
 
-Local linearization of $\mathbf{f}$ around the nominal point $(\bar{\mathbf{q}}, \bar{\mathbf{u}})$ yields 
+For more formalism and details, please check out [our appendix](#details-on-system-jacobian) on the system Jacobian.
 
-$$
-\begin{equation}
-    \mathbf{q}^{+} = \mathbf{f}(\bar{\mathbf{q}}, \bar{\mathbf{u}}) + \frac{\partial \mathbf{f}(\mathbf{q}, \mathbf{u})}{\partial \mathbf{u}} \bigg\rvert_{\bar{\mathbf{q}}, \bar{\mathbf{u}}} \delta \mathbf{u}.
-\end{equation}
-$$
+<div class="row">
+  <div class="col-sm">
+    <video class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
+      <source src="{{ site.baseurl }}/assets/video/njf/two_finger/only_joint_1_moving.mp4" type="video/mp4">
+    </video>
+    <figcaption style="text-align: center; margin-top: 10px;">
+      Only joint 1 moving
+    </figcaption>
+  </div>
 
-Here, $\mathbf{J}(\mathbf{q}, \mathbf{u}) = \frac{\partial \mathbf{f}(\mathbf{q}, \mathbf{u})}{\partial \mathbf{u}}$ is known as the system Jacobian, the matrix that relates a change of command $\mathbf{u}$ to the change of state $\mathbf{q}$.
+  <div class="col-sm">
+    <video controls class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
+      <source src="{{ site.baseurl }}/assets/video/njf/two_finger/only_joint_2_moving.mp4" type="video/mp4">
+    </video>
+    <figcaption style="text-align: center; margin-top: 10px;">
+      Only joint 2 moving
+    </figcaption>
+  </div>
+</div>
 
-Conventionally, modeling a robotic system involves experts designing a state vector $\mathbf{q}$ that completely defines the robot state, and then embedding sensors to measure each of these state variables. For example, the piece-wise-rigid morphology of conventional robotic systems means that the set of all joint angles is a full state description, and these are conventionally measured by an angular sensor in each joint. 
 
-However, these design decisions are difficult to apply to soft robots, and more broadly, to mechanical systems whose coordinates cannot be well-defined or sensorized. Here are a few examples
+### Spatialization of Jacobian
 
-- **Soft and Bio-inspired Robots.** Instead of discrete joints, large parts of the robot might deform. Embedding sensors to measure the continuous state of a deformable system is difficult, both because there is no canonical choice for sensors universally compatible with different robots and because their placement and installation are challenging. 
-- **Designing the state itself is challenging.** In contrast to a piece-wise rigid robot, where the state vector can be a finite-dimensional concatenation of joint angles, the state of a deformable robot is infinite-dimensional due to continuous deformations.  
-- **Contacts, appendages, wear-and-tear can alter the "coordinate system."** Grasping on a screwdriver, the Jacobian of the robotic system extends now to newly appended mechanical system. From an engineering standpoint, it is a bit odd to expect that screwdrivers and scissors arrive with sensors reporting their internal states.
-- **Multi-sensory integration requires spatialization.** Perceptual signals -- visual, tactile, or auditory -- reveal the same reality of the physical world precisely in the spatial sense. Traditional expert-designed coordinate systems, hand-crafted on a per-robot basis, do not directly present a general solution to integrating different sensory measurements.
+We can spatialize our Jacobian. This lifts our representation from reduced or minimal coordinates to the Eulidean space and draws deep connections with recent advances in computational perception. 
 
-### Spatialization of system Jacobian
+To formally describe this idea using continuum mechanics<d-cite key="bonet1997nonlinear"></d-cite>, we consider the the deformation map $\phi(\cdot \| \mathbf{q}, \mathbf{u}): \Omega^{0} \mapsto \Omega^{1}$, where $\Omega^{t} \subset \mathbb{R}^{d}$. $d$ = 2 or 3 depending on our modeling domain. $\mathbf{x} = \phi(\mathbf{X} \| \mathbf{q}, \mathbf{u})$ is a flow map that transports the coordinate $\mathbf{X}\in \mathbb{R}^{d}$ in the initial configuration to the configuration achieved at $\mathbf{q}$ and $\mathbf{u}$.
 
-We have argued for the importance of spatialization to overcome modeling challenges. For a solid domain<d-cite key="bonet1997nonlinear"></d-cite>, we can spatialize our differential quantity system Jacobian. This lifts our representation from reduced or minimal coordinates to the Eulidean space and draws deep connections with recent advances in computational perception.
-
-To formally describe this idea using continuum mechanics, we consider the spatial dynamics paramterized by a deformation map $\phi(\cdot \| \mathbf{q}, \mathbf{u}): \Omega^{0} \mapsto \Omega^{1}$, where $\Omega^{t} \subset \mathbb{R}^{d}$ and $d$ = 2 or 3 is the dimension of our domain. $\mathbf{x} = \phi(\mathbf{X} \| \mathbf{q}, \mathbf{u})$ is a flow map that transports the coordinate $\mathbf{X}\in \mathbb{R}^{d}$ in the initial configuration to the configuration achieved at $\mathbf{q}$ and $\mathbf{u}$.
-
-Now, similar to the differential relationship above in generalized coordinates, we have the spatial system Jacobian as follows
+Now, we have the spatial system Jacobian as follows
 
 $$
 \begin{equation}
@@ -125,6 +202,7 @@ We now use a simple 2D example to illustrate the idea of Jacobian Fields. Please
 **2D Pusher Environment.** The environment contains a spherical robotic pusher. The robot can move freely in 2D space and is steered by a 2D velocity command $\delta u \triangleq (x, y)$, where $x, y \in \mathbb{R}$.
 
 **Training Samples Illustration.** We now illustrate the two training samples in our dataset, moving left and right. The following same-row videos might become async due to html artifact.
+
 <div class="row">
   <div class="col-sm">
     <video class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
@@ -168,7 +246,6 @@ How can we learn Jacobian Fields from visual perception to "explain away" our ob
 
 We use a standard fully convolutional network (UNet<d-cite key="ronneberger2015unetconvolutionalnetworksbiomedical"></d-cite>) to parameterize the inference of Jacobian field from image observations. $J_\theta(\cdot \| I(\mathbf{q})) \triangleq \frac{\partial \mathbf{\phi}(\cdot \| \mathbf{q})}{\partial \mathbf{u}}$ conditions on an image, and outputs a field of linear operators, i.e., $J_\theta(x \| I) \in \mathbb{R}^{N_{u} \times N_{space}}$. 
 
-> One of our core insights is that visual perceptual signals $I(\mathbf{q})$ are functions of latent variable $\mathbf{q}$ that might be hard to directly parameterize, but can be encoded implicitly by a neural network. Indeed, perceptual signals such as images are physical artifacts of lights.
 
 Given data pair $(I, I^+, \delta u)$, we can set up the following learning problem
 
@@ -400,6 +477,11 @@ We see in order to move and we move in order to see. We are interested in buildi
 
 For more information about our project, please check out our [project website](https://sizhe-li.github.io/publication/neural_jacobian_field/). Feel free to email [sizheli@mit.edu]() or create an issue on our github repo for any questions!
 
+### Related Works
+(to be finished, Lester)
+
+
+
 ### Acknowledgement
 Sizhe Lester Li is presenting on behalf of the team in the 2024 paper "Unifying 3D Representation and Control of Diverse Robots with a Single Camera." We would like to thank Isabella Yu for the visualizations of two finger jacobian fields.
 
@@ -418,11 +500,31 @@ If you find this blog helpful, please consider citing our work
 }
 ```
 
+### Details on System Jacobian
 
+We first derive the conventional system Jacobian<d-cite key="pang2023globalplanningcontactrichmanipulation"></d-cite>. Consider a dynamical system with state $\mathbf{q} \in \mathbb{R}^{m}$, input command $\mathbf{u} \in \mathbb{R}^{n}$, and dynamics $\mathbf{f}: \mathbb{R}^{m} \times \mathbb{R}^{n} \mapsto \mathbb{R}^{m}$. Upon reaching a steady state, the state of the next timestep $\mathbf{q}^{+}$, is given by
 
+$$
+\begin{equation}
+    \mathbf{q}^{+} = \mathbf{f}(\mathbf{q}, \mathbf{u}).
+\end{equation}
+$$
 
+Local linearization of $\mathbf{f}$ around the nominal point $(\bar{\mathbf{q}}, \bar{\mathbf{u}})$ yields 
 
+$$
+\begin{equation}
+    \mathbf{q}^{+} = \mathbf{f}(\bar{\mathbf{q}}, \bar{\mathbf{u}}) + \frac{\partial \mathbf{f}(\mathbf{q}, \mathbf{u})}{\partial \mathbf{u}} \bigg\rvert_{\bar{\mathbf{q}}, \bar{\mathbf{u}}} \delta \mathbf{u}.
+\end{equation}
+$$
 
+Here, $\mathbf{J}(\mathbf{q}, \mathbf{u}) = \frac{\partial \mathbf{f}(\mathbf{q}, \mathbf{u})}{\partial \mathbf{u}}$ is known as the system Jacobian, the matrix that relates a change of command $\mathbf{u}$ to the change of state $\mathbf{q}$.
 
+Conventionally, modeling a robotic system involves experts designing a state vector $\mathbf{q}$ that completely defines the robot state, and then embedding sensors to measure each of these state variables. For example, the piece-wise-rigid morphology of conventional robotic systems means that the set of all joint angles is a full state description, and these are conventionally measured by an angular sensor in each joint. 
 
+However, these design decisions are difficult to apply to soft robots, and more broadly, to mechanical systems whose coordinates cannot be well-defined or sensorized. Here are a few examples
 
+- **Soft and Bio-inspired Robots.** Instead of discrete joints, large parts of the robot might deform. Embedding sensors to measure the continuous state of a deformable system is difficult, both because there is no canonical choice for sensors universally compatible with different robots and because their placement and installation are challenging. 
+- **Designing the state itself is challenging.** In contrast to a piece-wise rigid robot, where the state vector can be a finite-dimensional concatenation of joint angles, the state of a deformable robot is infinite-dimensional due to continuous deformations.  
+- **Contacts, appendages, wear-and-tear can alter the "coordinate system."** Grasping on a screwdriver, the notion of the robotic system extends to the appendage. From an engineering standpoint, it is a bit odd to expect that screwdrivers and scissors arrive with sensors reporting their internal states.
+- **Multi-sensory integration requires spatialization.** Perceptual signals -- visual, tactile, or auditory -- reveal the same reality of the physical world precisely in the spatial sense. Traditional expert-designed coordinate systems, hand-crafted on a per-robot basis, do not directly present a general solution to integrating different sensory measurements.
