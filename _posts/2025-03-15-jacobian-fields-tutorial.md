@@ -62,7 +62,7 @@ Let's take a step back and think about what a robot even is. Slapping a few moto
 
 ### The minimum requirement -- the ability to control
 
-Perhaps a valid definition of a robot includes a crtierion of *controlability*. We need to be able to control the robot to call it one. That's why many people wouldn't call the motorized IKEA lamp a robot. Because today we do not have an algorithm that can control it effectively. Next, we have a second robot -- a pneumatic hand (**left figure**) -- that shares the same property as our IKEA robot. Namely, today this robot is also not controllable. 
+Perhaps a valid definition of a robot includes a crtierion of *controllability*. We need to be able to control the robot to call it one. That's why many people wouldn't call the motorized IKEA lamp a robot. Because today we do not have an algorithm that can control it effectively. Next, we have a second robot -- a pneumatic hand (**left figure**) -- that shares the same property as our IKEA robot. Namely, today this robot is also not controllable. 
 
 The question of control is -- in order for my robot hand to create desired motions what change of command should I send? (**right figure**)
 <div class="row l-body">
