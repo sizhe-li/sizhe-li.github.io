@@ -26,7 +26,7 @@ I am interested in building models that capture the rich and *structured represe
 
 I am a PhD student at [MIT CSAIL](https://csail.mit.edu/), advised by [Vincent Sitzmann](https://www.vincentsitzmann.com/) and [Josh Tenenbaum](http://web.mit.edu/cocosci/josh.html). My research is supported by the [MIT Presidential Fellowship](https://oge.mit.edu/fellowships/presidential-graduate-fellowship-program/).
 
-I am interested in developing models that capture the rich, *structured representations* of the physical world from *unstructured observations*. My research draws ideas from machine learning, physics, and cognitive science, with applications in robotics, computer vision, and computer graphics.
+I build the brains and bodies of robots. My research draws ideas from machine learning, physics, and cognitive AI, with applications in robotics, computer vision, and computer graphics.
 
 **Prospective students & visitors**: Thank you for your interest! I strongly encourage students from [underrepresented groups]() to reach out and will prioritize responding to these messages. For those interested in working with me, please email me your CV and highlight your favorite accomplishments, thanks!
 
