@@ -28,7 +28,7 @@ I am a Computer Science PhD student at [MIT CSAIL](https://csail.mit.edu/), advi
 
 I build the brains and bodies of robots. My research draws ideas from machine learning, physics, and cognitive AI, with applications in robotics, computer vision, and computer graphics.
 
-**Prospective students & visitors**: Thank you for your interest! I strongly encourage students from [underrepresented groups]() to reach out and will prioritize responding to these messages. For those interested in working with me, please email me your CV and highlight your favorite accomplishments, thanks!
+**Prospective students**: Thank you for your interest! I strongly encourage students from [underrepresented groups]() to reach out. I am always happy to answer questions related to your career and the fields of AI and robotics! If you are interested in working with me, please email me your CV and highlight your favorite accomplishments, thanks!
 
 <!-- Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
 
