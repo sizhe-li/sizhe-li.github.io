@@ -470,7 +470,6 @@ Robot commands often result in highly localized spatial motion. Consider the two
 Robot commands often result in spatial motions composed by the influences of individual command channels. The two linkage robot finger we experiment with above is a great example. For a point inside the second segment, its motion is the integral over individual command channels in the Jacobian tensor field. Indeed, our predicted 2D motion is the summation over two Jacobian channels.
 
 <!-- # Connections with Spatial and Physical Intelligence, and Cognitive Science
-
 We see in order to move and we move in order to see. We are interested in building AI systems that learn from self-play and do not require special human-in-the-loop data annotations.  -->
 
 ### Project Website
@@ -480,23 +479,29 @@ For more information about our project, please check out our [project website](h
 ### Related Works
 (to be finished, Lester)
 
-
-
 ### Acknowledgement
-Sizhe Lester Li is presenting on behalf of the team in the 2024 paper "Unifying 3D Representation and Control of Diverse Robots with a Single Camera." We would like to thank Isabella Yu for the visualizations of two finger jacobian fields.
+Sizhe Lester Li is presenting on behalf of the team in the 2025 paper "Controlling diverse robots by inferring Jacobian fields with deep networks." We would like to thank Isabella Yu for the visualizations of two finger jacobian fields.
 
 ### Bibtex
 
 If you find this blog helpful, please consider citing our work
 ```
-@misc{li2024unifying3drepresentationcontrol,
-      title={Unifying 3D Representation and Control of Diverse Robots with a Single Camera}, 
-      author={Sizhe Lester Li and Annan Zhang and Boyuan Chen and Hanna Matusik and Chao Liu and Daniela Rus and Vincent Sitzmann},
-      year={2024},
-      eprint={2407.08722},
-      archivePrefix={arXiv},
-      primaryClass={cs.RO},
-      url={https://arxiv.org/abs/2407.08722}, 
+@Article{Li2025,
+author={Li, Sizhe Lester
+and Zhang, Annan
+and Chen, Boyuan
+and Matusik, Hanna
+and Liu, Chao
+and Rus, Daniela
+and Sitzmann, Vincent},
+title={Controlling diverse robots by inferring Jacobian fields with deep networks},
+journal={Nature},
+year={2025},
+month={Jun},
+day={25},
+issn={1476-4687},
+doi={10.1038/s41586-025-09170-0},
+url={https://doi.org/10.1038/s41586-025-09170-0}  
 }
 ```
 
