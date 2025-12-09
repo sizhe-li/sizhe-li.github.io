@@ -31,15 +31,15 @@ Have you ever wondered why robots today are so costly? Why are they almost alway
 
 <div class="row l-body">
 	<div class="col-sm">
-	  <img class="img-fluid rounded z-depth-1" src="{{ site.baseurl }}/assets/img/njf/allegro_cost.png">
+	  <img class="img-fluid rounded z-depth-1" src="/assets/img/njf/allegro_cost.png">
    <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;"> Allegro Hand  </figcaption>
 	</div>
 	<div class="col-sm">
-	  <img class="img-fluid rounded z-depth-1" src="{{ site.baseurl }}/assets/img/njf/ur5_cost.png">
+	  <img class="img-fluid rounded z-depth-1" src="/assets/img/njf/ur5_cost.png">
    <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;"> UR5 Arm </figcaption>
 	</div>
 	<div class="col-sm">
-  <img class="img-fluid rounded z-depth-1" src="{{ site.baseurl }}/assets/img/njf/shadow_hand_cost.png">
+  <img class="img-fluid rounded z-depth-1" src="/assets/img/njf/shadow_hand_cost.png">
    <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px"> Shadow Hand </figcaption>
   </div>
 </div>
@@ -51,7 +51,7 @@ Let's take a step back and think about what a robot even is. Slapping a few moto
 <div class="row l-body">
   <div class="col-sm text-center">
     <img class="img-fluid rounded z-depth-1" 
-         src="{{ site.baseurl }}/assets/img/njf/ikea_robot.png" 
+         src="/assets/img/njf/ikea_robot.png" 
          style="width: 50%; display: block; margin: 0 auto;">
     <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
       <strong><a href="https://community.robotshop.com/forum/t/tertiarm-low-cost-3d-printed-robot-arm-based-on-ikea-lamp/7517">Tertiarm</a></strong>: Low cost, 3D printed, made of IKEA Lamp 
@@ -67,11 +67,11 @@ Perhaps a valid definition of a robot includes a crtierion of *controllability*.
 The question of control is -- in order for my robot hand to create desired motions what change of command should I send? (**right figure**)
 <div class="row l-body">
 	<div class="col-sm">
-	  <img class="img-fluid rounded z-depth-1" src="{{ site.baseurl }}/assets/img/njf/control_1.png">
+	  <img class="img-fluid rounded z-depth-1" src="/assets/img/njf/control_1.png">
    <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;"> $300 pneuamtic hand at work </figcaption>
 	</div>
 	<div class="col-sm">
-  <img class="img-fluid rounded z-depth-1" src="{{ site.baseurl }}/assets/img/njf/control_2.png">
+  <img class="img-fluid rounded z-depth-1" src="/assets/img/njf/control_2.png">
    <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px"> <strong>Desired motions</strong>: arrows; <strong>Commands</strong>: blue air tubes </figcaption>
   </div>
 </div>
@@ -89,7 +89,7 @@ Consider a robot hand (**left figure**). The question of control is -- in order 
 <div class="row l-body">
   <div class="col-sm text-center">
     <img class="img-fluid rounded z-depth-1" 
-         src="{{ site.baseurl }}/assets/img/njf/rigid_motivation.png"
+         src="/assets/img/njf/rigid_motivation.png"
          style="width: 85%; display: block; margin: 0 auto;">
     <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
       Conventional robots might have limited our algorithmic thinking
@@ -118,7 +118,7 @@ Achieving this vision carries values to our society. Imprecise, flexible, and un
 <div class="row l-body">
   <div class="col-sm text-center">
     <img class="img-fluid rounded z-depth-1" 
-         src="{{ site.baseurl }}/assets/img/njf/new_robot_motivation.png"
+         src="/assets/img/njf/new_robot_motivation.png"
          style="width: 85%; display: block; margin: 0 auto;">
     <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
       Next-gen robots require a new algorithmic approach.
@@ -134,7 +134,7 @@ Jacobian Fields is an approach that aims to address problems we posed above. The
 <div class="row">
   <div class="col-sm">
     <video class="img-fluid z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/img/publication_preview/jacobian_fields_teaser.mp4" type="video/mp4">
+      <source src="/assets/img/publication_preview/jacobian_fields_teaser.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
      <strong> Teaser Video </strong> 
@@ -160,7 +160,7 @@ For more formalism and details, please check out [our appendix](#details-on-syst
 <div class="row">
   <div class="col-sm">
     <video class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/two_finger/only_joint_1_moving.mp4" type="video/mp4">
+      <source src="/assets/video/njf/two_finger/only_joint_1_moving.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       Only joint 1 moving
@@ -169,7 +169,7 @@ For more formalism and details, please check out [our appendix](#details-on-syst
 
   <div class="col-sm">
     <video controls class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/two_finger/only_joint_2_moving.mp4" type="video/mp4">
+      <source src="/assets/video/njf/two_finger/only_joint_2_moving.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       Only joint 2 moving
@@ -206,7 +206,7 @@ We now use a simple 2D example to illustrate the idea of Jacobian Fields. Please
 <div class="row">
   <div class="col-sm">
     <video class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/tutorial1/move_down_rgb.mp4" type="video/mp4">
+      <source src="/assets/video/njf/tutorial1/move_down_rgb.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       Sample 1 RGB observation
@@ -215,7 +215,7 @@ We now use a simple 2D example to illustrate the idea of Jacobian Fields. Please
 
   <div class="col-sm">
     <video controls class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/tutorial1/move_down_optical_flow.mp4" type="video/mp4">
+      <source src="/assets/video/njf/tutorial1/move_down_optical_flow.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       Sample 1 optical flow
@@ -225,7 +225,7 @@ We now use a simple 2D example to illustrate the idea of Jacobian Fields. Please
 
   <div class="col-sm">
     <video controls class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/tutorial1/move_right_rgb.mp4" type="video/mp4">
+      <source src="/assets/video/njf/tutorial1/move_right_rgb.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       Sample 2 RGB observation
@@ -234,7 +234,7 @@ We now use a simple 2D example to illustrate the idea of Jacobian Fields. Please
 
   <div class="col-sm">
     <video controls class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/tutorial1/move_right_optical_flow.mp4" type="video/mp4">
+      <source src="/assets/video/njf/tutorial1/move_right_optical_flow.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       Sample 2 optical flow
@@ -268,7 +268,7 @@ How are we visualizing the Jacobians? We simply assign color component to each c
 <div class="row">
   <div class="col-sm">
     <video class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/tutorial1/rgb_1.mp4" type="video/mp4">
+      <source src="/assets/video/njf/tutorial1/rgb_1.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       RGB observation
@@ -277,7 +277,7 @@ How are we visualizing the Jacobians? We simply assign color component to each c
 
   <div class="col-sm">
     <video controls class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/tutorial1/gt_optical_flow_1.mp4" type="video/mp4">
+      <source src="/assets/video/njf/tutorial1/gt_optical_flow_1.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       G.T. optical flow
@@ -287,7 +287,7 @@ How are we visualizing the Jacobians? We simply assign color component to each c
 
   <div class="col-sm">
     <video controls class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/tutorial1/pred_optical_flow_1.mp4" type="video/mp4">
+      <source src="/assets/video/njf/tutorial1/pred_optical_flow_1.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       Pred. optical flow
@@ -296,7 +296,7 @@ How are we visualizing the Jacobians? We simply assign color component to each c
 
   <div class="col-sm">
     <video controls class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/tutorial1/pred_jacobian_q0_1.mp4" type="video/mp4">
+      <source src="/assets/video/njf/tutorial1/pred_jacobian_q0_1.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       Jac. channel 1 (dx)
@@ -305,7 +305,7 @@ How are we visualizing the Jacobians? We simply assign color component to each c
 
   <div class="col-sm">
     <video controls class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/tutorial1/pred_jacobian_q1_1.mp4" type="video/mp4">
+      <source src="/assets/video/njf/tutorial1/pred_jacobian_q1_1.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       Jac. channel 2 (dy)
@@ -323,7 +323,7 @@ Let's train our Jacobian Fields in another environment, but this time more compo
 <div class="row">
   <div class="col-sm">
     <video class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/tutorial2/rgb_1.mp4" type="video/mp4">
+      <source src="/assets/video/njf/tutorial2/rgb_1.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       RGB observation
@@ -332,7 +332,7 @@ Let's train our Jacobian Fields in another environment, but this time more compo
 
   <div class="col-sm">
     <video controls class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/tutorial2/gt_optical_flow_1.mp4" type="video/mp4">
+      <source src="/assets/video/njf/tutorial2/gt_optical_flow_1.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       G.T. optical flow
@@ -342,7 +342,7 @@ Let's train our Jacobian Fields in another environment, but this time more compo
 
   <div class="col-sm">
     <video controls class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/tutorial2/pred_optical_flow_1.mp4" type="video/mp4">
+      <source src="/assets/video/njf/tutorial2/pred_optical_flow_1.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       Pred. optical flow
@@ -351,7 +351,7 @@ Let's train our Jacobian Fields in another environment, but this time more compo
 
   <div class="col-sm">
     <video controls class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/tutorial2/pred_jacobian_q0_1.mp4" type="video/mp4">
+      <source src="/assets/video/njf/tutorial2/pred_jacobian_q0_1.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       Jac. channel 1 
@@ -360,7 +360,7 @@ Let's train our Jacobian Fields in another environment, but this time more compo
 
   <div class="col-sm">
     <video controls class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/tutorial2/pred_jacobian_q1_1.mp4" type="video/mp4">
+      <source src="/assets/video/njf/tutorial2/pred_jacobian_q1_1.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       Jac. channel 2 
@@ -392,7 +392,7 @@ Here are a few examples, please check out the pytorch implementation of [tutoria
 <div class="row">
   <div class="col-sm">
     <video class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/njf_allegro.mp4" type="video/mp4">
+      <source src="/assets/video/njf/njf_allegro.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
      <strong> Results on Allegro Hand.</strong> (Left) Input video, (Middle) Depth Prediction, (Right) Jacobian Prediction
@@ -404,7 +404,7 @@ Here are a few examples, please check out the pytorch implementation of [tutoria
 <div class="row">
   <div class="col-sm">
     <video class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/njf_pneumatic.mp4" type="video/mp4">
+      <source src="/assets/video/njf/njf_pneumatic.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
      <strong>Results on Pneumatic Hand.</strong> (Left) Input Image, (Middle) Depth Prediction, (Right) Jacobian Prediction
@@ -420,7 +420,7 @@ For now, let's illustrate the idea by just using a keypoint trajectory and a mod
 <div class="row">
 
   <div class="col-sm">
-    <img src="{{ site.baseurl }}/assets/video/njf/inverse_dynamics/desired_motion.png" 
+    <img src="/assets/video/njf/inverse_dynamics/desired_motion.png" 
          class="img-fluid rounded z-depth-1" 
          alt="Results on Pneumatic Hand">
     <figcaption style="text-align: center; margin-top: 10px;">
@@ -430,7 +430,7 @@ For now, let's illustrate the idea by just using a keypoint trajectory and a mod
 
   <div class="col-sm">
     <video class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="{{ site.baseurl }}/assets/video/njf/inverse_dynamics/optim_process.mp4" type="video/mp4">
+      <source src="/assets/video/njf/inverse_dynamics/optim_process.mp4" type="video/mp4">
     </video>
     <figcaption style="text-align: center; margin-top: 10px;">
       Optimization
@@ -438,7 +438,7 @@ For now, let's illustrate the idea by just using a keypoint trajectory and a mod
   </div>
 
   <div class="col-sm">
-    <img src="{{ site.baseurl }}/assets/video/njf/inverse_dynamics/output_command.png" 
+    <img src="/assets/video/njf/inverse_dynamics/output_command.png" 
       style="height: 162px; object-fit: cover;" 
          class="img-fluid rounded z-depth-1" 
          alt="Results on Pneumatic Hand">
