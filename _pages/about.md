@@ -34,7 +34,9 @@ More brodaly, I take a physics-based perspective to the study of intelligent sys
 
 I am a PhD student in Computer Science at [MIT CSAIL](https://csail.mit.edu/), advised by [Vincent Sitzmann](https://www.vincentsitzmann.com/) and [Josh Tenenbaum](http://web.mit.edu/cocosci/josh.html). My research is supported by the [MIT Presidential Fellowship](https://oge.mit.edu/fellowships/presidential-graduate-fellowship-program/). 
 
-**Research Objectives.** I build the brains and bodies of robots. My work draws on ideas from machine learning, physics, and cognitive AI, with applications in robotics, computer vision, and computer graphics. More broadly, I take a physics-based perspective on the study of intelligent systems for inference and learning. This does not always mean injecting physical inductive biases, but rather building intelligent systems like a physicist—seeking to understand the underlying mechanisms behind generalizations and behaviors.
+**Research Objectives.** I build the brains and bodies of robots. My work draws on ideas from machine learning, physics, and cognitive AI, with applications in robotics, computer vision, and computer graphics.
+
+More broadly, I take a physics-based perspective on the study of intelligent systems for inference and learning. This does not always mean injecting physical inductive biases, but rather building intelligent systems like a physicist—seeking to understand the underlying mechanisms behind generalizations and behaviors.
 
 **Prospective students.** Thank you for your interest! I strongly encourage students from [underrepresented groups]() to reach out. I’m always happy to answer questions about careers in AI and robotics. If you’re interested in working with me, please email me your CV and highlight **one of your favorite accomplishments**.
 
