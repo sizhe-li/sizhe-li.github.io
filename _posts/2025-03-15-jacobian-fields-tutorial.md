@@ -459,7 +459,7 @@ We model *differential* kinematics by linearizing the system dynamics, which rep
 
 This is powerful, as completely specifying the system dynamics for a particular configuration $u'$ requires only $n \times 3$ linearly independent observations of pairs of control commands and induced scene flow, as this fully constrains the space Jacobian for a given configuration for a system with $n$ control channels. 
 
-For instance, one need not observe the motions for *both* $-\delta u$ and $\delta u$; it suffices to observe *one* of them. Similarly, one need not observe $\delta u$ and a scalar multiple $\alpha \delta u$; again, one of them in the training set suffices. This is in stark contrast to parameterizing $f$ as a neural network that directly predicts scene flow given an image and a robot command since the neural network *does not* model these symmetries and will thus require orders of magnitude more motion observations to adequately model the system dynamics.
+For instance, one need not observe the motions for *both* $-\delta u$ and $\alpha \delta u$; it suffices to observe *one* of them. Similarly, one need not observe $\delta u$ and a scalar multiple $\alpha \delta u$; again, one of them in the training set suffices. This is in stark contrast to parameterizing $f$ as a neural network that directly predicts scene flow given an image and a robot command since the neural network *does not* model these symmetries and will thus require orders of magnitude more motion observations to adequately model the system dynamics.
 
 
 ### 2. Spatial Locality of Mechanical Systems
