@@ -8,14 +8,15 @@ authors:
   - name: Sizhe Lester Li
     affiliations:
       name: MIT CSAIL
-  - name: Vincent Sitzmann
-    affiliations:
-      name: MIT CSAIL
 bibliography: blogs.bib
 comments: true
 
 
 ---
+
+<p style="margin-top: -0.5rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--global-text-color-light);">
+  Advised by <a href="https://www.vincentsitzmann.com/">Vincent Sitzmann</a>, MIT CSAIL
+</p>
 
 {% quote %}
 Was Du ererbt von Deinen Vätern hast, erwirb es, um es zu besitzen. (Goethe)
@@ -62,13 +63,13 @@ Let's take a step back and think about what a robot even is. Slapping a few moto
 
 ### The minimum requirement -- the ability to control
 
-Perhaps a valid definition of a robot includes a crtierion of *controllability*. We need to be able to control the robot to call it one. That's why many people wouldn't call the motorized IKEA lamp a robot. Because today we do not have an algorithm that can control it effectively. Next, we have a second robot -- a pneumatic hand (**left figure**) -- that shares the same property as our IKEA robot. Namely, today this robot is also not controllable. 
+Perhaps a valid definition of a robot includes a criterion of *controllability*. We need to be able to control the robot to call it one. That's why many people wouldn't call the motorized IKEA lamp a robot -- today we do not have an algorithm that can control it effectively. Next, we have a second robot -- a pneumatic hand (**left figure**) -- that shares the same property as our IKEA robot. Namely, today this robot is also not controllable. 
 
-The question of control is -- in order for my robot hand to create desired motions what change of command should I send? (**right figure**)
+The central question of control is: given a desired motion for my robot hand, what change of command should I send? (**right figure**)
 <div class="row l-body">
 	<div class="col-sm">
 	  <img class="img-fluid rounded z-depth-1" src="/assets/img/njf/control_1.png">
-   <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;"> $300 pneuamtic hand at work </figcaption>
+   <figcaption style="text-align: center; margin-top: 10px; margin-bottom: 10px;"> $300 pneumatic hand at work </figcaption>
 	</div>
 	<div class="col-sm">
   <img class="img-fluid rounded z-depth-1" src="/assets/img/njf/control_2.png">
@@ -100,7 +101,7 @@ Consider a robot hand (**left figure**). The question of control is -- in order 
 
 ### Why is the past solution no longer adequate
 
-The way we have approached this problem in the past has reached a ceiling. It turns out the past solutions cannot model the robot above. Since these robots lack sensory measurements and experience deformations. 
+The way we have approached this problem in the past has reached a ceiling. It turns out that past solutions cannot model the robots above, since these robots lack sensory measurements and experience deformations.
 
 This is a part of why robotic automation today remains costly. We have cheaper hardware designs that can still perform the same physical tasks, but the conventional software does not support these hardwares. As a result, our robots are often over-engineered to compensate the software limitations.
 
@@ -180,7 +181,7 @@ For more formalism and details, please check out [our appendix](#details-on-syst
 
 ### Spatialization of Jacobian
 
-We can spatialize our Jacobian. This lifts our representation from reduced or minimal coordinates to the Eulidean space and draws deep connections with recent advances in computational perception. 
+We can spatialize our Jacobian. This lifts our representation from reduced or minimal coordinates to the Euclidean space and draws deep connections with recent advances in computational perception. 
 
 To formally describe this idea using continuum mechanics<d-cite key="bonet1997nonlinear"></d-cite>, we consider the the deformation map $\phi(\cdot \| \mathbf{q}, \mathbf{u}): \Omega^{0} \mapsto \Omega^{1}$, where $\Omega^{t} \subset \mathbb{R}^{d}$. $d$ = 2 or 3 depending on our modeling domain. $\mathbf{x} = \phi(\mathbf{X} \| \mathbf{q}, \mathbf{u})$ is a flow map that transports the coordinate $\mathbf{X}\in \mathbb{R}^{d}$ in the initial configuration to the configuration achieved at $\mathbf{q}$ and $\mathbf{u}$.
 
@@ -201,7 +202,7 @@ We now use a simple 2D example to illustrate the idea of Jacobian Fields. Please
 
 **2D Pusher Environment.** The environment contains a spherical robotic pusher. The robot can move freely in 2D space and is steered by a 2D velocity command $\delta u \triangleq (x, y)$, where $x, y \in \mathbb{R}$.
 
-**Training Samples Illustration.** We now illustrate the two training samples in our dataset, moving left and right. The following same-row videos might become async due to html artifact.
+**Training Samples Illustration.** We now illustrate the two training samples in our dataset, moving down and to the right. The following same-row videos might become async due to HTML rendering.
 
 <div class="row">
   <div class="col-sm">
@@ -242,7 +243,7 @@ We now use a simple 2D example to illustrate the idea of Jacobian Fields. Please
   </div>
 </div>
 
-How can we learn Jacobian Fields from visual perception to "explain away" our observed optical flow motions? We first find that our solid domain here, $\Omega^{t}$, equates the pixel space $\mathbb^{H\times W}$ that we perceive. This is not always the case, as the 3D world induces a projection process to imaging devices and contains occluding and refracting surfaces.
+How can we learn Jacobian Fields from visual perception to "explain away" our observed optical flow motions? We first find that our solid domain here, $\Omega^{t}$, equates the pixel space $\mathbb{R}^{H\times W}$ that we perceive. This is not always the case, as the 3D world induces a projection process to imaging devices and contains occluding and refracting surfaces.
 
 We use a standard fully convolutional network (UNet<d-cite key="ronneberger2015unetconvolutionalnetworksbiomedical"></d-cite>) to parameterize the inference of Jacobian field from image observations. $J_\theta(\cdot \| I(\mathbf{q})) \triangleq \frac{\partial \mathbf{\phi}(\cdot \| \mathbf{q})}{\partial \mathbf{u}}$ conditions on an image, and outputs a field of linear operators. 
 
@@ -256,7 +257,7 @@ $$
     - V \big(x \mid I, I^+ \big) \right\rVert,
 \end{equation}
 $$
-where $V$ is the optical flow field computed by a state-of-the-art approach (e.g.,RAFT<d-cite key="teed2020raftrecurrentallpairsfield"></d-cite>).
+where $V$ is the optical flow field computed by a state-of-the-art approach (e.g., RAFT<d-cite key="teed2020raftrecurrentallpairsfield"></d-cite>).
 
 
 ### Visualizing the learned Jacobian Fields
@@ -314,7 +315,7 @@ How are we visualizing the Jacobians? We simply assign color component to each c
 </div>
 
 
-### A second example in 2D.
+### A second example in 2D
 
 Let's train our Jacobian Fields in another environment, but this time more compositional and dexterous! Please check out the pytorch implementation of [tutorial 2](https://github.com/sizhe-li/neural-jacobian-field/blob/main/notebooks/tutorial/2_training_finger_jacobian_in_2D.ipynb) to reproduce our results in this section.
 
@@ -368,7 +369,7 @@ Let's train our Jacobian Fields in another environment, but this time more compo
   </div>
 </div>
 
-Fantastic! The same idea can spatially disentangle the different components of motions.
+The same idea successfully disentangles the different spatial components of motion.
 
 ### Unified representation with environment variables
 
@@ -384,8 +385,8 @@ The idea of Jacobian Fields extends to capture dynamics with environment variabl
     </figcaption>
 </figure>
 
-### Real-world Examples.
-Amazingly, the same exact idea extends to the real-world and to 3D. By incorporating the image formation model and neural rendering, we can use optical flows observed with 2D cameras to explain away the underlying flow field in the 3D world. 
+### Real-world examples
+Remarkably, the same idea extends to the real world and to 3D. By incorporating the image formation model and neural rendering, we can use optical flows observed with 2D cameras to explain away the underlying flow field in the 3D world. 
 
 Here are a few examples, please check out the pytorch implementation of [tutorial 3](https://github.com/sizhe-li/neural-jacobian-field/blob/main/notebooks/real_world/1_visualize_jacobian_fields.ipynb) and [tutorial 4](https://github.com/sizhe-li/neural-jacobian-field/blob/main/notebooks/real_world/2_inverse_dynamics.ipynb) to reproduce our results in this section.
 
@@ -412,8 +413,8 @@ Here are a few examples, please check out the pytorch implementation of [tutoria
   </div>
 </div>
 
-### Controlling the robot with Jacobian Fields.
-After training, Jacobian fields can be used for inverse dynamics. We have new upcoming results showing that a flow planner can be flexibly integrated into the approach, stay tuned!
+### Controlling the robot with Jacobian Fields
+After training, Jacobian Fields can be used for inverse dynamics. We have new upcoming results showing that a flow planner can be flexibly integrated into the approach, stay tuned!
 
 For now, let's illustrate the idea by just using a keypoint trajectory and a model-predictive controller.
 
@@ -463,7 +464,7 @@ For instance, one need not observe the motions for *both* $-\delta u$ and $\alph
 
 
 ### 2. Spatial Locality of Mechanical Systems
-Robot commands often result in highly localized spatial motion. Consider the two finger example we experiment with above, within a "rigid" segment, the jacobian tensors are locally smooth as we spatially perturbe the coordinate value.
+Robot commands often result in highly localized spatial motion. Consider the two finger example we experiment with above, within a "rigid" segment, the Jacobian tensors are locally smooth as we spatially perturb the coordinate value.
 
 ### 3. Spatial Compositionality of Mechanical Systems
 
@@ -474,13 +475,13 @@ We see in order to move and we move in order to see. We are interested in buildi
 
 ### Project Website
 
-For more information about our project, please check out our [project website](https://sizhe-li.github.io/publication/neural_jacobian_field/). Feel free to email [sizheli@mit.edu]() or create an issue on our github repo for any questions!
+For more information about our project, please check out our [project website](https://sizhe-li.github.io/publication/neural_jacobian_field/). Feel free to email [sizheli@mit.edu]() or create an issue on our GitHub repo for any questions!
 
 ### Related Works
-(to be finished, Lester)
+For a comprehensive discussion of related works, please refer to Section 6 of our [Nature paper](https://doi.org/10.1038/s41586-025-09170-0).
 
 ### Acknowledgement
-Sizhe Lester Li is presenting on behalf of the team in the 2025 paper "Controlling diverse robots by inferring Jacobian fields with deep networks." We would like to thank Isabella Yu for the visualizations of two finger jacobian fields.
+Sizhe Lester Li is presenting on behalf of the team in the 2025 paper "Controlling diverse robots by inferring Jacobian fields with deep networks." We would like to thank Isabella Yu for the visualizations of two-finger Jacobian Fields.
 
 ### Bibtex
 

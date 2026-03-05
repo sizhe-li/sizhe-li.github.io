@@ -37,6 +37,10 @@
               {% else %}
                 <a class="news-title" href="{{ item.redirect | relative_url }}">{{ item.title }}</a>
               {% endif %}
+              {% if item.description %}
+                <br>
+                <span style="color: var(--global-text-color-light); font-size: 0.9rem;">{{ item.description }}</span>
+              {% endif %}
             </td>
           </tr>
         {% endfor %}

@@ -52,8 +52,20 @@ table.table a {
 .table-dark {
   background-color: transparent;
 
+  td,
+  th {
+    color: var(--global-text-color);
+  }
+
   &.table-bordered {
     border: 1px solid var(--global-divider-color) !important;
+  }
+}
+
+.news {
+  table td,
+  table th {
+    color: var(--global-text-color);
   }
 }
 
