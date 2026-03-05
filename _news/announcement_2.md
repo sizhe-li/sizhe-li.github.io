@@ -5,6 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Very excited to share my [blog post](https://sizhe-li.github.io/blog/2025/jacobian-fields-tutorial/) on robot modeling and representation! A tutorial of Jacobian Fields with [code](https://github.com/sizhe-li/neural-jacobian-field/tree/main). 
-
-
+Very excited to share my [blog post](https://sizhe-li.github.io/blog/2025/jacobian-fields-tutorial/) on robot modeling and representation! A tutorial of Jacobian Fields with [code](https://github.com/sizhe-li/neural-jacobian-field/tree/main).

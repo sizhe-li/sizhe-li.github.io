@@ -16,6 +16,7 @@
       {{ page._styles }}
     </style>
     {%- endif %}
+
   </head>
 
   <d-front-matter>
@@ -102,7 +103,7 @@
     {%- include footer.html %}
 
     <d-bibliography src="{{ page.bibliography | prepend: '/assets/_bibliography/' | relative_url }}"></d-bibliography>
-    
+
     {% if site.disqus_shortname and page.comments %}
     <d-article>
       <div id="disqus_thread"></div>
@@ -118,9 +119,11 @@
       })();
     </script>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  {% endif %}
+
+{% endif %}
 
     {% include scripts/bootstrap.html %}
     {% include scripts/analytics.html %}
+
   </body>
 </html>

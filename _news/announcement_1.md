@@ -6,4 +6,3 @@ related_posts: false
 ---
 
 Check out our new [preprint](https://arxiv.org/abs/2407.08722) on learning representation of robotic embodiment!
-
