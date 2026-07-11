@@ -2,7 +2,8 @@
 layout: page
 title: projects
 permalink: /projects/
-description: A growing collection of your cool projects.
+description: Project page placeholder hidden until content is ready.
+published: false
 nav: false
 nav_order: 3
 display_categories: [work, fun]

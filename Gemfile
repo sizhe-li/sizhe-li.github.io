@@ -23,6 +23,7 @@ group :jekyll_plugins do
     gem 'webrick'
     gem 'logger'
     gem 'observer'
+    gem 'ostruct'
 end
 group :other_plugins do
     gem 'css_parser', '~> 1.0'

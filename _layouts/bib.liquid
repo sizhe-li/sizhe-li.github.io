@@ -25,7 +25,35 @@
           <abbr class="badge rounded w-100">{{ entry.abbr }}</abbr>
         {% endif %}
       {% endif %}
-      {% if entry.preview %}
+      {% if entry.video_preview %}
+        {% if entry.video_preview contains '://' %}
+          {% assign video_preview_path = entry.video_preview %}
+        {% else %}
+          {% assign video_preview_path = entry.video_preview | prepend: '/assets/video/publication_preview/' | relative_url %}
+        {% endif %}
+        {% assign video_poster_path = '' %}
+        {% if entry.video_poster %}
+          {% if entry.video_poster contains '://' %}
+            {% assign video_poster_path = entry.video_poster %}
+          {% else %}
+            {% assign video_poster_path = entry.video_poster | prepend: '/assets/img/publication_preview/' | relative_url %}
+          {% endif %}
+        {% endif %}
+        <video
+          class="preview publication-preview-video z-depth-1 rounded"
+          autoplay
+          loop
+          muted
+          playsinline
+          preload="metadata"
+          {% if video_poster_path != '' %}
+            poster="{{ video_poster_path }}"
+          {% endif %}
+          aria-label="{{ entry.title | strip_html | escape }} teaser"
+        >
+          <source src="{{ video_preview_path }}" type="video/mp4">
+        </video>
+      {% elsif entry.preview %}
         {% if entry.preview contains '://' %}
           <img class="preview z-depth-1 rounded" src="{{ entry.preview }}">
         {% else %}

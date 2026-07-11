@@ -3,21 +3,20 @@
 # -----------------------------------------------------------------------------
 
 title: blank # the website title (if blank, full name will be used instead)
-first_name:
+first_name: Sizhe Lester
 middle_name:
-last_name: Lester Li 李思哲
+last_name: Li 李思哲
 email: sizheli@mit.edu
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+  Sizhe Lester Li is a PhD student at MIT CSAIL working on machine learning, physics-inspired AI, and robotics.
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
-  Photos from <a href="https://unsplash.com" target="_blank">Unsplash</a>.
-keywords: jekyll, jekyll-theme, academic-website, portfolio-website # add your own keywords or leave empty
+keywords: robotics, machine learning, physics-inspired AI, computer vision, computer graphics, MIT CSAIL
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: ⚛️ # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
-url: sizhe-li.github.io # the base hostname & protocol for your site
+url: https://sizhe-li.github.io # the base hostname & protocol for your site
 baseurl: "" # the subpath of your site, e.g. /blog/. Leave blank for root
 
 last_updated: false # set to true if you want to display last updated in the footer
@@ -241,6 +240,7 @@ exclude:
   - Gemfile.lock
   - INSTALL.md
   - LICENSE
+  - assets/jupyter/
   - lighthouse_results/
   - package.json
   - package-lock.json
@@ -314,8 +314,8 @@ display_categories: ["external-services"] # these categories will be displayed o
 # -----------------------------------------------------------------------------
 
 scholar:
-  last_name: [Einstein]
-  first_name: [Albert, A.]
+  last_name: [Li]
+  first_name: [Sizhe Lester, Sizhe, Lester, S.]
 
   style: apa
   locale: en

@@ -25,7 +25,7 @@ I am a PhD student in Computer Science at [MIT CSAIL](https://csail.mit.edu/), a
 
 I study intelligent systems in a physics-inspired way, by which I don't mean injecting inductive biases, but rather building systems like a physicist seeking to understand the underlying mechanisms behind generalizations and behaviors.
 
-**Prospective students.** Thank you for your interest! I strongly encourage students from [underrepresented groups]() to reach out. If you’re interested in working with me, please email me your CV and highlight **one of your favorite accomplishments**.
+**Prospective students.** Thank you for your interest! I strongly encourage students from underrepresented groups to reach out. If you’re interested in working with me, please email me your CV and highlight **one of your favorite accomplishments**.
 
 <!-- Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
 
