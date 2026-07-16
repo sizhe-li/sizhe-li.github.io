@@ -3,12 +3,12 @@
 # -----------------------------------------------------------------------------
 
 title: blank # the website title (if blank, full name will be used instead)
-first_name: Sizhe Lester
+first_name: S. Lester
 middle_name:
 last_name: Li 李思哲
 email: sizheli@mit.edu
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Sizhe Lester Li is a PhD student at MIT CSAIL working on machine learning, physics-inspired AI, and robotics.
+  S. Lester Li 李思哲 is a PhD student at MIT CSAIL working on machine learning, physics-inspired AI, and robotics.
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
@@ -315,7 +315,7 @@ display_categories: ["external-services"] # these categories will be displayed o
 
 scholar:
   last_name: [Li]
-  first_name: [Sizhe Lester, Sizhe, Lester, S.]
+  first_name: [Sizhe Lester, S. Lester, Sizhe, Lester, S.]
 
   style: apa
   locale: en
