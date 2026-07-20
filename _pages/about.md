@@ -19,7 +19,39 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-I am a PhD student in Computer Science at [MIT CSAIL](https://csail.mit.edu/), advised by [Vincent Sitzmann](https://www.vincentsitzmann.com/) and [Josh Tenenbaum](http://web.mit.edu/cocosci/josh.html). My research is supported by the [MIT Presidential Fellowship](https://oge.mit.edu/fellowships/presidential-graduate-fellowship-program/).
+<p>
+  I am a PhD student in Computer Science at <a href="https://csail.mit.edu/" rel="external nofollow noopener" target="_blank">MIT CSAIL</a>, advised by
+  <span id="advisor-order">
+    <a href="https://www.vincentsitzmann.com/" rel="external nofollow noopener" target="_blank">Vincent Sitzmann</a> and
+    <a href="http://web.mit.edu/cocosci/josh.html" rel="external nofollow noopener" target="_blank">Josh Tenenbaum</a>
+  </span>. My research is supported by the
+  <a href="https://oge.mit.edu/fellowships/presidential-graduate-fellowship-program/" rel="external nofollow noopener" target="_blank">MIT Presidential Fellowship</a>.
+</p>
+
+<script>
+  (function () {
+    var advisorOrder = document.getElementById("advisor-order");
+    if (!advisorOrder) return;
+
+    var advisors = [
+      { name: "Vincent Sitzmann", url: "https://www.vincentsitzmann.com/" },
+      { name: "Josh Tenenbaum", url: "http://web.mit.edu/cocosci/josh.html" },
+    ];
+    if (Math.random() < 0.5) advisors.reverse();
+
+    advisorOrder.textContent = "";
+    advisors.forEach(function (advisor, index) {
+      if (index > 0) advisorOrder.appendChild(document.createTextNode(" and "));
+
+      var link = document.createElement("a");
+      link.href = advisor.url;
+      link.textContent = advisor.name;
+      link.rel = "external nofollow noopener";
+      link.target = "_blank";
+      advisorOrder.appendChild(link);
+    });
+  })();
+</script>
 
 **Research Objectives.** I build the brains and bodies of robots. My work draws on ideas from machine learning, physics, and cognitive AI, with applications in robotics, computer vision, and computer graphics.
 
