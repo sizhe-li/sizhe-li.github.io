@@ -32,7 +32,7 @@ related_posts: false
     </p>
 
     <p>
-      Robot learning is undergoing a similar transformation. New paradigms centered on large-scale robot data and generative models are developing rapidly. Recent systems such as <a href="https://arxiv.org/abs/2602.15922">DreamZero</a> and <a href="https://www.pi.website/blog/pi05">π₀.₅</a>, along with our recent work <a href="https://vera.csail.mit.edu/">VERA</a>—which post-trains video models on robot videos—are beginning to demonstrate generalization across environments, tasks, and even robotic platforms.
+      Robot learning is undergoing a similar transformation. New paradigms centered on large-scale robot data and generative models are developing rapidly. Recent systems such as Rhoda AI's <a href="https://www.rhoda.ai/research/direct-video-action">Direct Video-Action Model (DVA)</a>, <a href="https://arxiv.org/abs/2602.15922">DreamZero</a>, and <a href="https://www.pi.website/blog/pi05">π₀.₅</a>, along with our recent work <a href="https://vera.csail.mit.edu/">VERA</a>—which post-trains video models on robot videos—are beginning to demonstrate generalization across environments, tasks, and even robotic platforms.
     </p>
 
     <p>
@@ -63,7 +63,7 @@ related_posts: false
     </p>
 
     <p>
-      类似的转变也正在机器人学习领域发生。以大规模机器人数据和生成模型为核心的新范式正在快速发展。近期的 <a href="https://arxiv.org/abs/2602.15922">DreamZero</a>、<a href="https://www.pi.website/blog/pi05">π₀.₅</a>，以及我们最近的工作 <a href="https://vera.csail.mit.edu/">VERA</a>——通过在机器人视频上对视频模型进行 post-training——都开始展现出跨场景、跨任务，甚至跨机器人平台的泛化能力。
+      类似的转变也正在机器人学习领域发生。以大规模机器人数据和生成模型为核心的新范式正在快速发展。近期 Rhoda AI 的 <a href="https://www.rhoda.ai/research/direct-video-action">Direct Video-Action Model (DVA)</a>、<a href="https://arxiv.org/abs/2602.15922">DreamZero</a>、<a href="https://www.pi.website/blog/pi05">π₀.₅</a>，以及我们最近的工作 <a href="https://vera.csail.mit.edu/">VERA</a>——通过在机器人视频上对视频模型进行 post-training——都开始展现出跨场景、跨任务，甚至跨机器人平台的泛化能力。
     </p>
 
     <p>最近的工业界经历，让我看到了视频模型经过规模化训练后，作为机器人学习 backbone 所展现出的潜力。</p>
