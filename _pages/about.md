@@ -57,8 +57,6 @@ social: true # includes social icons at the bottom of the page
 
 <div class="research-statement">
   <p><strong>Research Objectives.</strong> I build the brains and bodies of robots. My work draws on ideas from machine learning, physics, and cognitive AI, with applications in robotics, computer vision, and computer graphics.</p>
-
-  <p>I study intelligent systems in a physics-inspired way, by which I don't mean injecting inductive biases, but rather building systems like a physicist seeking to understand the underlying mechanisms behind generalizations and behaviors.</p>
 </div>
 
 <!-- Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
