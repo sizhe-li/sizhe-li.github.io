@@ -281,6 +281,15 @@
       {% if entry.website %}
         <a href="{{ entry.website }}" class="btn btn-sm z-depth-0" role="button">WEBSITE</a>
       {% endif %}
+      {% if entry.press_forbes %}
+        <a href="{{ entry.press_forbes }}" class="btn btn-sm z-depth-0" role="button">Forbes</a>
+      {% endif %}
+      {% if entry.press_mit_news %}
+        <a href="{{ entry.press_mit_news }}" class="btn btn-sm z-depth-0" role="button">MIT News</a>
+      {% endif %}
+      {% if entry.press_deeptech %}
+        <a href="{{ entry.press_deeptech }}" class="btn btn-sm z-depth-0" role="button">DeepTech</a>
+      {% endif %}
     </div>
     {% if site.enable_publication_badges %}
       {% assign entry_has_altmetric_badge = false %}
