@@ -139,18 +139,19 @@ Jacobian Fields is an approach that aims to address problems we posed above. The
 
 ### The Body Jacobian
 
-Look at this 2D robot arm! For any spatial point $(x, y)$ on the robot. Given a small variation of the joint angles $\delta q$, we can find Jacobian of the following form
+Consider a point $\mathbf{p}(\mathbf{q}) = [x(\mathbf{q}), y(\mathbf{q})]^\top$ attached to this 2D robot arm. A small perturbation $\delta \mathbf{q}$ of the joint configuration produces the first-order displacement
 
 $$
-\begin{bmatrix}
-\delta {x} \\ \delta {y}
-\end{bmatrix} = J(q)
-\begin{bmatrix}
-\delta {q}_1 \\ \delta {q}_2
-\end{bmatrix}.
+\delta \mathbf{p}
+\approx
+\mathbf{J}_{\mathbf{p}}(\mathbf{q})\,\delta \mathbf{q},
+\qquad
+\mathbf{J}_{\mathbf{p}}(\mathbf{q})
+:=
+\frac{\partial \mathbf{p}(\mathbf{q})}{\partial \mathbf{q}}.
 $$
 
-For more formalism and details, please check out [our appendix](#details-on-system-jacobian) on the system Jacobian.
+The matrix $\mathbf{J}_{\mathbf{p}}(\mathbf{q})$ is the Jacobian associated with this particular point. For more formalism and details, please see [our appendix](#details-on-system-jacobian) on the system Jacobian.
 
 <div class="row">
   <div class="col-sm">
@@ -172,21 +173,50 @@ For more formalism and details, please check out [our appendix](#details-on-syst
   </div>
 </div>
 
-### Spatialization of Jacobian
+### Spatialization of the Jacobian
 
-We can spatialize our Jacobian. This lifts our representation from reduced or minimal coordinates to the Euclidean space and draws deep connections with recent advances in computational perception.
+Instead of choosing only one point, such as an end effector, we assign a Jacobian to every point in space. This lifts the representation from reduced coordinates to Euclidean space and connects it naturally to perceptual measurements such as scene flow and optical flow.
 
-To formally describe this idea using continuum mechanics<d-cite key="bonet1997nonlinear"></d-cite>, we consider the the deformation map $\phi(\cdot \| \mathbf{q}, \mathbf{u}): \Omega^{0} \mapsto \Omega^{1}$, where $\Omega^{t} \subset \mathbb{R}^{d}$. $d$ = 2 or 3 depending on our modeling domain. $\mathbf{x} = \phi(\mathbf{X} \| \mathbf{q}, \mathbf{u})$ is a flow map that transports the coordinate $\mathbf{X}\in \mathbb{R}^{d}$ in the initial configuration to the configuration achieved at $\mathbf{q}$ and $\mathbf{u}$.
-
-Now, we have the spatial system Jacobian as follows
+Using the language of continuum mechanics<d-cite key="bonet1997nonlinear"></d-cite>, let $\Omega_{\bar{\mathbf{q}}}\subset\mathbb{R}^d$ denote the robot's spatial domain at a nominal state $\bar{\mathbf{q}}$, with $d\in\{2,3\}$. Define the one-step deformation map
 
 $$
-\begin{equation}
-    \mathbf{x}^{+} = \mathbf{\phi}(\mathbf{x} | \bar{\mathbf{q}} , \bar{\mathbf{u}}) + \frac{\partial \mathbf{\phi}(\mathbf{x} | \mathbf{q}, \mathbf{u})}{\partial \mathbf{u}} \bigg\rvert_{\bar{\mathbf{q}}, \bar{\mathbf{u}}} \delta \mathbf{u}.
-\end{equation}
+\Phi(\cdot\,;\bar{\mathbf{q}},\mathbf{u})
+:
+\Omega_{\bar{\mathbf{q}}}\to\mathbb{R}^d,
+\qquad
+\mathbf{x}\mapsto\mathbf{x}^{+}
+=
+\Phi(\mathbf{x};\bar{\mathbf{q}},\mathbf{u}),
 $$
 
-> The spatial differential quantity $\frac{\partial \mathbf{\phi}(\cdot \| \mathbf{q}, \mathbf{u})}{\partial \mathbf{u}} $ is precisely the Jacobian Field that we are interested in learning and measuring from perceptual observations.
+which maps a point at its current spatial coordinate $\mathbf{x}$ to its next position under command $\mathbf{u}$. Around a nominal command $\bar{\mathbf{u}}$, the motion caused by a small command perturbation $\delta\mathbf{u}$ is
+
+$$
+\begin{aligned}
+\delta\mathbf{x}(\mathbf{x})
+&:=
+\Phi(\mathbf{x};\bar{\mathbf{q}},\bar{\mathbf{u}}+\delta\mathbf{u})
+-
+\Phi(\mathbf{x};\bar{\mathbf{q}},\bar{\mathbf{u}}) \\
+&=
+\mathbf{J}(\mathbf{x};\bar{\mathbf{q}},\bar{\mathbf{u}})\,\delta\mathbf{u}
++ o(\lVert\delta\mathbf{u}\rVert),
+\end{aligned}
+$$
+
+with the pointwise Jacobian
+
+$$
+\mathbf{J}(\mathbf{x};\bar{\mathbf{q}},\bar{\mathbf{u}})
+:=
+\left.
+\frac{\partial \Phi(\mathbf{x};\bar{\mathbf{q}},\mathbf{u})}
+{\partial \mathbf{u}}
+\right\rvert_{\mathbf{u}=\bar{\mathbf{u}}}
+\in \mathbb{R}^{d\times n}.
+$$
+
+> The **Jacobian field** is the spatially indexed collection of these local linear maps: $\mathbf{x}\mapsto\mathbf{J}(\mathbf{x};\bar{\mathbf{q}},\bar{\mathbf{u}})$. At each point, it maps a small actuator-command perturbation $\delta\mathbf{u}$ to the point's first-order motion $\delta\mathbf{x}$.
 
 ### Learning and measuring Jacobian Fields from perceptual inputs
 
@@ -234,21 +264,22 @@ We now use a simple 2D example to illustrate the idea of Jacobian Fields. Please
   </div>
 </div>
 
-How can we learn Jacobian Fields from visual perception to "explain away" our observed optical flow motions? We first find that our solid domain here, $\Omega^{t}$, equates the pixel space $\mathbb{R}^{H\times W}$ that we perceive. This is not always the case, as the 3D world induces a projection process to imaging devices and contains occluding and refracting surfaces.
+How can we learn Jacobian Fields from visual perception to explain the optical flow we observe? In this 2D example, the spatial domain is the image plane, so the motion $\delta\mathbf{x}$ can be measured directly as optical flow. In 3D scenes, this correspondence also involves camera projection, visibility, and occlusion.
 
-We use a standard fully convolutional network (UNet<d-cite key="ronneberger2015unetconvolutionalnetworksbiomedical"></d-cite>) to parameterize the inference of Jacobian field from image observations. $J_\theta(\cdot \| I(\mathbf{q})) \triangleq \frac{\partial \mathbf{\phi}(\cdot \| \mathbf{q})}{\partial \mathbf{u}}$ conditions on an image, and outputs a field of linear operators.
+We use a standard fully convolutional network (UNet<d-cite key="ronneberger2015unetconvolutionalnetworksbiomedical"></d-cite>) to infer an image-space Jacobian field $\mathbf{J}_\theta(\mathbf{x}\mid I)\in\mathbb{R}^{2\times n}$ from an image observation $I$. At every pixel $\mathbf{x}$, the network outputs a linear map from the $n$-dimensional command perturbation to a 2D motion vector.
 
-Given data pair $(I, I^+, \delta u)$, we can set up the following learning problem
+Given a training tuple $(I,I^+,\delta\mathbf{u})$, we minimize the discrepancy between the motion predicted by the Jacobian field and the measured optical flow:
 
 $$
-\begin{equation}
-    \arg\min_{\theta} \
-    \left\lVert J_\theta \big(x \mid I \big)^\top \delta u
-    - V \big(x \mid I, I^+ \big) \right\rVert,
-\end{equation}
+\underset{\theta}{\operatorname{argmin}}
+\sum_{\mathbf{x}\in\Omega}
+\left\lVert
+\mathbf{J}_\theta(\mathbf{x}\mid I)\,\delta\mathbf{u}
+- \mathbf{V}(\mathbf{x}\mid I,I^+)
+\right\rVert_2^2,
 $$
 
-where $V$ is the optical flow field computed by a state-of-the-art approach (e.g., RAFT<d-cite key="teed2020raftrecurrentallpairsfield"></d-cite>).
+where $\mathbf{V}$ is the optical flow field computed by a state-of-the-art approach such as RAFT<d-cite key="teed2020raftrecurrentallpairsfield"></d-cite>.
 
 ### Visualizing the learned Jacobian Fields
 
@@ -505,15 +536,32 @@ $$
 \end{equation}
 $$
 
-Local linearization of $\mathbf{f}$ around the nominal point $(\bar{\mathbf{q}}, \bar{\mathbf{u}})$ yields
+Holding the current state fixed at $\bar{\mathbf{q}}$, we perturb the nominal command $\bar{\mathbf{u}}$ by $\delta\mathbf{u}$. A first-order expansion in the command gives
 
 $$
-\begin{equation}
-    \mathbf{q}^{+} = \mathbf{f}(\bar{\mathbf{q}}, \bar{\mathbf{u}}) + \frac{\partial \mathbf{f}(\mathbf{q}, \mathbf{u})}{\partial \mathbf{u}} \bigg\rvert_{\bar{\mathbf{q}}, \bar{\mathbf{u}}} \delta \mathbf{u}.
-\end{equation}
+\mathbf{f}(\bar{\mathbf{q}},\bar{\mathbf{u}}+\delta\mathbf{u})
+\approx
+\mathbf{f}(\bar{\mathbf{q}},\bar{\mathbf{u}})
++
+\left.
+\frac{\partial\mathbf{f}(\bar{\mathbf{q}},\mathbf{u})}
+{\partial\mathbf{u}}
+\right\rvert_{\mathbf{u}=\bar{\mathbf{u}}}
+\delta\mathbf{u}.
 $$
 
-Here, $\mathbf{J}(\mathbf{q}, \mathbf{u}) = \frac{\partial \mathbf{f}(\mathbf{q}, \mathbf{u})}{\partial \mathbf{u}}$ is known as the system Jacobian, the matrix that relates a change of command $\mathbf{u}$ to the change of state $\mathbf{q}$.
+Define the system Jacobian at the nominal operating point as
+
+$$
+\mathbf{J}_{\mathrm{sys}}(\bar{\mathbf{q}},\bar{\mathbf{u}})
+:=
+\left.
+\frac{\partial\mathbf{f}(\bar{\mathbf{q}},\mathbf{u})}
+{\partial\mathbf{u}}
+\right\rvert_{\mathbf{u}=\bar{\mathbf{u}}}.
+$$
+
+This matrix maps a small command perturbation to the first-order change in the next state. If both the state and command are perturbed, the full linearization also contains the term $\frac{\partial\mathbf{f}}{\partial\mathbf{q}}\delta\mathbf{q}$.
 
 Conventionally, modeling a robotic system involves experts designing a state vector $\mathbf{q}$ that completely defines the robot state, and then embedding sensors to measure each of these state variables. For example, the piece-wise-rigid morphology of conventional robotic systems means that the set of all joint angles is a full state description, and these are conventionally measured by an angular sensor in each joint.
 

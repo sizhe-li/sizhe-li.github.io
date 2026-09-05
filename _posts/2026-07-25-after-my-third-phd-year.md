@@ -7,6 +7,7 @@ author: Lester Li
 tags: [robot learning, video models, physical intelligence]
 categories: [research reflections]
 related_posts: false
+featured: false
 ---
 
 <div class="bilingual-post">
