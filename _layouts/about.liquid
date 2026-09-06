@@ -65,6 +65,20 @@ layout: default
       {% include latest_posts.liquid %}
     {% endif %}
 
+    {% if page.mentees %}
+      <section class="mentorship-section" aria-labelledby="student-mentorship-heading">
+        <h2 id="student-mentorship-heading" class="about-section-heading">Student Mentorship</h2>
+        <ul class="mentee-list">
+          {% for mentee in page.mentees %}
+            <li>
+              <a href="{{ mentee.url }}" rel="external nofollow noopener" target="_blank">{{ mentee.name }}</a>
+              <span>{{ mentee.affiliation }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+
     <!-- Selected papers -->
     {% if page.selected_papers %}
       <h2 class="about-section-heading">

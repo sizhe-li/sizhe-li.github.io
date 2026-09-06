@@ -1507,6 +1507,39 @@ ninja-keys::part(ninja-input-wrapper) {
     }
   }
 
+  .mentorship-section {
+    clear: both;
+  }
+
+  .mentee-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      align-items: baseline;
+      border-bottom: 1px solid var(--global-divider-color);
+      display: grid;
+      gap: 0.25rem 1rem;
+      grid-template-columns: minmax(8.5rem, 0.65fr) minmax(0, 1.35fr);
+      padding: 0.7rem 0;
+    }
+
+    a {
+      font-weight: 600;
+    }
+
+    span {
+      color: var(--global-text-color-light);
+    }
+  }
+
+  @media (max-width: 575px) {
+    .mentee-list li {
+      grid-template-columns: 1fr;
+    }
+  }
+
   .news {
     .table-responsive {
       border-top: 1px solid rgba(163, 31, 52, 0.18);

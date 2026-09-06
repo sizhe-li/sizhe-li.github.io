@@ -17,6 +17,13 @@ profile:
 news: true # includes a list of news items
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
+mentees:
+  - name: Evan Kim
+    url: https://www.evn.kim/
+    affiliation: OpenAI, Pretraining Team
+  - name: Isabella Yu
+    url: https://yukaryote.github.io/
+    affiliation: UC Berkeley, EECS PhD student
 ---
 
 <div class="about-intro">
@@ -57,6 +64,7 @@ social: true # includes social icons at the bottom of the page
 
 <div class="research-statement">
   <p><strong>Research Objectives.</strong> I build the brains and bodies of robots. My work draws on ideas from machine learning, physics, and cognitive AI, with applications in robotics, computer vision, and computer graphics.</p>
+  <p><strong>Prospective students.</strong> Thank you for your interest! I strongly encourage students from underrepresented groups to reach out. If you’re interested in working with me, please feel free to email me your CV and tell me about a project or experience you’re especially proud of.</p>
 </div>
 
 <!-- Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
