@@ -64,7 +64,7 @@ mentees:
 
 <div class="research-statement">
   <p><strong>Research Objectives.</strong> I build the brains and bodies of robots. My work draws on ideas from machine learning, physics, and cognitive AI, with applications in robotics, computer vision, and computer graphics.</p>
-  <p><strong>Prospective students.</strong> Thank you for your interest! I strongly encourage students from underrepresented groups to reach out. If you’re interested in working with me, please feel free to email me your CV and tell me about a project or experience you’re especially proud of.</p>
+  <p><strong>Prospective students.</strong> Thank you for your interest! I strongly encourage students from underrepresented groups to reach out. If you’re interested in working with me, please feel free to email me your CV. I’d also love to hear about a project or experience that has been especially meaningful to you.</p>
 </div>
 
 <!-- Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
