@@ -1,51 +1,79 @@
 ---
 ---
-<div class="row">
+{% assign homepage_publication = false %}
+{% if page.layout == 'about' %}
+  {% assign homepage_publication = true %}
+{% endif %}
+{% assign preview_video = entry.video_preview %}
+{% assign preview_poster = entry.video_poster %}
+{% if homepage_publication %}
+  {% assign homepage_media = site.data.publication_previews[entry.key] %}
+  {% assign preview_video = homepage_media.video | default: preview_video %}
+  {% assign preview_poster = homepage_media.poster | default: preview_poster %}
+{% endif %}
+<div class="row{% if homepage_publication %} selected-publication-row{% endif %}">
   {% if site.enable_publication_thumbnails %}
-    <div class="col col-sm-2 abbr">
-      {%- if entry.abbr -%}
-        {%- if site.data.venues[entry.abbr] -%}
-          {% assign venue_style = null %}
-          {% if site.data.venues[entry.abbr].color != blank %}
-            {% assign venue_style = site.data.venues[entry.abbr].color | prepend: 'style="background-color:' | append: '"' %}
-          {%- endif -%}
-          <abbr
-            class="badge rounded w-100"
-            {% if venue_style %}
-              {{ venue_style }}
-            {% endif -%}
-          >
-            {% if site.data.venues[entry.abbr].url %}
-              <a href="{{ site.data.venues[entry.abbr].url }}">{{ entry.abbr }}</a>
-            {% else %}
-              <div>{{- entry.abbr -}}</div>
-            {% endif %}
-          </abbr>
-        {% else %}
-          <abbr class="badge rounded w-100">{{ entry.abbr }}</abbr>
+    <div class="col col-sm-2 abbr{% if homepage_publication %} publication-media-column{% endif %}">
+      {% unless homepage_publication %}
+        {%- if entry.abbr -%}
+          {%- if site.data.venues[entry.abbr] -%}
+            {% assign venue_style = null %}
+            {% if site.data.venues[entry.abbr].color != blank %}
+              {% assign venue_style = site.data.venues[entry.abbr].color | prepend: 'style="background-color:' | append: '"' %}
+            {%- endif -%}
+            <abbr
+              class="badge rounded w-100"
+              {% if venue_style %}
+                {{ venue_style }}
+              {% endif -%}
+            >
+              {% if site.data.venues[entry.abbr].url %}
+                <a href="{{ site.data.venues[entry.abbr].url }}">{{ entry.abbr }}</a>
+              {% else %}
+                <div>{{- entry.abbr -}}</div>
+              {% endif %}
+            </abbr>
+          {% else %}
+            <abbr class="badge rounded w-100">{{ entry.abbr }}</abbr>
+          {% endif %}
         {% endif %}
+      {% endunless %}
+      {% if homepage_publication %}
+        {% assign teaser_link = entry.website | default: entry.pdf %}
+        {% unless teaser_link contains '://' %}
+          {% assign teaser_link = teaser_link | prepend: '/assets/pdf/' | relative_url %}
+        {% endunless %}
+        <div class="publication-media"><a class="publication-teaser" href="{{ teaser_link }}" aria-label="{{ entry.title | strip_html | escape }}">
       {% endif %}
-      {% if entry.video_preview %}
-        {% if entry.video_preview contains '://' %}
-          {% assign video_preview_path = entry.video_preview %}
+      {% if preview_video %}
+        {% if preview_video contains '://' %}
+          {% assign video_preview_path = preview_video %}
         {% else %}
-          {% assign video_preview_path = entry.video_preview | prepend: '/assets/video/publication_preview/' | relative_url %}
+          {% assign video_preview_path = preview_video | prepend: '/assets/video/publication_preview/' | relative_url %}
+        {% endif %}
+        {% if homepage_publication and homepage_media.start %}
+          {% assign video_preview_path = video_preview_path | append: '#t=' | append: homepage_media.start %}
         {% endif %}
         {% assign video_poster_path = '' %}
-        {% if entry.video_poster %}
-          {% if entry.video_poster contains '://' %}
-            {% assign video_poster_path = entry.video_poster %}
+        {% if preview_poster %}
+          {% if preview_poster contains '://' %}
+            {% assign video_poster_path = preview_poster %}
           {% else %}
-            {% assign video_poster_path = entry.video_poster | prepend: '/assets/img/publication_preview/' | relative_url %}
+            {% assign video_poster_path = preview_poster | prepend: '/assets/img/publication_preview/' | relative_url %}
           {% endif %}
         {% endif %}
         <video
-          class="preview publication-preview-video z-depth-1 rounded"
-          autoplay
+          class="preview publication-preview-video{% if homepage_publication %} selected-publication-video{% else %} z-depth-1 rounded{% endif %}"
+          {% unless homepage_publication %}
+            autoplay
+          {% endunless %}
           loop
           muted
           playsinline
           preload="metadata"
+          {% if homepage_publication %}
+            data-preview-start="{{ homepage_media.start | default: 0 }}"
+          {% endif %}
           {% if video_poster_path != '' %}
             poster="{{ video_poster_path }}"
           {% endif %}
@@ -55,27 +83,70 @@
         </video>
       {% elsif entry.preview %}
         {% if entry.preview contains '://' %}
-          <img class="preview z-depth-1 rounded" src="{{ entry.preview }}">
+          <img
+            class="preview{% unless homepage_publication %} z-depth-1 rounded{% endunless %}"
+            src="{{ entry.preview }}"
+            alt="{{ entry.title | strip_html | escape }} teaser"
+            loading="lazy"
+          >
         {% else %}
           {% assign entry_path = entry.preview | prepend: '/assets/img/publication_preview/' %}
+          {% if homepage_publication %}
+            {% assign preview_class = 'preview' %}
+            {% assign preview_sizes = '(min-width: 768px) 252px, (min-width: 576px) 180px, 100vw' %}
+            {% assign preview_loading = 'lazy' %}
+            {% assign preview_zoomable = false %}
+          {% else %}
+            {% assign preview_class = 'preview z-depth-1 rounded' %}
+            {% assign preview_sizes = '200px' %}
+            {% assign preview_loading = 'eager' %}
+            {% assign preview_zoomable = true %}
+          {% endif %}
           {%
             include figure.liquid
-            loading="eager"
+            loading=preview_loading
             path=entry_path
-            sizes = "200px"
-            class="preview z-depth-1 rounded"
-            zoomable=true
-            alt=entry.preview
+            sizes=preview_sizes
+            class=preview_class
+            zoomable=preview_zoomable
+            alt=entry.title
           %}
         {% endif %}
+      {% endif %}
+      {% if homepage_publication %}
+        </a>
+        {% if preview_video %}
+          <button class="publication-video-toggle" type="button" aria-label="Play teaser" title="Play teaser" aria-pressed="false" hidden>
+            <i class="fa-solid fa-play" aria-hidden="true"></i>
+          </button>
+        {% endif %}
+        </div>
       {% endif %}
     </div>
   {% endif %}
 
   <!-- Entry bib key -->
-  <div id="{{ entry.key }}" class="{% if site.enable_publication_thumbnails %}col-sm-8{% else %}col-sm-10{% endif %}">
+  <div
+    id="{{ entry.key }}"
+    class="{% if site.enable_publication_thumbnails %}col-sm-8{% else %}col-sm-10{% endif %}{% if homepage_publication %} publication-copy{% endif %}"
+  >
+    {% if homepage_publication %}
+      <div class="publication-meta">
+        <span class="publication-venue">{{ entry.abbr }}</span>
+        <span class="publication-year">{{ entry.year }}</span>
+        {% if entry.honor and entry.honor != entry.abbr %}
+          <span class="publication-honor"><i class="fa-solid fa-award" aria-hidden="true"></i> {{ entry.honor }}</span>
+        {% endif %}
+      </div>
+    {% endif %}
     <!-- Title -->
-    <div class="title">{{ entry.title }}</div>
+    {% if homepage_publication %}
+      <h3 class="title">
+        <a href="{{ teaser_link }}">{{ entry.title }}</a>
+      </h3>
+    {% else %}
+      <div class="title">{{ entry.title }}</div>
+    {% endif %}
     <!-- Author -->
     <div class="author">
       {% assign author_array_size = entry.author_array | size %}
@@ -174,123 +245,132 @@
     </div>
 
     <!-- Journal/Book title and date -->
-    {% assign proceedings = 'inproceedings,incollection' | split: ',' %}
-    {% assign thesis = 'thesis,mastersthesis,phdthesis' | split: ',' %}
-    {% if entry.type == 'article' %}
-      {% capture entrytype %}<em>{{ entry.journal }}</em>{% endcapture %}
-    {% elsif proceedings contains entry.type %}
-      {% capture entrytype %}<em>In {{ entry.booktitle }}</em>{% endcapture %}
-    {% elsif thesis contains entry.type %}
-      {% capture entrytype %}<em>{{ entry.school }}</em>{% endcapture %}
-    {% else %}
-      {% capture entrytype %}{% endcapture %}
-    {% endif %}
-    {% if entry.month %}
-      {% capture entrymonth %}{{ " " }}{{ entry.month | capitalize }}{% endcapture %}
-    {% endif %}
-    {% if entry.year %}
-      {% capture entryyear %}{{ " " }}{{ entry.year }}{% endcapture %}
-    {% endif %}
-    {% if entry.location %}
-      {% capture entrytype %}{{ entrytype }}{{ ", " }}{{ entry.location }}{% endcapture %}
-    {% endif -%}
-    {% if entry.additional_info %}
-      {% capture entrytype %}{{ entrytype }}{{ entry.additional_info | markdownify | remove: '<p>' | remove: '</p>' }}{% endcapture %}
-    {% endif %}
-    {% capture hook_exists %}{% file_exists _includes/hook/bib.liquid %}{% endcapture %}
-    {% if hook_exists == 'true' %}
-      {% include hook/bib.liquid %}
-    {% endif %}
-    {% assign entrytype_text = entrytype | strip_html | strip %}
-    {% capture periodical %}{{ entrytype }}{% if entrytype_text != "" and entryyear != "" %}, {% endif %}{{ entrymonth }}{{ entryyear }}{% endcapture %}
-    <div class="periodical">
-      {{ periodical | strip }}
-    </div>
-    <div class="periodical">
-      {{ entry.note | strip }}
-    </div>
+    {% unless homepage_publication %}
+      {% assign proceedings = 'inproceedings,incollection' | split: ',' %}
+      {% assign thesis = 'thesis,mastersthesis,phdthesis' | split: ',' %}
+      {% if entry.type == 'article' %}
+        {% capture entrytype %}<em>{{ entry.journal }}</em>{% endcapture %}
+      {% elsif proceedings contains entry.type %}
+        {% capture entrytype %}<em>In {{ entry.booktitle }}</em>{% endcapture %}
+      {% elsif thesis contains entry.type %}
+        {% capture entrytype %}<em>{{ entry.school }}</em>{% endcapture %}
+      {% else %}
+        {% capture entrytype %}{% endcapture %}
+      {% endif %}
+      {% if entry.month %}
+        {% capture entrymonth %}{{ " " }}{{ entry.month | capitalize }}{% endcapture %}
+      {% endif %}
+      {% if entry.year %}
+        {% capture entryyear %}{{ " " }}{{ entry.year }}{% endcapture %}
+      {% endif %}
+      {% if entry.location %}
+        {% capture entrytype %}{{ entrytype }}{{ ", " }}{{ entry.location }}{% endcapture %}
+      {% endif -%}
+      {% if entry.additional_info %}
+        {% capture entrytype %}{{ entrytype }}{{ entry.additional_info | markdownify | remove: '<p>' | remove: '</p>' }}{% endcapture %}
+      {% endif %}
+      {% capture hook_exists %}{% file_exists _includes/hook/bib.liquid %}{% endcapture %}
+      {% if hook_exists == 'true' %}
+        {% include hook/bib.liquid %}
+      {% endif %}
+      {% assign entrytype_text = entrytype | strip_html | strip %}
+      {% capture periodical %}{{ entrytype }}{% if entrytype_text != "" and entryyear != "" %}, {% endif %}{{ entrymonth }}{{ entryyear }}{% endcapture %}
+      <div class="periodical">
+        {{ periodical | strip }}
+      </div>
+      <div class="periodical">
+        {{ entry.note | strip }}
+      </div>
 
-    {%- if entry.honor -%}
-      <span class="honor">
-        {{ entry.honor }}
-      </span>
-    {%- endif -%}
+      {%- if entry.honor -%}
+        <span class="honor">
+          {{ entry.honor }}
+        </span>
+      {%- endif -%}
+    {% endunless %}
+    {% if homepage_publication and entry.note %}
+      <div class="publication-note">{{ entry.note }}</div>
+    {% endif %}
 
     <!-- Links/Buttons -->
-    <div class="links">
-      {% if entry.award %}
-        <a class="award btn btn-sm z-depth-0" role="button">
-          {%- if entry.award_name %}{{ entry.award_name }}{% else %}Awarded{% endif -%}
-        </a>
-      {% endif %}
-      {% if entry.abstract %}
-        <a class="abstract btn btn-sm z-depth-0" role="button">Abs</a>
-      {% endif %}
-      {% if entry.arxiv %}
-        <a href="http://arxiv.org/abs/{{ entry.arxiv }}" class="btn btn-sm z-depth-0" role="button">arXiv</a>
-      {% endif %}
-      {% if entry.bibtex_show %}
-        <a class="bibtex btn btn-sm z-depth-0" role="button">Bib</a>
-      {% endif %}
-      {% if entry.html %}
-        {% if entry.html contains '://' %}
-          <a href="{{ entry.html }}" class="btn btn-sm z-depth-0" role="button">HTML</a>
-        {% else %}
-          <a href="{{ entry.html | prepend: '/assets/html/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">HTML</a>
+    {% if homepage_publication %}
+      {% include selected_publication_links.liquid %}
+    {% else %}
+      <div class="links">
+        {% if entry.award %}
+          <a class="award btn btn-sm z-depth-0" role="button">
+            {%- if entry.award_name %}{{ entry.award_name }}{% else %}Awarded{% endif -%}
+          </a>
         {% endif %}
-      {% endif %}
-      {% if entry.pdf %}
-        {% if entry.pdf contains '://' %}
-          <a href="{{ entry.pdf }}" class="btn btn-sm z-depth-0" role="button">PAPER</a>
-        {% else %}
-          <a href="{{ entry.pdf | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">PAPER</a>
+        {% if entry.abstract %}
+          <a class="abstract btn btn-sm z-depth-0" role="button">Abs</a>
         {% endif %}
-      {% endif %}
-      {% if entry.supp %}
-        {% if entry.supp contains '://' %}
-          <a href="{{ entry.supp }}" class="btn btn-sm z-depth-0" role="button">Supp</a>
-        {% else %}
-          <a href="{{ entry.supp | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">Supp</a>
+        {% if entry.arxiv %}
+          <a href="http://arxiv.org/abs/{{ entry.arxiv }}" class="btn btn-sm z-depth-0" role="button">arXiv</a>
         {% endif %}
-      {% endif %}
-      {% if entry.video and site.enable_video_embedding %}
-        <a class="abstract btn btn-sm z-depth-0" role="button">Video</a>
-      {% elsif entry.video %}
-        <a href="{{ entry.video }}" class="btn btn-sm z-depth-0" role="button">Video</a>
-      {% endif %}
-      {% if entry.blog %}
-        <a href="{{ entry.blog }}" class="btn btn-sm z-depth-0" role="button">Blog</a>
-      {% endif %}
-      {% if entry.code %}
-        <a href="{{ entry.code }}" class="btn btn-sm z-depth-0" role="button">Code</a>
-      {% endif %}
-      {% if entry.poster %}
-        {% if entry.poster contains '://' %}
-          <a href="{{ entry.poster }}" class="btn btn-sm z-depth-0" role="button">Poster</a>
-        {% else %}
-          <a href="{{ entry.poster | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">Poster</a>
+        {% if entry.bibtex_show %}
+          <a class="bibtex btn btn-sm z-depth-0" role="button">Bib</a>
         {% endif %}
-      {% endif %}
-      {% if entry.slides %}
-        {% if entry.slides contains '://' %}
-          <a href="{{ entry.slides }}" class="btn btn-sm z-depth-0" role="button">Slides</a>
-        {% else %}
-          <a href="{{ entry.slides | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">Slides</a>
+        {% if entry.html %}
+          {% if entry.html contains '://' %}
+            <a href="{{ entry.html }}" class="btn btn-sm z-depth-0" role="button">HTML</a>
+          {% else %}
+            <a href="{{ entry.html | prepend: '/assets/html/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">HTML</a>
+          {% endif %}
         {% endif %}
-      {% endif %}
-      {% if entry.website %}
-        <a href="{{ entry.website }}" class="btn btn-sm z-depth-0" role="button">WEBSITE</a>
-      {% endif %}
-      {% if entry.press_forbes %}
-        <a href="{{ entry.press_forbes }}" class="btn btn-sm z-depth-0" role="button">Forbes</a>
-      {% endif %}
-      {% if entry.press_mit_news %}
-        <a href="{{ entry.press_mit_news }}" class="btn btn-sm z-depth-0" role="button">MIT News</a>
-      {% endif %}
-      {% if entry.press_deeptech %}
-        <a href="{{ entry.press_deeptech }}" class="btn btn-sm z-depth-0" role="button">DeepTech</a>
-      {% endif %}
-    </div>
+        {% if entry.pdf %}
+          {% if entry.pdf contains '://' %}
+            <a href="{{ entry.pdf }}" class="btn btn-sm z-depth-0" role="button">PAPER</a>
+          {% else %}
+            <a href="{{ entry.pdf | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">PAPER</a>
+          {% endif %}
+        {% endif %}
+        {% if entry.supp %}
+          {% if entry.supp contains '://' %}
+            <a href="{{ entry.supp }}" class="btn btn-sm z-depth-0" role="button">Supp</a>
+          {% else %}
+            <a href="{{ entry.supp | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">Supp</a>
+          {% endif %}
+        {% endif %}
+        {% if entry.video and site.enable_video_embedding %}
+          <a class="abstract btn btn-sm z-depth-0" role="button">Video</a>
+        {% elsif entry.video %}
+          <a href="{{ entry.video }}" class="btn btn-sm z-depth-0" role="button">Video</a>
+        {% endif %}
+        {% if entry.blog %}
+          <a href="{{ entry.blog }}" class="btn btn-sm z-depth-0" role="button">Blog</a>
+        {% endif %}
+        {% if entry.code %}
+          <a href="{{ entry.code }}" class="btn btn-sm z-depth-0" role="button">Code</a>
+        {% endif %}
+        {% if entry.poster %}
+          {% if entry.poster contains '://' %}
+            <a href="{{ entry.poster }}" class="btn btn-sm z-depth-0" role="button">Poster</a>
+          {% else %}
+            <a href="{{ entry.poster | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">Poster</a>
+          {% endif %}
+        {% endif %}
+        {% if entry.slides %}
+          {% if entry.slides contains '://' %}
+            <a href="{{ entry.slides }}" class="btn btn-sm z-depth-0" role="button">Slides</a>
+          {% else %}
+            <a href="{{ entry.slides | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">Slides</a>
+          {% endif %}
+        {% endif %}
+        {% if entry.website %}
+          <a href="{{ entry.website }}" class="btn btn-sm z-depth-0" role="button">WEBSITE</a>
+        {% endif %}
+        {% if entry.press_forbes %}
+          <a href="{{ entry.press_forbes }}" class="btn btn-sm z-depth-0" role="button">Forbes</a>
+        {% endif %}
+        {% if entry.press_mit_news %}
+          <a href="{{ entry.press_mit_news }}" class="btn btn-sm z-depth-0" role="button">MIT News</a>
+        {% endif %}
+        {% if entry.press_deeptech %}
+          <a href="{{ entry.press_deeptech }}" class="btn btn-sm z-depth-0" role="button">DeepTech</a>
+        {% endif %}
+      </div>
+    {% endif %}
     {% if site.enable_publication_badges %}
       {% assign entry_has_altmetric_badge = false %}
       {% if entry.altmetric and entry.altmetric != 'false' %}
@@ -385,7 +465,7 @@
       <div class="bibtex hidden">
         {% highlight bibtex %}
         {{- entry.bibtex | hideCustomBibtex -}}
-        {% endhighlight %}
+      {% endhighlight %}
       </div>
     {% endif %}
 

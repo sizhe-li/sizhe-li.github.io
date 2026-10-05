@@ -1,0 +1,39 @@
+<div class="publication-links">
+  {% if entry.website %}
+    <a class="publication-project-link" href="{{ entry.website }}"
+      ><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Project</a
+    >
+  {% endif %}
+  {% if entry.pdf %}
+    {% assign paper_link = entry.pdf %}
+    {% unless paper_link contains '://' %}
+      {% assign paper_link = paper_link | prepend: '/assets/pdf/' | relative_url %}
+    {% endunless %}
+    <a href="{{ paper_link }}"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> Paper</a>
+  {% elsif entry.arxiv %}
+    <a href="https://arxiv.org/abs/{{ entry.arxiv }}"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> arXiv</a>
+  {% endif %}
+  {% if entry.code %}
+    <a href="{{ entry.code }}"><i class="fa-brands fa-github" aria-hidden="true"></i> Code</a>
+  {% endif %}
+  {% if entry.video %}
+    <a href="{{ entry.video }}"><i class="fa-solid fa-play" aria-hidden="true"></i> Video</a>
+  {% endif %}
+  {% if entry.blog %}
+    <a href="{{ entry.blog }}"><i class="fa-regular fa-pen-to-square" aria-hidden="true"></i> Blog</a>
+  {% endif %}
+</div>
+{% if entry.press_forbes or entry.press_mit_news or entry.press_deeptech %}
+  <div class="publication-press" aria-label="Press coverage">
+    <span>Press</span>
+    {% if entry.press_forbes -%}
+      <a href="{{ entry.press_forbes }}">Forbes</a>
+    {%- endif %}
+    {% if entry.press_mit_news -%}
+      <a href="{{ entry.press_mit_news }}">MIT News</a>
+    {%- endif %}
+    {% if entry.press_deeptech -%}
+      <a href="{{ entry.press_deeptech }}">DeepTech<span lang="zh">深科技</span></a>
+    {%- endif %}
+  </div>
+{% endif %}

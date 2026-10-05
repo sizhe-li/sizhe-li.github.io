@@ -63,7 +63,7 @@ mentees:
 </script>
 
 <div class="research-statement">
-  <p><strong>Research Objectives.</strong> I build the brains and bodies of robots. My work draws on ideas from machine learning, physics, and cognitive AI, with applications in robotics, computer vision, and computer graphics.</p>
+  <p><strong>Research Objectives.</strong> I study how robots can learn to model their bodies and the physical world, predict the consequences of their actions, and use these predictions for planning and control. My work connects representation learning, generative modeling, and physical reasoning, with the goal of enabling robots to generalize across tasks, environments, and embodiments.</p>
 </div>
 
 <!-- Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.

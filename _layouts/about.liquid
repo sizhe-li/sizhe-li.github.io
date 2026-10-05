@@ -2,52 +2,54 @@
 layout: default
 ---
 <div class="post about-page">
-  <header class="post-header about-header">
-    <h1 class="post-title">
-      {% if site.title == 'blank' %}
-        <span class="font-weight-bold">{{ site.first_name }}</span> {{ site.middle_name }}
-        {{ site.last_name }}
-      {% else %}
-        {{ site.title }}
-      {% endif %}
-    </h1>
-    <p class="desc">{{ page.subtitle }}</p>
-  </header>
-
   <article>
-    {% if page.profile %}
-      <div class="profile float-{% if page.profile.align == 'left' %}left{% else %}right{% endif %}">
-        {% if page.profile.image %}
-          {% assign profile_image_path = page.profile.image | prepend: 'assets/img/' %}
-          {% if page.profile.image_circular %}
-            {% assign profile_image_class = 'img-fluid z-depth-1 rounded-circle' %}
-          {% else %}
-            {% assign profile_image_class = 'img-fluid z-depth-1
-      rounded' %}
-          {% endif %}
-          {% capture sizes %}(min-width: {{site.max_width}}) {{ site.max_width | minus: 30 | times: 0.3}}px, (min-width: 576px)
-      30vw, 95vw"{% endcapture %}
-          {%
-            include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes alt=page.profile.image
-            cache_bust=true
-          %}
-        {% endif %}
-        {% if page.profile.more_info %}
-          <div class="more-info">{{ page.profile.more_info }}</div>
-        {% endif %}
-
-        <!-- Social -->
-        {% if page.social %}
-          <div class="social">
-            <div class="contact-icons">{% include social.liquid %}</div>
-
-            <div class="contact-note">{{ site.contact_note }}</div>
-          </div>
-        {% endif %}
+    <div class="about-overview{% if page.profile.align == 'left' %} about-overview-photo-left{% endif %}">
+      <div class="about-overview-copy">
+        <header class="post-header about-header">
+          <h1 class="post-title">
+            {% if site.title == 'blank' %}
+              {{ site.first_name }}
+              {{ site.middle_name }}
+              {{ site.last_name }}
+            {% else %}
+              {{ site.title }}
+            {% endif %}
+          </h1>
+          <p class="desc">{{ page.subtitle }}</p>
+        </header>
+        <div class="about-body">{{ content }}</div>
       </div>
-    {% endif %}
+      {% if page.profile %}
+        <aside class="profile" aria-label="Profile photo and contact links">
+          {% if page.profile.image %}
+            {% assign profile_image_path = page.profile.image | prepend: 'assets/img/' %}
+            {% if page.profile.image_circular %}
+              {% assign profile_image_class = 'img-fluid rounded-circle' %}
+            {% else %}
+              {% assign profile_image_class = 'img-fluid rounded' %}
+            {% endif %}
+            {% assign profile_alt = site.first_name | append: ' ' | append: site.last_name | strip %}
+            {% assign sizes = '(min-width: 768px) 210px, (min-width: 576px) 168px, 112px' %}
+            {%
+              include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes alt=profile_alt
+              cache_bust=true
+            %}
+          {% endif %}
+          {% if page.profile.more_info %}
+            <div class="more-info">{{ page.profile.more_info }}</div>
+          {% endif %}
 
-    <div class="clearfix about-body">{{ content }}</div>
+          <!-- Social -->
+          {% if page.social %}
+            <div class="social">
+              <div class="contact-icons">{% include social.liquid %}</div>
+
+              <div class="contact-note">{{ site.contact_note }}</div>
+            </div>
+          {% endif %}
+        </aside>
+      {% endif %}
+    </div>
 
     <!-- News -->
     {% if page.news and site.announcements.enabled %}
@@ -81,10 +83,14 @@ layout: default
 
     <!-- Selected papers -->
     {% if page.selected_papers %}
-      <h2 class="about-section-heading">
-        <a href="{{ '/publication/' | relative_url }}" style="color: inherit">Publications</a>
-      </h2>
+      <div class="publication-section-header">
+        <h2 class="about-section-heading" id="selected-publications">Selected Publications</h2>
+        <a class="publication-index-link" href="{{ '/publication/' | relative_url }}">
+          All publications <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </div>
       {% include selected_papers.liquid %}
+      <script defer src="{{ '/assets/js/publication-previews.js' | relative_url | bust_file_cache }}"></script>
     {% endif %}
 
     {% if site.newsletter.enabled and site.footer_fixed %}
