@@ -8,6 +8,7 @@ tags: [robot learning, video models, physical intelligence]
 categories: [research reflections]
 related_posts: false
 homepage: hidden
+published: false
 ---
 
 <div class="bilingual-post">
