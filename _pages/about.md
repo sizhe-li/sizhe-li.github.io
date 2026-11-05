@@ -28,7 +28,7 @@ mentees:
 
 <div class="about-intro">
   <p class="about-lead">
-    I am a PhD student in Computer Science at <a href="https://csail.mit.edu/" rel="external nofollow noopener" target="_blank">MIT CSAIL</a>, advised by
+    Hi! I am a PhD student in Computer Science at <a href="https://csail.mit.edu/" rel="external nofollow noopener" target="_blank">MIT CSAIL</a>, advised by
     <span id="advisor-order">
       <a href="https://www.vincentsitzmann.com/" rel="external nofollow noopener" target="_blank">Vincent Sitzmann</a> and
       <a href="https://cocosci.mit.edu/josh-tenenbaum/" rel="external nofollow noopener" target="_blank">Josh Tenenbaum</a>
