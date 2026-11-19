@@ -1,4 +1,4 @@
-/* Interactive figures for the post "Embodied Programming Through Vision".
+/* Interactive figures for the post "Embodied Programming Through Vision", and its floating contents bar.
    Plain ES5 on purpose: the site's minifier runs on every script. */
 (function () {
   "use strict";
@@ -1030,6 +1030,259 @@
     });
   }
 
+  /* ------------------------------------------------------------------ acts: the floating contents bar
+     Each act is a label paragraph (p.ep-act) followed by its heading. The bar lists the acts, marks the one being read,
+     and jumps to an act on click. A wide window shows the whole list in the left margin; a narrow one shows a pill
+     with the current act, and the pill opens the list. */
+  function initActs() {
+    var article = $("d-article");
+    var acts = [];
+    $$("d-article p.ep-act").forEach(function (label) {
+      var head = label.nextElementSibling;
+      if (!head || !/^H[1-6]$/.test(head.tagName) || !head.id) return;
+      acts.push({
+        label: label,
+        head: head,
+        name: label.textContent.replace(/\s+/g, " ").trim(),
+        title: head.textContent.replace(/\s+/g, " ").trim(),
+        turn: label.classList.contains("ep-act--turn"),
+      });
+    });
+    if (!article || acts.length < 2 || $(".ep-toc")) return;
+
+    /* Every heading at the acts' level ends the act before it. One without a label (the TL;DR, the acknowledgments)
+       is not an act: while it is being read, no act is current. */
+    var marks = [];
+    var seen = 0;
+    $$("d-article > " + acts[0].head.tagName.toLowerCase()).forEach(function (head) {
+      var i = -1;
+      acts.forEach(function (act, k) {
+        if (act.head === head) i = k;
+      });
+      marks.push({ el: i < 0 ? head : acts[i].label, act: i, done: seen });
+      if (i >= 0) seen += 1;
+    });
+
+    function el(tag, cls, text) {
+      var node = document.createElement(tag);
+      if (cls) node.className = cls;
+      if (text !== undefined) node.textContent = text;
+      return node;
+    }
+
+    var SVG = '<svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" ';
+    var LINES = SVG + 'width="12" height="10" viewBox="0 0 12 10"><path d="M1 1h10M1 5h10M1 9h6"/></svg>';
+    var CHEVRON = SVG + 'width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4"/></svg>';
+
+    function icon(cls, svg) {
+      var span = el("span", cls);
+      span.setAttribute("aria-hidden", "true");
+      span.innerHTML = svg;
+      return span;
+    }
+
+    var nav = el("nav", "ep-toc ep-toc--pill");
+    nav.setAttribute("aria-label", "Sections of this post");
+    var css = window.CSS;
+    if (css && css.supports && (css.supports("backdrop-filter", "blur(1px)") || css.supports("-webkit-backdrop-filter", "blur(1px)"))) {
+      nav.classList.add("ep-toc--glass");
+    }
+
+    var pill = el("button", "ep-toc__pill");
+    pill.type = "button";
+    pill.setAttribute("aria-expanded", "false");
+    pill.setAttribute("aria-controls", "ep-toc-list");
+    var pillAct = el("span", "ep-toc__act", "Contents");
+    var pillTitle = el("span", "ep-toc__title");
+    pill.appendChild(icon("ep-toc__icon", LINES));
+    pill.appendChild(pillAct);
+    pill.appendChild(pillTitle);
+    pill.appendChild(icon("ep-toc__chev", CHEVRON));
+
+    var list = el("ol", "ep-toc__list");
+    list.id = "ep-toc-list";
+    var items = acts.map(function (act, i) {
+      var li = el("li", "ep-toc__item" + (act.turn ? " ep-toc__item--turn" : ""));
+      var a = el("a");
+      a.href = "#" + act.head.id;
+      a.setAttribute("data-act", i);
+      a.appendChild(el("span", "ep-toc__act", act.name));
+      a.appendChild(el("span", "ep-toc__title", act.title));
+      li.appendChild(a);
+      list.appendChild(li);
+      return li;
+    });
+    nav.appendChild(pill);
+    nav.appendChild(list);
+    document.body.appendChild(nav);
+
+    var navbar = $("header nav") || $("nav.navbar");
+    var footer = $("footer.fixed-bottom");
+    var edge = 0; /* the bottom of the fixed navbar */
+    var rail = false;
+    var open = false;
+    var openedAt = 0;
+    var cur = -2; /* -1: no act is being read; -2: not measured yet */
+    var done = -1;
+    var flashTimer = 0;
+
+    function setOpen(next) {
+      if (open === next) return;
+      open = next;
+      openedAt = window.pageYOffset;
+      nav.classList.toggle("is-open", open);
+      pill.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+
+    /* Where the bar sits, and which of its two forms fits beside the text. */
+    function layout() {
+      var expanded = navbar && $(".navbar-collapse.show", navbar);
+      if (navbar && !expanded) edge = Math.round(navbar.getBoundingClientRect().bottom);
+      var top = edge + 14;
+      nav.style.top = top + "px";
+      var inset = parseFloat(window.getComputedStyle(nav).left) || 20;
+      var room = acts[0].head.getBoundingClientRect().left - inset - 24;
+      rail = room >= 176;
+      nav.classList.toggle("ep-toc--rail", rail);
+      nav.classList.toggle("ep-toc--pill", !rail);
+      if (rail) setOpen(false);
+      var below = footer ? footer.getBoundingClientRect().height : 0;
+      var free = window.innerHeight - top - below - 16 - (rail ? 0 : 48);
+      list.style.width = rail ? Math.min(room, 232) + "px" : "";
+      list.style.maxHeight = Math.max(120, free) + "px";
+    }
+
+    function spy() {
+      /* shown while the article is being read: after the title has scrolled away, and until the references */
+      var box = article.getBoundingClientRect();
+      var on = box.top < edge && box.bottom > edge + 160;
+      nav.classList.toggle("is-on", on);
+      if (!on) setOpen(false);
+      if (open && Math.abs(window.pageYOffset - openedAt) > 80) setOpen(false);
+      /* an act is "being read" once its label is in the top part of the window */
+      var line = edge + Math.min(180, window.innerHeight * 0.3);
+      var nextCur = -1;
+      var nextDone = 0;
+      for (var i = 0; i < marks.length; i++) {
+        if (marks[i].el.getBoundingClientRect().top > line) break;
+        nextCur = marks[i].act;
+        nextDone = marks[i].done;
+      }
+      if (nextCur === cur && nextDone === done) return;
+      var first = cur === -2;
+      var changed = nextCur !== cur;
+      cur = nextCur;
+      done = nextDone;
+      items.forEach(function (li, k) {
+        li.classList.toggle("is-cur", k === cur);
+        li.classList.toggle("is-past", k < done);
+        var a = li.firstChild;
+        if (k === cur) a.setAttribute("aria-current", "location");
+        else a.removeAttribute("aria-current");
+      });
+      pillAct.textContent = cur < 0 ? "Contents" : acts[cur].name;
+      pillTitle.textContent = cur < 0 ? "" : acts[cur].title;
+      if (changed && !first && cur >= 0 && !REDUCED) {
+        nav.classList.remove("is-flash");
+        void nav.offsetWidth; /* restart the animation */
+        nav.classList.add("is-flash");
+        window.clearTimeout(flashTimer);
+        flashTimer = window.setTimeout(function () {
+          nav.classList.remove("is-flash");
+        }, 950);
+      }
+    }
+
+    /* Where the window should be for an act: its label below the navbar, and below the pill when the pill is showing. */
+    function restAt(act) {
+      return act.label.getBoundingClientRect().top + window.pageYOffset - edge - (rail ? 22 : 62);
+    }
+
+    function scrollToAct(act, smooth) {
+      var y = restAt(act);
+      try {
+        window.scrollTo({ top: y, behavior: smooth ? "smooth" : "auto" });
+      } catch (err) {
+        window.scrollTo(0, y);
+      }
+    }
+
+    var settleTimer = 0;
+
+    function stopSettling() {
+      window.clearInterval(settleTimer);
+      settleTimer = 0;
+    }
+
+    function go(i) {
+      var act = acts[i];
+      scrollToAct(act, !REDUCED);
+      if (window.history && window.history.replaceState) window.history.replaceState(null, "", "#" + act.head.id);
+      setOpen(false);
+      /* as with any in-page link, the keyboard continues from the heading */
+      act.head.setAttribute("tabindex", "-1");
+      try {
+        act.head.focus({ preventScroll: true });
+      } catch (err) {
+        /* an old browser: the scroll alone is enough */
+      }
+      /* A picture that arrives on the way can still move the act. Once the scrolling has stopped, look again,
+         and stop looking as soon as the reader scrolls. */
+      stopSettling();
+      var last = -1;
+      var still = 0;
+      var ticks = 0;
+      var fixes = 0;
+      settleTimer = window.setInterval(function () {
+        var y = window.pageYOffset;
+        ticks += 1;
+        still = y === last ? still + 1 : 0;
+        last = y;
+        if (ticks > 30) return stopSettling();
+        if (still < 2) return;
+        if (Math.abs(restAt(act) - y) <= 4 || fixes >= 3) return stopSettling();
+        fixes += 1;
+        still = 0;
+        scrollToAct(act, false);
+      }, 150);
+    }
+
+    ["wheel", "touchstart", "keydown", "mousedown"].forEach(function (type) {
+      window.addEventListener(type, stopSettling, { passive: true });
+    });
+
+    list.addEventListener("click", function (e) {
+      var a = e.target;
+      while (a && a !== list && a.tagName !== "A") a = a.parentNode;
+      if (!a || a === list) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return; /* leave "open in a new tab" alone */
+      e.preventDefault();
+      go(+a.getAttribute("data-act"));
+    });
+    pill.addEventListener("click", function () {
+      setOpen(!open);
+    });
+    document.addEventListener("click", function (e) {
+      if (open && !nav.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (!open || (e.key !== "Escape" && e.keyCode !== 27)) return;
+      setOpen(false);
+      pill.focus();
+    });
+    /* Browsers send at most one scroll event per frame, and spy() only measures a few headings, so it runs directly.
+       (Waiting for an animation frame would stall in a background tab.) */
+    window.addEventListener("scroll", spy, { passive: true });
+
+    function refresh() {
+      layout();
+      spy();
+    }
+    window.addEventListener("resize", refresh);
+    window.addEventListener("load", refresh);
+    refresh();
+  }
+
   var INIT = {
     stepper: initStepper,
     slots: initSlots,
@@ -1053,6 +1306,11 @@
       }
     });
     initClips();
+    try {
+      initActs();
+    } catch (err) {
+      if (window.console) console.error("embodied-programming contents bar failed", err);
+    }
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);

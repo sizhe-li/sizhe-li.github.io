@@ -22,6 +22,9 @@ Today I gave a talk at Brown's Carney Institute for Brain Science called _Embodi
 
 Robots can learn how their own bodies move from vision alone, by watching themselves execute random commands. A video model can plan what should happen in the world, and a learned body program turns that plan into commands for one particular robot. The planner never needs to know any robot's action coordinates. That is why I think embodiment generalization need not be a distinct learning problem.
 
+Prologue
+{: .ep-act}
+
 # Is this a robot?
 
 Put a few motors on a desk lamp and you get a machine you can command. Is it a robot? My intuition is that it counts if we can control it to do different things. (I wrote more about this question in [an earlier post](/blog/2025/jacobian-fields-tutorial/).)
@@ -62,6 +65,9 @@ People, in contrast, are capable embodied programmers. We can learn to teleopera
 {::nomarkdown}
 {% include posts/embodied-programming/gallery.html items="vid::teleop_losey.mp4::Teleoperating an assistive arm with a joystick;;vid::teleop_pneumatic.mp4::Teleoperating the printed hand" cols=2 aspect="16/9" cover=true alt="People teleoperating a robot arm with a joystick, and teleoperating the pneumatic hand" credit='Left: Losey et al., <a href="https://arxiv.org/abs/2107.02907">Autonomous Robots 2022</a>. Right: Matusik et al., ICRA 2024.' %}
 {:/nomarkdown}
+
+Act I
+{: .ep-act}
 
 # Learning a body from vision
 
@@ -116,7 +122,7 @@ Why render at all? If we give the model depth as input and drop the rendering, i
 
 And why predict a Jacobian, rather than the motion directly? With the same data and backbone, a model that predicts motion directly still fits the training data but falls apart on new commands. In simulation, its error on unseen commands is 26 to 57 times higher. On the real Allegro hand, its predicted motion smears across the whole hand.
 
-<div class="row l-body">
+<div class="row l-body ep-hold" style="--ep-hold: 1800 / 829">
   <div class="col-sm">
     {% include figure.liquid path="assets/img/embodied-programming/njf_direct_flow_baseline.jpg" class="img-fluid rounded z-depth-1" zoomable=true caption="A model that predicts motion directly, compared with the Jacobian field, on held-out samples of the real Allegro hand." %}
   </div>
@@ -173,14 +179,24 @@ The same recipe works on very different bodies. The pneumatic hand closes its fi
 {% include posts/embodied-programming/gallery.html items="img::hsa_load_feedback.webp::::::::1029/740" zoom=true alt="Distance to the target over time for the soft wrist under a 350 g load, with three frames from the run" caption="Visual feedback reduces the waypoint error. One experiment, from Fig. 4b of the Nature paper: the distance falls to 7.3 mm. The dashed baseline is a fixed reference position." %}
 {:/nomarkdown}
 
-### A Jacobian field is a body program
+Since each body learns its own model from its own experience, the hardware no longer has to be designed around our ability to model it by hand.
 
-Since each body learns its own model from its own experience, the hardware no longer has to be designed around our ability to model it by hand. Stepping back, the Jacobian field turns a motion plan into one body's commands. I call this a _body program_. So far the motion plan came from us, because there was no planner. The second half of the talk was about learning that level too.
+Turning point
+{: .ep-act .ep-act--turn}
+
+# A Jacobian field is a body program
+
+Step back from the details, and the Jacobian field does one job: it turns a motion plan, what should move where in the image, into the commands that one particular body needs to produce it. I call this a _body program_. Each body learns its own from its own experience, and nothing above it needs to know that body's actuators.
+
+That changes how I think about the whole problem. Control splits into two levels. At the low level, each body has its own body program. At the high level, a planning program decides what should happen in the world. The two meet in a language every body shares: motion, as a camera sees it. So far the motion plan came from us, because there was no planner. The rest of this post is about learning that level too.
 
 {% capture ep_caps %}For each body, a Jacobian field turns a motion plan into that body's commands.|I call that a body program. It takes what the camera sees and a motion plan, and returns actuator commands. Each body learns its own.|But where does the motion plan come from? So far, from us: there was no planner.|Next, we learn that level too. A planning program takes an instruction and proposes the motion.{% endcapture %}
 {::nomarkdown}
 {% include posts/embodied-programming/stepper.html name="body-program" count=4 aspect="1400/615" kicker="Two levels, click by click" captions=ep_caps alt="A two-level picture: planning programs at the high level, shared across bodies, and one learned body program per body at the low level" caption="Body programs at the low level, one per body, below a shared planner." %}
 {:/nomarkdown}
+
+Act II
+{: .ep-act}
 
 # Planning in video
 
@@ -224,7 +240,7 @@ What does post-training keep? In our tests, the planner kept working with new ca
 
 Does the Jacobian structure still matter once there is a planner? We compared three heads with the same backbone, model size, and data. The Jacobian head stays accurate as we add degrees of freedom, and it needs less data. In closed loop in simulation, it succeeds 70% of the time on the 16-DoF hand and 94% of the time on the 7-DoF arm, where a [UniPi](https://arxiv.org/abs/2302.00111)-style direct inverse dynamics model succeeds 0% of the time on both.
 
-<div class="row l-body">
+<div class="row l-body ep-hold" style="--ep-hold: 1800 / 839">
   <div class="col-sm">
     {% include figure.liquid path="assets/img/embodied-programming/vera_jacobian_structure.png" class="img-fluid rounded z-depth-1" zoomable=true caption="Action reconstruction error as the degrees of freedom (left) and the number of training samples (right) grow. Lower is better." %}
   </div>
@@ -286,6 +302,9 @@ Finally, we moved the external camera between the two settings below, and asked 
   </div>
 </div>
 
+Act III
+{: .ep-act}
+
 # Where should a shared model meet the body?
 
 Video models are becoming robot policies in industry too, for example Rhoda AI's [Direct Video-Action Model](https://www.rhoda.ai/research/direct-video-action) and NVIDIA's [GR00T 2](https://research.nvidia.com/labs/gear/gr00t-2) world action model. So the question is less whether to use a video model, and more where the shared model should meet the body.
@@ -299,6 +318,9 @@ We do the opposite. The shared program never outputs an action. It outputs effec
 {:/nomarkdown}
 
 This is the argument of the talk. Embodiment generalization need not be a distinct learning problem. Much of the problem comes from describing behavior in the coordinates of one particular body. If we describe behavior by its effects in the world, shared programs can act through different bodies, and each body can learn its own mapping from experience.
+
+Epilogue
+{: .ep-act}
 
 # Looking forward
 
