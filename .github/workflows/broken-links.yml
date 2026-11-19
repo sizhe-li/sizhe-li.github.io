@@ -46,6 +46,8 @@ jobs:
 
       - name: Link Checker 🔗
         uses: lycheeverse/lychee-action@v1.9.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           fail: true
           # removed md files that include liquid tags

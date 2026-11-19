@@ -79,6 +79,15 @@ jobs:
           valueFile: "_config.yml"
           propertyPath: "giscus.repo"
           value: ${{ github.repository }}
+      - name: Install ImageMagick 🖼️
+        # the runner image no longer ships it; jekyll-imagemagick needs `convert` to make the responsive WebP images
+        # optional: without it the site still builds and falls back to the original images
+        continue-on-error: true
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+          command -v convert || sudo ln -s "$(command -v magick)" /usr/local/bin/convert
+          convert -version
       - name: Install and Build 🔧
         run: |
           pip3 install --upgrade jupyter
