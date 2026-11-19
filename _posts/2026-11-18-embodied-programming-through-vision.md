@@ -181,7 +181,7 @@ The same recipe works on very different bodies. The pneumatic hand closes its fi
 
 Since each body learns its own model from its own experience, the hardware no longer has to be designed around our ability to model it by hand.
 
-Turning point
+Act II
 {: .ep-act .ep-act--turn}
 
 # A Jacobian field is a body program
@@ -195,7 +195,7 @@ That changes how I think about the whole problem. Control splits into two levels
 {% include posts/embodied-programming/stepper.html name="body-program" count=4 aspect="1400/615" kicker="Two levels, click by click" captions=ep_caps alt="A two-level picture: planning programs at the high level, shared across bodies, and one learned body program per body at the low level" caption="Body programs at the low level, one per body, below a shared planner." %}
 {:/nomarkdown}
 
-Act II
+Act III
 {: .ep-act}
 
 # Planning in video
@@ -302,7 +302,7 @@ Finally, we moved the external camera between the two settings below, and asked 
   </div>
 </div>
 
-Act III
+Act IV
 {: .ep-act}
 
 # Where should a shared model meet the body?
