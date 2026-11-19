@@ -1,0 +1,39 @@
+{%- assign ep_img = '/assets/img/embodied-programming/' | relative_url -%}
+<figure class="ep-fig ep-jac l-page" data-ep="jac" aria-label="The body program: pretrained VGGT with its geometry heads replaced by a Jacobian head">
+<div class="ep-card">
+<div class="ep-bar ep-needs-js"><span class="ep-kicker">Command channel</span>
+<div class="ep-chips">
+<button type="button" class="ep-chip ep-chip--text" data-col="-1" aria-pressed="true">all</button>
+<button type="button" class="ep-chip ep-chip--text" data-col="0" aria-pressed="false">x-translation</button>
+<button type="button" class="ep-chip ep-chip--text" data-col="1" aria-pressed="false">y-translation</button>
+<button type="button" class="ep-chip ep-chip--text" data-col="2" aria-pressed="false">z-translation</button>
+<button type="button" class="ep-chip ep-chip--text" data-col="3" aria-pressed="false">z-rotation</button>
+<button type="button" class="ep-chip ep-chip--text" data-col="4" aria-pressed="false">gripper</button>
+</div></div>
+<div class="ep-stage ep-jac__grid">
+<div class="ep-jac__in"><div class="ep-label">Cameras</div><img src="{{ ep_img }}jacobian_views.jpg" alt="Three camera views of a real Panda arm" loading="lazy"></div>
+<div class="ep-flow" aria-hidden="true">→</div>
+<div class="ep-model ep-model--sm"><span class="ep-pill">Pretrained</span><div class="ep-model__name">VGGT</div><div class="ep-model__what">multi-view geometry transformer</div></div>
+<div class="ep-flow" aria-hidden="true">→</div>
+<div class="ep-heads">
+<div class="ep-head ep-head--new"><span class="ep-pill ep-pill--new">New</span>Jacobian head</div>
+<div class="ep-head ep-head--old">depth · point map</div>
+<div class="ep-head ep-head--old">camera · tracks</div>
+<div class="ep-heads__note">VGGT's own heads, removed</div>
+</div>
+<div class="ep-flow" aria-hidden="true">→</div>
+<div>
+<div class="ep-label ep-label--teal">Per-pixel Jacobian<span>one 2 × K matrix per pixel</span></div>
+<div class="ep-panel"><img src="{{ ep_img }}jacobian_panel.png" alt="Predicted Jacobian for five command channels in three camera views" loading="lazy">
+<button type="button" class="ep-mask" data-col="0" style="left: 2.4%;" aria-label="x-translation"></button>
+<button type="button" class="ep-mask" data-col="1" style="left: 21.95%;" aria-label="y-translation"></button>
+<button type="button" class="ep-mask" data-col="2" style="left: 41.6%;" aria-label="z-translation"></button>
+<button type="button" class="ep-mask" data-col="3" style="left: 61.2%;" aria-label="z-rotation"></button>
+<button type="button" class="ep-mask" data-col="4" style="left: 80.75%;" aria-label="gripper"></button>
+</div>
+</div>
+</div>
+<div class="ep-step" aria-live="polite"><span class="ep-step__text">Each column is one command channel, each row one camera. Brighter pixels move more when that command changes; arrows show the direction.</span></div>
+</div>
+<figcaption class="caption">The body program for a real Panda arm. Hover or click a column to look at one command channel. The Jacobian panel is from the VERA paper (Fig. 3).</figcaption>
+</figure>

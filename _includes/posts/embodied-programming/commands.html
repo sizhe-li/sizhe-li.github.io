@@ -1,0 +1,33 @@
+{%- assign ep_img = '/assets/img/embodied-programming/' | relative_url -%}
+{%- assign ep_vid = '/assets/video/embodied-programming/' | relative_url -%}
+<figure class="ep-fig ep-cmd l-page" data-ep="cmd" aria-label="Commands predict motion: pick one command of the pneumatic hand and see the predicted 3D motion">
+<div class="ep-card">
+<div class="ep-bar ep-needs-js"><span class="ep-kicker">Move one command</span><span class="ep-hint">click a slider</span></div>
+<div class="ep-stage ep-cmd__grid">
+<div><div class="ep-label">Input image</div><img src="{{ ep_img }}pneumatic_input.jpg" alt="One camera image of the pneumatic hand" loading="lazy"></div>
+<div>
+<div class="ep-label">Input command</div>
+<div class="ep-axis" aria-hidden="true"><span>-1</span><span>0</span><span>1</span></div>
+<button type="button" class="ep-slider" data-ch="index" style="--c: #ffc000;" aria-pressed="false"><span class="ep-slider__name">index</span><span class="ep-slider__track"><i></i></span></button>
+<button type="button" class="ep-slider" data-ch="middle" style="--c: #5b9bd5;" aria-pressed="false"><span class="ep-slider__name">middle</span><span class="ep-slider__track"><i></i></span></button>
+<button type="button" class="ep-slider" data-ch="ring" style="--c: #c565e4;" aria-pressed="false"><span class="ep-slider__name">ring</span><span class="ep-slider__track"><i></i></span></button>
+<button type="button" class="ep-slider" data-ch="little" style="--c: #70ad47;" aria-pressed="false"><span class="ep-slider__name">little</span><span class="ep-slider__track"><i></i></span></button>
+<button type="button" class="ep-slider" data-ch="thumb" style="--c: #d0194e;" aria-pressed="false"><span class="ep-slider__name">thumb</span><span class="ep-slider__track"><i></i></span></button>
+<button type="button" class="ep-btn ep-cmd__reset ep-needs-js" disabled>Back to the Jacobian field</button>
+</div>
+<div>
+<div class="ep-label">Predicted 3D motion</div>
+<div class="ep-cmd__screen">
+<video class="is-on" data-ch="field" muted playsinline loop preload="metadata" src="{{ ep_vid }}njf_cmd_field.mp4"></video>
+<video data-ch="index" muted playsinline loop preload="none" data-src="{{ ep_vid }}njf_cmd_index.mp4"></video>
+<video data-ch="middle" muted playsinline loop preload="none" data-src="{{ ep_vid }}njf_cmd_middle.mp4"></video>
+<video data-ch="ring" muted playsinline loop preload="none" data-src="{{ ep_vid }}njf_cmd_ring.mp4"></video>
+<video data-ch="little" muted playsinline loop preload="none" data-src="{{ ep_vid }}njf_cmd_little.mp4"></video>
+<video data-ch="thumb" muted playsinline loop preload="none" data-src="{{ ep_vid }}njf_cmd_thumb.mp4"></video>
+</div>
+</div>
+</div>
+<div class="ep-step" aria-live="polite"><span class="ep-step__text">The Jacobian field. Each color marks the part of the hand that one command moves.</span></div>
+</div>
+<figcaption class="caption">From one image of the pneumatic hand, the Jacobian field predicts how each command moves the hand in 3D.</figcaption>
+</figure>
