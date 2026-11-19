@@ -1,0 +1,26 @@
+{%- comment -%}
+  Picture for the homepage card of "Embodied Programming Through Vision": an act("…") call,
+  the video plan, and four bodies, built up in a loop with CSS only.
+  Styles (.fp-mini): assets/css/components/featured-post.css
+{%- endcomment -%}
+{%- assign fp_img = '/assets/img/embodied-programming/' | relative_url -%}
+<span class="fp-mini">
+  <span class="fp-mini__call">act(<span class="fp-mini__arg">"put the cube on the lego"</span>)</span>
+  <span class="fp-mini__row fp-mini__row--plan">
+    <span class="fp-mini__label">Visual planning program</span>
+    <span class="fp-mini__imgs">
+      <img src="{{ fp_img }}plan_1.jpg" alt="" width="480" height="320" loading="lazy">
+      <img src="{{ fp_img }}plan_2.jpg" alt="" width="480" height="320" loading="lazy">
+      <img src="{{ fp_img }}plan_3.jpg" alt="" width="480" height="320" loading="lazy">
+    </span>
+  </span>
+  <span class="fp-mini__row fp-mini__row--body">
+    <span class="fp-mini__label">Body programs</span>
+    <span class="fp-mini__imgs">
+      <img src="{{ fp_img }}body_pneumatic.jpg" alt="" width="480" height="360" loading="lazy">
+      <img src="{{ fp_img }}body_arm.jpg" alt="" width="480" height="360" loading="lazy">
+      <img src="{{ fp_img }}body_panda.jpg" alt="" width="480" height="360" loading="lazy">
+      <img src="{{ fp_img }}body_allegro.jpg" alt="" width="480" height="360" loading="lazy">
+    </span>
+  </span>
+</span>

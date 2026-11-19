@@ -1,0 +1,63 @@
+{%- comment -%}
+  Featured blog post on the homepage: one card, all of it a link to the post.
+  Choose the post in the page's front matter (see _pages/about.md):
+    featured_post: /blog/2026/embodied-programming-through-vision/   # the post's URL
+    featured_post_teaser: featured_post/embodied-programming.liquid  # optional picture, from _includes/
+  Without a teaser the card shows the post's `thumbnail`, if it has one, or text only.
+  Title and date come from the post. The badge reads "New" for 60 days after
+  the post date (counted when the site is built), then "Featured".
+  If no post has that URL, nothing is rendered.
+  variant="pill" renders a one-line link instead; the homepage shows it at the top on phones.
+  Styles: assets/css/components/featured-post.css
+  The prettier-ignore below keeps Prettier from dropping the double braces of the variable
+  include path, which Jekyll needs.
+{%- endcomment -%}
+{%- assign fp = null -%}
+{%- if page.featured_post -%}
+  {%- assign fp = site.posts | where: 'url', page.featured_post | first -%}
+{%- endif -%}
+{%- if fp -%}
+  {%- assign fp_now = site.time | date: '%s' | plus: 0 -%}
+  {%- assign fp_then = fp.date | date: '%s' | plus: 0 -%}
+  {%- assign fp_days = fp_now | minus: fp_then | divided_by: 86400 -%}
+  {%- if fp_days < 60 -%}
+    {%- assign fp_badge = 'New' -%}
+  {%- else -%}
+    {%- assign fp_badge = 'Featured' -%}
+  {%- endif -%}
+  {%- unless featured_post_css_linked -%}
+    <link rel="stylesheet" href="{{ '/assets/css/components/featured-post.css' | relative_url | bust_file_cache }}">
+    {%- assign featured_post_css_linked = true -%}
+  {%- endunless -%}
+  {%- if include.variant == 'pill' -%}
+    <a class="featured-pill" href="{{ fp.url | relative_url }}">
+      <span class="featured-pill__badge">{{ fp_badge }}</span>
+      <span class="featured-pill__title">{{ fp.title }}</span>
+      <span class="featured-pill__arrow" aria-hidden="true">→</span>
+    </a>
+  {%- else -%}
+    <a
+      class="featured-post{% unless page.featured_post_teaser or fp.thumbnail %} featured-post--text{% endunless %}"
+      href="{{ fp.url | relative_url }}"
+      aria-labelledby="featured-post-title"
+      aria-describedby="featured-post-kicker"
+    >
+      {%- if page.featured_post_teaser -%}
+        <!-- prettier-ignore -->
+        <span class="featured-post__media" aria-hidden="true">{% include {{ page.featured_post_teaser }} %}</span>
+      {%- elsif fp.thumbnail -%}
+        <span class="featured-post__media" aria-hidden="true">
+          <img class="featured-post__thumb" src="{{ fp.thumbnail | relative_url }}" alt="" loading="lazy">
+        </span>
+      {%- endif -%}
+      <span class="featured-post__copy">
+        <span class="featured-post__kicker" id="featured-post-kicker">
+          <span class="featured-post__badge">{{ fp_badge }}</span>
+          <span class="featured-post__date">Blog post · {{ fp.date | date: '%b %d, %Y' }}</span>
+        </span>
+        <span class="featured-post__title" id="featured-post-title">{{ fp.title }}</span>
+        <span class="featured-post__cta">Read the post <span class="featured-post__arrow" aria-hidden="true">→</span></span>
+      </span>
+    </a>
+  {%- endif -%}
+{%- endif -%}

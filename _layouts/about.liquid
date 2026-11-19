@@ -17,7 +17,10 @@ layout: default
           </h1>
           <p class="desc">{{ page.subtitle }}</p>
         </header>
-        <div class="about-body">{{ content }}</div>
+        <div class="about-body">
+          {%- include featured_post.liquid variant="pill" -%}
+          {{ content }}
+        </div>
       </div>
       {% if page.profile %}
         <aside class="profile" aria-label="Profile photo and contact links">
@@ -48,6 +51,9 @@ layout: default
         </aside>
       {% endif %}
     </div>
+
+    <!-- Featured blog post (set featured_post in the page's front matter) -->
+    {% include featured_post.liquid %}
 
     <!-- News -->
     {% if page.news and site.announcements.enabled %}
