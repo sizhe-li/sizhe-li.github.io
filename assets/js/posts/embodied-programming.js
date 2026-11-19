@@ -74,7 +74,8 @@
     var caps = $$(".ep-captions > li", fig).map(function (li) {
       return li.innerHTML;
     });
-    var imgs = $$(".ep-stack img", fig);
+    // layers: the stacked click-state images of a slide, or the tiles of a reveal gallery
+    var imgs = $$(".ep-stack > img, .ep-reveal > .ep-tile", fig);
     var n = Math.max(caps.length, imgs.length);
     var dots = $(".ep-dots", fig);
     var prev = $(".ep-prev", fig);
@@ -82,7 +83,7 @@
     var playBtn = $(".ep-play", fig);
     var text = $(".ep-step__text", fig);
     var num = $(".ep-step__n", fig);
-    var stage = $(".ep-stack", fig);
+    var stage = $(".ep-stack, .ep-reveal", fig);
     var k = 0;
     var timers = [];
     var auto = !REDUCED; // rolls out by itself, on a loop, while it is on screen
@@ -93,6 +94,7 @@
       k = Math.max(0, Math.min(n - 1, i));
       imgs.forEach(function (im, j) {
         im.classList.toggle("is-on", j <= k);
+        im.classList.toggle("is-cur", j === k);
       });
       dotEls.forEach(function (d, j) {
         d.classList.toggle("is-on", j === k);
@@ -206,7 +208,7 @@
       n: 6,
       fill: [0, 1, 2, 3, 4, 5],
       verdict: "It fits: 6 arm-joint slots are used. The other 18 are padding.",
-      out: "Its own body program outputs 6 motor commands."
+      out: "Its own body program outputs 6 motor commands.",
     },
     panda: {
       name: "Panda arm",
@@ -214,7 +216,7 @@
       n: 7,
       fill: [7, 10, 11, 12, 13, 14, 15],
       verdict: "It fits: 7 slots are used. The other 17 are padding.",
-      out: "Its own body program outputs 7 end-effector and gripper commands."
+      out: "Its own body program outputs 7 end-effector and gripper commands.",
     },
     allegro: {
       name: "Allegro hand",
@@ -223,7 +225,7 @@
       fill: null,
       stamp: "16 hand joints: no slot",
       verdict: "It does not fit: the placeholder has no slots for 16 hand joints.",
-      out: "Its own body program outputs 16 joint commands."
+      out: "Its own body program outputs 16 joint commands.",
     },
     pneumatic: {
       name: "Pneumatic hand",
@@ -232,8 +234,8 @@
       fill: null,
       stamp: "15 pressure channels: no slot",
       verdict: "It does not fit: the placeholder has no slots for air pressures.",
-      out: "Its own body program outputs 15 pressure commands."
-    }
+      out: "Its own body program outputs 15 pressure commands.",
+    },
   };
   var BODY_ORDER = ["arm", "panda", "allegro", "pneumatic"];
 
@@ -293,63 +295,99 @@
 
       // 1. the body's own command vector appears
       inCells.forEach(function (c, i) {
-        later(function () {
-          c.classList.add("is-in");
-        }, 80 + i * 28, timers);
+        later(
+          function () {
+            c.classList.add("is-in");
+          },
+          80 + i * 28,
+          timers
+        );
       });
 
       // 2. try to fit it into the placeholder
       var t = 80 + b.n * 28 + 420;
       if (b.fill) {
         b.fill.forEach(function (idx, i) {
-          later(function () {
-            slots[idx].classList.add("is-fill");
-            if (inCells[i]) inCells[i].classList.add("is-sent");
-          }, t + i * 60, timers);
+          later(
+            function () {
+              slots[idx].classList.add("is-fill");
+              if (inCells[i]) inCells[i].classList.add("is-sent");
+            },
+            t + i * 60,
+            timers
+          );
         });
         t += b.fill.length * 60 + 200;
-        later(function () {
-          slots.forEach(function (s, idx) {
-            if (b.fill.indexOf(idx) < 0) s.classList.add("is-pad");
-          });
-          verdictL.textContent = b.verdict;
-          verdictL.classList.add("is-on");
-        }, t, timers);
+        later(
+          function () {
+            slots.forEach(function (s, idx) {
+              if (b.fill.indexOf(idx) < 0) s.classList.add("is-pad");
+            });
+            verdictL.textContent = b.verdict;
+            verdictL.classList.add("is-on");
+          },
+          t,
+          timers
+        );
       } else {
-        later(function () {
-          row.classList.add("is-bad", "is-shake");
-          stamp.textContent = b.stamp;
-          stamp.classList.add("is-on");
-          verdictL.textContent = b.verdict;
-          verdictL.classList.add("is-on", "is-bad");
-        }, t, timers);
+        later(
+          function () {
+            row.classList.add("is-bad", "is-shake");
+            stamp.textContent = b.stamp;
+            stamp.classList.add("is-on");
+            verdictL.textContent = b.verdict;
+            verdictL.classList.add("is-on", "is-bad");
+          },
+          t,
+          timers
+        );
       }
 
       // 3. the other way: a video plan, then this body's own program
       t += 750;
       frames.forEach(function (f, i) {
-        later(function () {
-          f.classList.add("is-pulse");
-        }, t + i * 170, timers);
-        later(function () {
-          f.classList.remove("is-pulse");
-        }, t + i * 170 + 320, timers);
+        later(
+          function () {
+            f.classList.add("is-pulse");
+          },
+          t + i * 170,
+          timers
+        );
+        later(
+          function () {
+            f.classList.remove("is-pulse");
+          },
+          t + i * 170 + 320,
+          timers
+        );
       });
       t += frames.length * 170 + 300;
       outCells.forEach(function (c, i) {
-        later(function () {
-          c.classList.add("is-in");
-        }, t + i * 28, timers);
+        later(
+          function () {
+            c.classList.add("is-in");
+          },
+          t + i * 28,
+          timers
+        );
       });
-      later(function () {
-        verdictR.textContent = b.out;
-        verdictR.classList.add("is-on");
-      }, t + b.n * 28 + 120, timers);
+      later(
+        function () {
+          verdictR.textContent = b.out;
+          verdictR.classList.add("is-on");
+        },
+        t + b.n * 28 + 120,
+        timers
+      );
 
       if (auto) {
-        later(function () {
-          if (auto && visible) select(BODY_ORDER[(BODY_ORDER.indexOf(key) + 1) % BODY_ORDER.length], false);
-        }, t + b.n * 28 + 2900, timers);
+        later(
+          function () {
+            if (auto && visible) select(BODY_ORDER[(BODY_ORDER.indexOf(key) + 1) % BODY_ORDER.length], false);
+          },
+          t + b.n * 28 + 2900,
+          timers
+        );
       }
     }
 
@@ -435,63 +473,99 @@
         return;
       }
       if (call === "look") {
-        later(function () {
-          if (ret) ret.classList.add("is-on");
-        }, 550, timers);
+        later(
+          function () {
+            if (ret) ret.classList.add("is-on");
+          },
+          550,
+          timers
+        );
         later(done, 1150, timers);
         return;
       }
       // act(...): the call goes down, the whole stack of this talk runs, the result comes back
       var t = 250;
-      later(function () {
-        wire.classList.remove("is-up");
-        wire.classList.add("is-down");
-      }, t, timers);
+      later(
+        function () {
+          wire.classList.remove("is-up");
+          wire.classList.add("is-down");
+        },
+        t,
+        timers
+      );
       t += 520;
-      later(function () {
-        arg.textContent = '"' + line.getAttribute("data-arg") + '"';
-        box.classList.add("is-running");
-        planImgs.forEach(function (im) {
-          im.classList.add("is-dim");
-        });
-        plan.classList.add("is-on");
-      }, t, timers);
+      later(
+        function () {
+          arg.textContent = '"' + line.getAttribute("data-arg") + '"';
+          box.classList.add("is-running");
+          planImgs.forEach(function (im) {
+            im.classList.add("is-dim");
+          });
+          plan.classList.add("is-on");
+        },
+        t,
+        timers
+      );
       planImgs.forEach(function (im, i) {
-        later(function () {
-          im.classList.remove("is-dim");
-        }, t + 260 + i * 260, timers);
+        later(
+          function () {
+            im.classList.remove("is-dim");
+          },
+          t + 260 + i * 260,
+          timers
+        );
       });
       t += 260 + planImgs.length * 260 + 250;
-      later(function () {
-        plan.classList.remove("is-on");
-        pill.classList.add("is-on");
-      }, t, timers);
+      later(
+        function () {
+          plan.classList.remove("is-on");
+          pill.classList.add("is-on");
+        },
+        t,
+        timers
+      );
       t += 650;
-      later(function () {
-        pill.classList.remove("is-on");
-        body.classList.add("is-on");
-        bodyImgs.forEach(function (im) {
-          im.classList.add("is-dim");
-        });
-      }, t, timers);
+      later(
+        function () {
+          pill.classList.remove("is-on");
+          body.classList.add("is-on");
+          bodyImgs.forEach(function (im) {
+            im.classList.add("is-dim");
+          });
+        },
+        t,
+        timers
+      );
       bodyImgs.forEach(function (im, i) {
-        later(function () {
-          im.classList.remove("is-dim");
-        }, t + 220 + i * 200, timers);
+        later(
+          function () {
+            im.classList.remove("is-dim");
+          },
+          t + 220 + i * 200,
+          timers
+        );
       });
       t += 220 + bodyImgs.length * 200 + 350;
-      later(function () {
-        body.classList.remove("is-on");
-        box.classList.remove("is-running");
-        wire.classList.remove("is-down");
-        wire.classList.add("is-up");
-      }, t, timers);
+      later(
+        function () {
+          body.classList.remove("is-on");
+          box.classList.remove("is-running");
+          wire.classList.remove("is-down");
+          wire.classList.add("is-up");
+        },
+        t,
+        timers
+      );
       t += 540;
-      later(function () {
-        wire.classList.remove("is-up");
-        arg.textContent = "instruction";
-        if (ret) ret.classList.add("is-on");
-      }, t, timers);
+      later(
+        function () {
+          wire.classList.remove("is-up");
+          arg.textContent = "instruction";
+          if (ret) ret.classList.add("is-on");
+        },
+        t,
+        timers
+      );
       later(done, t + 450, timers);
     }
 
@@ -546,7 +620,7 @@
   var PLANNER_NOTE = [
     "The gripper moves to the cup.",
     "Same frames, new instruction: the gripper moves to the lego block.",
-    "Same frames, new instruction: the gripper moves to the tennis ball."
+    "Same frames, new instruction: the gripper moves to the tennis ball.",
   ];
 
   function initPlanner(fig) {
@@ -579,18 +653,26 @@
         /* metadata not loaded yet */
       }
       void crop.offsetWidth; // restart the transitions
-      later(function () {
-        crop.classList.add("is-clearing");
-        bar.classList.add("is-run");
-      }, 60, timers);
-      later(function () {
-        crop.classList.remove("is-clearing");
-        crop.classList.add("is-clear");
-        model.classList.remove("is-busy");
-        note.textContent = "a video plan, replayed from the observed frames";
-        text.textContent = PLANNER_NOTE[r];
-        if (visible) play(video, 0);
-      }, 1650, timers);
+      later(
+        function () {
+          crop.classList.add("is-clearing");
+          bar.classList.add("is-run");
+        },
+        60,
+        timers
+      );
+      later(
+        function () {
+          crop.classList.remove("is-clearing");
+          crop.classList.add("is-clear");
+          model.classList.remove("is-busy");
+          note.textContent = "a video plan, replayed from the observed frames";
+          text.textContent = PLANNER_NOTE[r];
+          if (visible) play(video, 0);
+        },
+        1650,
+        timers
+      );
     }
 
     chips.forEach(function (chip) {
@@ -622,7 +704,7 @@
     1: "y-translation: how every pixel moves when the hand is commanded along y.",
     2: "z-translation: in the wrist camera, the whole image expands or contracts.",
     3: "z-rotation: in the wrist camera, the image turns around its center.",
-    4: "gripper: only the fingers move, so only the fingers light up."
+    4: "gripper: only the fingers move, so only the fingers light up.",
   };
 
   function initJac(fig) {
@@ -680,7 +762,7 @@
     middle: "Command the middle finger: only the middle finger is predicted to move.",
     ring: "Command the ring finger.",
     little: "Command the little finger.",
-    thumb: "Command the thumb."
+    thumb: "Command the thumb.",
   };
 
   function initCommands(fig) {
@@ -785,6 +867,96 @@
     );
   }
 
+  /* ------------------------------------------------------------------ tabs: pick a body, see its clips
+     Cycles through the panels while on screen until the reader picks one. */
+  function initTabs(fig) {
+    var chips = $$(".ep-chip[data-i]", fig);
+    var panels = $$(".ep-tabpanel", fig);
+    var autoBtn = $(".ep-auto", fig);
+    var current = 0;
+    var visible = false;
+    var auto = !REDUCED;
+    var timers = [];
+
+    function videos(panel) {
+      return $$("video", panel);
+    }
+
+    function schedule() {
+      clearAll(timers);
+      if (!auto || !visible) return;
+      var hold = parseInt(panels[current].getAttribute("data-hold"), 10) || 7000;
+      later(
+        function () {
+          show(current + 1);
+        },
+        hold,
+        timers
+      );
+    }
+
+    function show(i) {
+      current = (i + panels.length) % panels.length;
+      press(chips, chips[current]);
+      panels.forEach(function (p, j) {
+        var on = j === current;
+        p.classList.toggle("is-on", on);
+        videos(p).forEach(function (v) {
+          if (on) {
+            if (!v.getAttribute("src") && v.getAttribute("data-src")) v.setAttribute("src", v.getAttribute("data-src"));
+            if (visible) play(v, 0);
+          } else {
+            v.pause();
+          }
+        });
+      });
+      schedule();
+    }
+
+    function setAuto(on) {
+      auto = on;
+      if (autoBtn) {
+        autoBtn.textContent = on ? "❚❚ Pause" : "▶ Auto";
+        autoBtn.setAttribute("aria-pressed", on ? "true" : "false");
+      }
+      schedule();
+    }
+
+    chips.forEach(function (c, i) {
+      c.addEventListener("click", function () {
+        setAuto(false);
+        show(i);
+      });
+    });
+    if (autoBtn) {
+      autoBtn.addEventListener("click", function () {
+        setAuto(!auto);
+      });
+    }
+
+    fig.classList.add("is-ready");
+    setAuto(auto);
+    show(0);
+    onVisible(
+      fig,
+      function () {
+        if (visible) return;
+        visible = true;
+        show(current);
+      },
+      function () {
+        visible = false;
+        clearAll(timers);
+        panels.forEach(function (p) {
+          videos(p).forEach(function (v) {
+            v.pause();
+          });
+        });
+      },
+      0.3
+    );
+  }
+
   /* ------------------------------------------------------------------ copy the citation */
   function copyFallback(text) {
     var ta = document.createElement("textarea");
@@ -833,7 +1005,42 @@
     fig.classList.add("is-ready");
   }
 
-  var INIT = { stepper: initStepper, slots: initSlots, tool: initTool, planner: initPlanner, jac: initJac, cmd: initCommands, switch: initSwitch, cite: initCite };
+  /* ------------------------------------------------------------------ gallery clips
+     They carry no autoplay attribute, so they are not all downloaded at page load: each plays while it is on screen. */
+  function initClips() {
+    var clips = $$("video[data-autoplay]");
+    if (!clips.length) return;
+    if (!("IntersectionObserver" in window)) {
+      clips.forEach(function (v) {
+        play(v);
+      });
+      return;
+    }
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) play(e.target);
+          else e.target.pause();
+        });
+      },
+      { threshold: 0.25 }
+    );
+    clips.forEach(function (v) {
+      io.observe(v);
+    });
+  }
+
+  var INIT = {
+    stepper: initStepper,
+    slots: initSlots,
+    tool: initTool,
+    planner: initPlanner,
+    jac: initJac,
+    cmd: initCommands,
+    switch: initSwitch,
+    tabs: initTabs,
+    cite: initCite,
+  };
 
   function boot() {
     $$("[data-ep]").forEach(function (fig) {
@@ -845,6 +1052,7 @@
         if (window.console) console.error("embodied-programming figure failed", fig, err);
       }
     });
+    initClips();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);

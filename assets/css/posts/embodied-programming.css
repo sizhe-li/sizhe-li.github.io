@@ -17,6 +17,8 @@
   font-size: 15px;
   line-height: 1.4;
   color: var(--ep-ink);
+  /* layouts below respond to the figure's own width (the text column), not the window's */
+  container-type: inline-size;
 }
 
 .ep-fig *,
@@ -117,6 +119,10 @@
 .ep-play {
   min-width: 2.4rem;
   font-size: 0.72rem;
+}
+
+.ep-bar .ep-auto {
+  margin-left: auto;
 }
 
 .ep-fig.is-auto .ep-dot.is-on {
@@ -294,6 +300,7 @@
 /* ---------- slide builds: a stack of click states ---------- */
 
 .ep-stack {
+  margin: 0 auto;
   padding: 0;
   cursor: pointer;
   overflow: hidden;
@@ -328,7 +335,9 @@
 
 .ep-col {
   display: grid;
+  grid-row: span 4;
   grid-template-rows: auto auto auto 1fr;
+  grid-template-rows: subgrid;
   gap: 0.55rem;
   min-width: 0;
 }
@@ -422,6 +431,7 @@
 
 .ep-cols .ep-mid {
   min-height: 5.9rem;
+  padding-bottom: 0.45rem;
 }
 
 .ep-label {
@@ -544,7 +554,7 @@
 
 .ep-prompt {
   display: inline-block;
-  max-width: 11rem;
+  max-width: 100%;
   padding: 0.3rem 0.6rem;
   font-size: 0.76rem;
   font-style: italic;
@@ -783,9 +793,15 @@
 }
 
 .ep-plan {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto repeat(3, minmax(0, 1fr));
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.4rem 0.45rem;
+}
+
+.ep-plan .ep-prompt {
+  grid-column: 1 / -1;
+  justify-self: start;
 }
 
 .ep-plan .ep-arrow {
@@ -794,8 +810,7 @@
 }
 
 .ep-fig .ep-plan img {
-  flex: 1 1 0;
-  width: 0;
+  width: 100%;
   min-width: 0;
   aspect-ratio: 3 / 2;
   object-fit: cover;
@@ -1266,15 +1281,28 @@ button.ep-line:hover {
 
 .ep-jac__grid {
   display: grid;
-  grid-template-columns: minmax(4.6rem, 0.5fr) auto minmax(6.2rem, 0.8fr) auto minmax(6rem, 0.75fr) auto minmax(0, 3fr);
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.55rem;
+}
+
+.ep-jac__flow {
+  display: grid;
+  grid-template-columns: 5.4rem auto minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.7rem;
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto;
 }
 
 .ep-fig .ep-jac__in img {
   display: block;
   width: 100%;
   border-radius: 5px;
+}
+
+.ep-jac__out .ep-label {
+  text-align: center;
 }
 
 .ep-heads {
@@ -1359,9 +1387,22 @@ button.ep-line:hover {
 
 .ep-cmd__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(9.5rem, 0.8fr) minmax(0, 1.25fr);
+  grid-template-columns: minmax(0, 1fr) minmax(9.5rem, 0.85fr) minmax(0, 1.15fr);
+  grid-template-areas: "in sliders out";
   align-items: start;
   gap: 0.9rem;
+}
+
+.ep-cmd__in {
+  grid-area: in;
+}
+
+.ep-cmd__sliders {
+  grid-area: sliders;
+}
+
+.ep-cmd__out {
+  grid-area: out;
 }
 
 .ep-fig .ep-cmd__grid img {
@@ -1498,45 +1539,6 @@ button.ep-line:hover {
   opacity: 1;
 }
 
-/* ---------- narrow screens ---------- */
-
-@media (max-width: 767px) {
-  .ep-fig {
-    font-size: 14px;
-  }
-
-  .ep-cols,
-  .ep-planner__grid,
-  .ep-jac__grid,
-  .ep-cmd__grid,
-  .ep-tool .ep-band {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .ep-flow {
-    transform: rotate(90deg);
-  }
-
-  .ep-model {
-    min-height: 0;
-    padding: 2rem 0.6rem 0.9rem;
-  }
-
-  .ep-thesis {
-    font-size: 1.05rem;
-  }
-
-  .ep-fig .ep-jac__in img {
-    width: 40%;
-    margin: 0 auto;
-  }
-
-  .ep-axis,
-  .ep-cmd__reset {
-    margin-left: 3.6rem;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .ep-fig *,
   .ep-fig *::before,
@@ -1589,4 +1591,540 @@ button.ep-line:hover {
   color: #fff;
   background: var(--ep-teal);
   border-color: var(--ep-teal);
+}
+
+/* ---------- galleries: photos and clips from the slides ---------- */
+
+.ep-tiles {
+  display: grid;
+  gap: 0.9rem 0.8rem;
+  align-items: stretch;
+  margin: 0 auto;
+}
+
+.ep-tiles--c1 {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.ep-tiles--c2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ep-tiles--c3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.ep-tiles--c4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* a label that wraps to two lines pushes its media down; keep the media of a row aligned at the bottom */
+.ep-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ep-tile__label {
+  flex: 1 0 auto;
+  margin: 0 0 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ep-ink);
+}
+
+.ep-tile--crimson .ep-tile__label {
+  color: var(--ep-crimson);
+}
+
+.ep-tile--teal .ep-tile__label {
+  color: var(--ep-teal);
+}
+
+.ep-tile__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--ep-grey-lo);
+}
+
+.ep-tile__media--dark {
+  background: #000;
+}
+
+.ep-fig .ep-tile__media img,
+.ep-fig .ep-tile__media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+}
+
+.ep-fig .ep-tile__media--cover img,
+.ep-fig .ep-tile__media--cover video {
+  object-fit: cover;
+}
+
+.ep-tile__note {
+  margin-top: 0.35rem;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--ep-muted);
+}
+
+.ep-tiles--arrows {
+  column-gap: 1.7rem;
+}
+
+.ep-tiles--arrows > .ep-tile + .ep-tile::before {
+  content: "\2192";
+  position: absolute;
+  top: 50%;
+  left: -1.35rem;
+  width: 1rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  text-align: center;
+  color: var(--ep-muted);
+}
+
+.ep-credit {
+  padding: 0 0.95rem 0.75rem;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--ep-muted);
+}
+
+/* tiles that appear one click at a time (driven by the slide-build stepper) */
+.ep-reveal {
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.ep-fig.is-ready .ep-reveal > .ep-tile {
+  opacity: 0.1;
+  filter: grayscale(1);
+  transition:
+    opacity 0.5s ease,
+    filter 0.5s ease;
+}
+
+.ep-fig.is-ready .ep-reveal > .ep-tile.is-on {
+  opacity: 1;
+  filter: none;
+}
+
+/* ---------- what earlier approaches need: one row per approach ---------- */
+
+.ep-approaches__list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.5rem;
+}
+
+.ep-approach {
+  display: grid;
+  grid-template-columns: 6.6rem minmax(0, 0.85fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: 0.2rem 1rem;
+  padding: 0.5rem 0.8rem 0.5rem 0.5rem;
+  background: #fff;
+  border: 1px solid var(--ep-line);
+  border-radius: 10px;
+}
+
+.ep-approach__img {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--ep-line);
+  border-radius: 6px;
+}
+
+.ep-fig .ep-approach__img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+}
+
+.ep-approach__name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.ep-approach__credit {
+  margin-top: 0.2rem;
+  font-size: 0.7rem;
+  line-height: 1.3;
+  color: var(--ep-muted);
+}
+
+.ep-approach__needs {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ep-muted);
+}
+
+.ep-approach__need {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.ep-approach__detail {
+  margin-top: 0.15rem;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: var(--ep-muted);
+}
+
+.ep-approach--ours {
+  background: var(--ep-teal-tint);
+  border-color: #b9d7da;
+}
+
+.ep-approach--ours .ep-approach__name,
+.ep-approach--ours .ep-approach__need {
+  color: var(--ep-teal);
+}
+
+/* ---------- random commands (training regime) ---------- */
+
+.ep-cmds {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 15%;
+}
+
+.ep-cmds__scale {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.72rem;
+  line-height: 1;
+  color: var(--ep-muted);
+  border-bottom: 1.5px solid var(--ep-ink);
+}
+
+.ep-cmds__bar {
+  position: relative;
+  height: 0.85rem;
+  margin: 0.3rem 0;
+  border-radius: 2px;
+}
+
+.ep-cmds__knob {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin: -0.3rem 0 0 -0.34rem;
+  border-left: 0.34rem solid transparent;
+  border-right: 0.34rem solid transparent;
+  border-top: 0.6rem solid #fff;
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.75));
+  animation: 4.8s steps(1, end) infinite;
+}
+
+.ep-cmds__knob--1 {
+  left: 30%;
+  animation-name: ep-knob-1;
+}
+
+.ep-cmds__knob--2 {
+  left: 64%;
+  animation-name: ep-knob-2;
+}
+
+.ep-cmds__knob--3 {
+  left: 45%;
+  animation-name: ep-knob-3;
+}
+
+.ep-cmds__knob--4 {
+  left: 78%;
+  animation-name: ep-knob-4;
+}
+
+.ep-cmds__knob--5 {
+  left: 18%;
+  animation-name: ep-knob-5;
+}
+
+@keyframes ep-knob-1 {
+  0% {
+    left: 30%;
+  }
+  17% {
+    left: 72%;
+  }
+  33% {
+    left: 12%;
+  }
+  50% {
+    left: 55%;
+  }
+  67% {
+    left: 88%;
+  }
+  83% {
+    left: 41%;
+  }
+  100% {
+    left: 30%;
+  }
+}
+
+@keyframes ep-knob-2 {
+  0% {
+    left: 64%;
+  }
+  17% {
+    left: 20%;
+  }
+  33% {
+    left: 83%;
+  }
+  50% {
+    left: 36%;
+  }
+  67% {
+    left: 58%;
+  }
+  83% {
+    left: 9%;
+  }
+  100% {
+    left: 64%;
+  }
+}
+
+@keyframes ep-knob-3 {
+  0% {
+    left: 45%;
+  }
+  17% {
+    left: 91%;
+  }
+  33% {
+    left: 27%;
+  }
+  50% {
+    left: 70%;
+  }
+  67% {
+    left: 15%;
+  }
+  83% {
+    left: 62%;
+  }
+  100% {
+    left: 45%;
+  }
+}
+
+@keyframes ep-knob-4 {
+  0% {
+    left: 78%;
+  }
+  17% {
+    left: 40%;
+  }
+  33% {
+    left: 58%;
+  }
+  50% {
+    left: 10%;
+  }
+  67% {
+    left: 33%;
+  }
+  83% {
+    left: 86%;
+  }
+  100% {
+    left: 78%;
+  }
+}
+
+@keyframes ep-knob-5 {
+  0% {
+    left: 18%;
+  }
+  17% {
+    left: 52%;
+  }
+  33% {
+    left: 94%;
+  }
+  50% {
+    left: 23%;
+  }
+  67% {
+    left: 76%;
+  }
+  83% {
+    left: 47%;
+  }
+  100% {
+    left: 18%;
+  }
+}
+
+/* ---------- tabs: pick a body ---------- */
+
+.ep-tabpanel {
+  display: none;
+}
+
+.ep-tabpanel.is-on {
+  display: block;
+  animation: ep-fade-in 0.35s ease;
+}
+
+@keyframes ep-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.ep-tabpanel__title {
+  margin: 0 0 0.65rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ep-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ep-fig .ep-cmds__knob {
+    animation: none;
+  }
+}
+
+/* ---------- narrow figures ----------
+   The text column is 704px on a laptop, about 470-510px on small laptops and tablets, and the screen width on phones. */
+
+@media (max-width: 767px) {
+  .ep-fig {
+    font-size: 14px;
+  }
+}
+
+@container (max-width: 619px) {
+  .ep-cols,
+  .ep-planner__grid,
+  .ep-tool .ep-band {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ep-planner__grid > .ep-flow {
+    transform: rotate(90deg);
+  }
+
+  .ep-model {
+    min-height: 0;
+    padding: 2rem 0.6rem 0.9rem;
+  }
+
+  .ep-thesis {
+    font-size: 1.05rem;
+  }
+
+  .ep-cmd__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "in out"
+      "sliders sliders";
+  }
+
+  .ep-cmd__sliders {
+    width: 100%;
+    max-width: 22rem;
+    margin: 0 auto;
+  }
+
+  .ep-tiles--c4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@container (max-width: 430px) {
+  .ep-jac__flow {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 16rem;
+  }
+
+  .ep-jac__flow > .ep-flow {
+    transform: rotate(90deg);
+  }
+
+  .ep-fig .ep-jac__in img {
+    width: 40%;
+    margin: 0 auto;
+  }
+
+  .ep-jac__in .ep-label {
+    text-align: center;
+  }
+
+  .ep-approach {
+    grid-template-columns: 5rem minmax(0, 1fr);
+    align-items: start;
+    gap: 0.35rem 0.7rem;
+    padding: 0.5rem 0.6rem 0.55rem 0.5rem;
+  }
+
+  .ep-approach__img {
+    grid-row: 1 / span 2;
+  }
+
+  .ep-approach__name {
+    font-size: 0.9rem;
+  }
+
+  .ep-tiles {
+    gap: 0.7rem 0.6rem;
+  }
+
+  .ep-tiles--arrows {
+    column-gap: 1.2rem;
+  }
+
+  .ep-tiles--arrows > .ep-tile + .ep-tile::before {
+    left: -1.05rem;
+    font-size: 0.95rem;
+  }
+
+  .ep-tile__label {
+    font-size: 0.74rem;
+  }
+
+  .ep-cmds {
+    padding: 0 10%;
+  }
+
+  .ep-cmds__bar {
+    height: 0.6rem;
+    margin: 0.2rem 0;
+  }
 }

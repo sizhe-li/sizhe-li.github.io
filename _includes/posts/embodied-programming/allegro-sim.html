@@ -1,15 +1,21 @@
 {%- assign ep_vid = '/assets/video/embodied-programming/' | relative_url -%}
 <figure class="ep-fig ep-switch l-body" data-ep="switch" aria-label="A simulated 16-DoF hand follows two different prompts">
-<div class="ep-card">
-<div class="ep-bar ep-needs-js"><span class="ep-kicker">Prompt</span>
-<div class="ep-chips">
-<button type="button" class="ep-chip ep-chip--text" data-i="0" aria-pressed="true">“Rotate the cube clockwise”</button>
-<button type="button" class="ep-chip ep-chip--text" data-i="1" aria-pressed="false">“Rotate the cube counter-clockwise”</button>
-</div></div>
-<div class="ep-stage"><div class="ep-switch__screen">
-<video class="is-on" muted playsinline loop preload="metadata" src="{{ ep_vid }}vera_allegro_sim_clockwise.mp4"></video>
-<video muted playsinline loop preload="none" data-src="{{ ep_vid }}vera_allegro_sim_counterclockwise.mp4"></video>
-</div></div>
-</div>
-<figcaption class="caption">Closed-loop rollouts in simulation, each seen from three cameras. The full prompts end with “around the vertical axis”.</figcaption>
+  <div class="ep-card">
+    <div class="ep-bar ep-needs-js">
+      <span class="ep-kicker">Prompt</span>
+      <div class="ep-chips">
+        <button type="button" class="ep-chip ep-chip--text" data-i="0" aria-pressed="true">“Rotate the cube clockwise”</button>
+        <button type="button" class="ep-chip ep-chip--text" data-i="1" aria-pressed="false">“Rotate the cube counter-clockwise”</button>
+      </div>
+    </div>
+    <div class="ep-stage">
+      <div class="ep-switch__screen">
+        <video class="is-on" muted playsinline loop preload="metadata" src="{{ ep_vid }}vera_allegro_sim_clockwise.mp4"></video>
+        <video muted playsinline loop preload="none" data-src="{{ ep_vid }}vera_allegro_sim_counterclockwise.mp4"></video>
+      </div>
+    </div>
+  </div>
+  <figcaption class="caption">
+    Closed-loop rollouts in simulation, each seen from three cameras. The full prompts end with “around the vertical axis”.
+  </figcaption>
 </figure>

@@ -1,0 +1,80 @@
+{%- comment -%} Control results on three bodies: desired motion next to what the robot did. {%- endcomment -%} {%- assign ep_img =
+'/assets/img/embodied-programming/' | relative_url -%} {%- assign ep_vid = '/assets/video/embodied-programming/' | relative_url -%}
+<figure class="ep-fig ep-tabs l-body" data-ep="tabs" aria-label="Control results on three bodies: the desired motion next to what the robot did">
+  <div class="ep-card">
+    <div class="ep-bar ep-needs-js">
+      <span class="ep-kicker">Pick a body</span>
+      <div class="ep-chips">
+        <button type="button" class="ep-chip" data-i="0" aria-pressed="true">
+          <img src="{{ ep_img }}kin_pneu_in.webp" alt="" /><span>Pneumatic hand</span>
+        </button>
+        <button type="button" class="ep-chip" data-i="1" aria-pressed="false">
+          <img src="{{ ep_img }}kin_hsa_in.webp" alt="" /><span>HSA platform</span>
+        </button>
+        <button type="button" class="ep-chip" data-i="2" aria-pressed="false">
+          <img src="{{ ep_img }}kin_poppy_in.webp" alt="" /><span>Poppy arm</span>
+        </button>
+      </div>
+      <span class="ep-spacer"></span><button type="button" class="ep-btn ep-auto" aria-pressed="true">❚❚ Pause</button>
+    </div>
+    <div class="ep-stage">
+      <div class="ep-tabpanel is-on" data-name="Pneumatic hand" data-hold="8600">
+        <div class="ep-tabpanel__title">Closing the fingers under partial occlusion</div>
+        <div class="ep-tiles ep-tiles--c2">
+          <div class="ep-tile ep-tile--crimson">
+            <div class="ep-tile__label">Desired motion</div>
+            <div class="ep-tile__media" style="aspect-ratio: 4/3">
+              <video muted loop playsinline preload="none" src="{{ ep_vid }}pneumatic_occlusion_desired.mp4"></video>
+            </div>
+          </div>
+          <div class="ep-tile ep-tile--teal">
+            <div class="ep-tile__label">Execution</div>
+            <div class="ep-tile__media" style="aspect-ratio: 4/3">
+              <video muted loop playsinline preload="none" src="{{ ep_vid }}pneumatic_occlusion_execution.mp4"></video>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ep-tabpanel" data-name="HSA platform" data-hold="7200">
+        <div class="ep-tabpanel__title">Counter-clockwise rotation while carrying a 350 g load</div>
+        <div class="ep-tiles ep-tiles--c2">
+          <div class="ep-tile ep-tile--crimson">
+            <div class="ep-tile__label">Desired motion</div>
+            <div class="ep-tile__media" style="aspect-ratio: 4/3">
+              <video muted loop playsinline preload="none" data-src="{{ ep_vid }}hsa_load_desired.mp4"></video>
+            </div>
+          </div>
+          <div class="ep-tile ep-tile--teal">
+            <div class="ep-tile__label">Goal configuration</div>
+            <div class="ep-tile__media" style="aspect-ratio: 4/3">
+              <img
+                src="{{ ep_img }}hsa_load_goal.webp"
+                alt="The HSA platform at its goal configuration, carrying the load"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ep-tabpanel" data-name="Poppy arm" data-hold="11000">
+        <div class="ep-tabpanel__title">Tracing the letter M in the air</div>
+        <div class="ep-tiles ep-tiles--c2">
+          <div class="ep-tile ep-tile--crimson">
+            <div class="ep-tile__label">Desired motion</div>
+            <div class="ep-tile__media" style="aspect-ratio: 4/3">
+              <video muted loop playsinline preload="none" data-src="{{ ep_vid }}poppy_m_desired.mp4"></video>
+            </div>
+          </div>
+          <div class="ep-tile ep-tile--teal">
+            <div class="ep-tile__label">Achieved trajectory</div>
+            <div class="ep-tile__media" style="aspect-ratio: 4/3">
+              <video muted loop playsinline preload="none" data-src="{{ ep_vid }}poppy_m_achieved.mp4"></video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <figcaption class="caption">The target is only a motion in the world. Each body's Jacobian field turns it into that body's commands.</figcaption>
+</figure>

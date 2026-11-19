@@ -1,29 +1,67 @@
 {%- assign ep_img = '/assets/img/embodied-programming/' | relative_url -%}
-<figure class="ep-fig ep-tool l-page" data-ep="tool" aria-label="A multimodal agent calls the planner and body programs of this talk as one tool">
-<div class="ep-card">
-<div class="ep-bar ep-needs-js"><span class="ep-kicker">A program that calls this talk</span><span class="ep-spacer"></span><span class="ep-hint">click a line, or</span><button type="button" class="ep-btn ep-btn--primary ep-run">▶ Run</button></div>
-<div class="ep-stage">
-<div class="ep-band ep-band--grey-hi"><span class="ep-level">High level</span>
-<div><div class="ep-title">Multimodal agent</div><div class="ep-scope">e.g., Claude</div></div>
-<div class="ep-code">
-<div class="ep-line ep-line--comment"><code># goal: set the table for two</code></div>
-<button type="button" class="ep-line" data-call="look"><code>look()</code><span class="ep-ret">→ camera images</span></button>
-<button type="button" class="ep-line" data-call="act" data-arg="put a plate at each seat"><code><b>act</b>("put a plate at each seat")</code><span class="ep-ret">→ done</span></button>
-<button type="button" class="ep-line" data-call="act" data-arg="put a cup next to each plate"><code><b>act</b>("put a cup next to each plate")</code><span class="ep-ret">→ done</span></button>
-</div>
-</div>
-<div class="ep-wire"><span class="ep-wire__line"></span><span class="ep-wire__dot"></span><span class="ep-wire__label">tool call</span></div>
-<div class="ep-band ep-band--grey-lo"><span class="ep-level">Low level</span>
-<div><div class="ep-title">Toolkits</div><div class="ep-scope">= this talk is one instantiation</div></div>
-<div class="ep-toolbox">
-<div class="ep-toolbox__tab"><code>act(<span class="ep-arg">instruction</span>)</code></div>
-<div class="ep-mini ep-mini--plan"><span>Visual planning program</span><div class="ep-mini__imgs"><img src="{{ ep_img }}plan_1.jpg" alt="" loading="lazy"><img src="{{ ep_img }}plan_2.jpg" alt="" loading="lazy"><img src="{{ ep_img }}plan_3.jpg" alt="" loading="lazy"></div></div>
-<div class="ep-mini__pill">Effects in the world</div>
-<div class="ep-mini ep-mini--body"><span>Body programs</span><div class="ep-mini__imgs"><img src="{{ ep_img }}body_pneumatic.jpg" alt="" loading="lazy"><img src="{{ ep_img }}body_arm.jpg" alt="" loading="lazy"><img src="{{ ep_img }}body_panda.jpg" alt="" loading="lazy"><img src="{{ ep_img }}body_allegro.jpg" alt="" loading="lazy"></div></div>
-</div>
-</div>
-<div class="ep-thesis ep-thesis--plain"><b>Programs have a recursive structure:</b> a whole system becomes one call in a larger program.</div>
-</div>
-</div>
-<figcaption class="caption">A sketch of where this could go, not something we have built. Each <code>act(...)</code> call runs everything in this talk: a video plan, then a body program.</figcaption>
+<figure class="ep-fig ep-tool l-body" data-ep="tool" aria-label="A multimodal agent calls the planner and body programs of this talk as one tool">
+  <div class="ep-card">
+    <div class="ep-bar ep-needs-js">
+      <span class="ep-kicker">A program that calls this talk</span><span class="ep-spacer"></span><span class="ep-hint">click a line, or</span
+      ><button type="button" class="ep-btn ep-btn--primary ep-run">▶ Run</button>
+    </div>
+    <div class="ep-stage">
+      <div class="ep-band ep-band--grey-hi">
+        <span class="ep-level">High level</span>
+        <div>
+          <div class="ep-title">Multimodal agent</div>
+          <div class="ep-scope">e.g., Claude</div>
+        </div>
+        <div class="ep-code">
+          <div class="ep-line ep-line--comment"><code># goal: set the table for two</code></div>
+          <button type="button" class="ep-line" data-call="look"><code>look()</code><span class="ep-ret">→ camera images</span></button>
+          <button type="button" class="ep-line" data-call="act" data-arg="put a plate at each seat">
+            <code><b>act</b>("put a plate at each seat")</code><span class="ep-ret">→ done</span>
+          </button>
+          <button type="button" class="ep-line" data-call="act" data-arg="put a cup next to each plate">
+            <code><b>act</b>("put a cup next to each plate")</code><span class="ep-ret">→ done</span>
+          </button>
+        </div>
+      </div>
+      <div class="ep-wire"><span class="ep-wire__line"></span><span class="ep-wire__dot"></span><span class="ep-wire__label">tool call</span></div>
+      <div class="ep-band ep-band--grey-lo">
+        <span class="ep-level">Low level</span>
+        <div>
+          <div class="ep-title">Toolkits</div>
+          <div class="ep-scope">= this talk is one instantiation</div>
+        </div>
+        <div class="ep-toolbox">
+          <div class="ep-toolbox__tab">
+            <code>act(<span class="ep-arg">instruction</span>)</code>
+          </div>
+          <div class="ep-mini ep-mini--plan">
+            <span>Visual planning program</span>
+            <div class="ep-mini__imgs">
+              <img src="{{ ep_img }}plan_1.jpg" alt="" loading="lazy" /><img src="{{ ep_img }}plan_2.jpg" alt="" loading="lazy" /><img
+                src="{{ ep_img }}plan_3.jpg"
+                alt=""
+                loading="lazy"
+              />
+            </div>
+          </div>
+          <div class="ep-mini__pill">Effects in the world</div>
+          <div class="ep-mini ep-mini--body">
+            <span>Body programs</span>
+            <div class="ep-mini__imgs">
+              <img src="{{ ep_img }}body_pneumatic.jpg" alt="" loading="lazy" /><img src="{{ ep_img }}body_arm.jpg" alt="" loading="lazy" /><img
+                src="{{ ep_img }}body_panda.jpg"
+                alt=""
+                loading="lazy"
+              /><img src="{{ ep_img }}body_allegro.jpg" alt="" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ep-thesis ep-thesis--plain"><b>Programs have a recursive structure:</b> a whole system becomes one call in a larger program.</div>
+    </div>
+  </div>
+  <figcaption class="caption">
+    A sketch of where this could go, not something we have built. Each <code>act(...)</code> call runs everything in this talk: a video plan, then a
+    body program.
+  </figcaption>
 </figure>

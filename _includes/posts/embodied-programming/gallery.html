@@ -1,0 +1,113 @@
+{%- comment -%} Photos and clips from a slide, side by side, each with a short label above it (like the slide headings). items: tiles separated by
+";;", fields by "::" -> kind::file::label::note::tone::aspect kind img | vid | cmds (animated random commands, no file) file in
+assets/img/embodied-programming/ (img) or assets/video/embodied-programming/ (vid) tone c = crimson label, t = teal label, empty = plain aspect this
+tile's aspect ratio (reserves the space before a lazy image loads) Options: cols (1-4, default = number of tiles), template (a custom
+grid-template-columns, e.g. "2.6fr 1fr"), aspect (tile aspect ratio, e.g. "4/3"), cover (crop media to fill the tile), dark (black tiles), arrows (an
+arrow between tiles), zoom (click a photo to enlarge it), reveal + captions ("|"-separated, one per tile): the tiles appear one at a time, like the
+slide's clicks, kicker, caption, credit, max (CSS max-width of the tiles; the card is always as wide as the text), alt. {%- endcomment -%} {%- assign
+ep_img = '/assets/img/embodied-programming/' | relative_url -%} {%- assign ep_vid = '/assets/video/embodied-programming/' | relative_url -%} {%-
+assign ep_items = include.items | split: ";;" -%} {%- assign ep_n = ep_items | size -%} {%- assign ep_cols = include.cols | default: ep_n -%}
+<figure
+  class="ep-fig ep-gallery{% if include.reveal %} ep-stepper{% endif %} l-body"
+  {%
+  if
+  include.reveal
+  %}
+  data-ep="stepper"
+  tabindex="0"
+  {%
+  endif
+  %}
+  aria-label="{{ include.alt }}"
+>
+  <div class="ep-card">
+    {%- if include.reveal %}
+    <div class="ep-bar ep-needs-js">
+      <span class="ep-kicker">{{ include.kicker | default: "Step through the slide" }}</span><span class="ep-spacer"></span
+      ><span class="ep-dots"></span><button type="button" class="ep-btn ep-play" aria-pressed="true" aria-label="Pause the animation">❚❚</button
+      ><button type="button" class="ep-btn ep-prev" aria-label="Previous step">←</button
+      ><button type="button" class="ep-btn ep-next" aria-label="Next step">→</button>
+    </div>
+    {%- elsif include.kicker %}
+    <div class="ep-bar"><span class="ep-kicker">{{ include.kicker }}</span></div>
+    {%- endif %}
+    <div
+      class="ep-stage ep-tiles{% if include.template %} ep-tiles--custom{% else %} ep-tiles--c{{ ep_cols }}{% endif %}{% if include.reveal %} ep-reveal{% endif %}{% if include.arrows %} ep-tiles--arrows{% endif %}"
+      style="{% if include.template %}grid-template-columns: {{ include.template }};{% endif %}{% if include.max %} max-width: {{ include.max }};{% endif %}"
+    >
+      {%- for ep_it in ep_items -%} {%- assign f = ep_it | strip | split: "::" -%} {%- assign ep_label = f[2] | strip -%} {%- assign ep_note = f[3] |
+      strip -%}
+      <div class="ep-tile{% if f[4] == 'c' %} ep-tile--crimson{% elsif f[4] == 't' %} ep-tile--teal{% endif %}">
+        {%- if ep_label != "" %}
+        <div class="ep-tile__label">{{ ep_label }}</div>
+        {% endif -%}
+        <div
+          class="ep-tile__media{% if include.dark %} ep-tile__media--dark{% endif %}{% if include.cover %} ep-tile__media--cover{% endif %}"
+          {%
+          if
+          include.aspect
+          %}
+          style="aspect-ratio: {{ include.aspect }};"
+          {%
+          elsif
+          f[5]
+          %}
+          style="aspect-ratio: {{ f[5] }};"
+          {%
+          endif
+          %}
+        >
+          {%- if f[0] == "vid" -%}
+          <video
+            loop
+            muted
+            playsinline
+            preload="metadata"
+            data-autoplay
+            src="{{ ep_vid }}{{ f[1] }}"
+            aria-label="{{ ep_label | strip_html }}"
+          ></video>
+          {%- elsif f[0] == "cmds" -%}
+          <div class="ep-cmds" aria-hidden="true">
+            <div class="ep-cmds__scale"><span>-1</span><span>0</span><span>1</span></div>
+            {%- assign ep_colors = "#ffd966,#2e75b6,#c565e4,#70ad47,#d0194e" | split: "," -%} {%- for ep_c in ep_colors -%}
+            <div class="ep-cmds__bar" style="background: {{ ep_c }};"><i class="ep-cmds__knob ep-cmds__knob--{{ forloop.index }}"></i></div>
+            {%- endfor -%}
+          </div>
+          {%- else -%}
+          <img
+            src="{{ ep_img }}{{ f[1] }}"
+            alt="{{ ep_label | strip_html }}"
+            loading="lazy"
+            decoding="async"
+            {%
+            if
+            include.zoom
+            %}
+            data-zoomable{%
+            endif
+            %}
+          />
+          {%- endif -%}
+        </div>
+        {%- if ep_note != "" %}
+        <div class="ep-tile__note">{{ ep_note }}</div>
+        {% endif -%}
+      </div>
+      {%- endfor -%}
+    </div>
+    {%- if include.reveal %} {%- assign ep_caps = include.captions | split: "|" -%}
+    <div class="ep-step" aria-live="polite"><span class="ep-step__n"></span><span class="ep-step__text"></span></div>
+    <ol class="ep-captions">
+      {% for c in ep_caps %}
+      <li>{{ c | strip }}</li>
+      {% endfor %}
+    </ol>
+    {%- endif %} {%- if include.credit %}
+    <div class="ep-credit">{{ include.credit }}</div>
+    {%- endif %}
+  </div>
+  {%- if include.caption %}
+  <figcaption class="caption">{{ include.caption }}</figcaption>
+  {%- endif %}
+</figure>

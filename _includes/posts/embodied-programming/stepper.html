@@ -1,21 +1,39 @@
-{%- comment -%}
-  A slide build: the click states of one slide, stacked, with the sentence that goes with each click.
-  Parameters: name (file prefix in assets/img/embodied-programming/steps), count, aspect ("1400/818"),
-  captions (one per state, separated by |), alt, caption, kicker (optional), wide (optional: use the page width), max (optional: a CSS max-width).
-{%- endcomment -%}
-{%- assign ep_caps = include.captions | split: "|" -%}
-<figure class="ep-fig ep-stepper {% if include.wide %}l-page{% else %}l-body{% endif %}" data-ep="stepper" tabindex="0" aria-label="{{ include.alt }}"{% if include.max %} style="width: 100%; max-width: {{ include.max }}; margin-left: auto; margin-right: auto;"{% endif %}>
-<div class="ep-card">
-<div class="ep-bar ep-needs-js"><span class="ep-kicker">{{ include.kicker | default: "Step through the slide" }}</span><span class="ep-spacer"></span><span class="ep-dots"></span><button type="button" class="ep-btn ep-play" aria-pressed="true" aria-label="Pause the animation">❚❚</button><button type="button" class="ep-btn ep-prev" aria-label="Previous step">←</button><button type="button" class="ep-btn ep-next" aria-label="Next step">→</button></div>
-<div class="ep-stage ep-stack" style="aspect-ratio: {{ include.aspect }};">
-{%- for i in (1..include.count) -%}
-<img src="{{ '/assets/img/embodied-programming/steps/' | append: include.name | append: '-' | append: forloop.index0 | append: '.webp' | relative_url }}" alt="{% if forloop.last %}{{ include.alt }}{% endif %}" {% unless forloop.first %}loading="lazy" {% endunless %}decoding="async" draggable="false">
-{%- endfor -%}
-</div>
-<div class="ep-step" aria-live="polite"><span class="ep-step__n"></span><span class="ep-step__text"></span></div>
-<ol class="ep-captions">{% for c in ep_caps %}<li>{{ c | strip }}</li>{% endfor %}</ol>
-</div>
-{%- if include.caption %}
-<figcaption class="caption">{{ include.caption }}</figcaption>
-{%- endif %}
+{%- comment -%} A slide build: the click states of one slide, stacked, with the sentence that goes with each click. Parameters: name (file prefix in
+assets/img/embodied-programming/steps), count, aspect ("1400/818"), captions (one per state, separated by |), alt, caption, kicker (optional), max
+(optional: a CSS max-width for the picture; the card itself is always as wide as the text). {%- endcomment -%} {%- assign ep_caps = include.captions |
+split: "|" -%}
+<figure class="ep-fig ep-stepper l-body" data-ep="stepper" tabindex="0" aria-label="{{ include.alt }}">
+  <div class="ep-card">
+    <div class="ep-bar ep-needs-js">
+      <span class="ep-kicker">{{ include.kicker | default: "Step through the slide" }}</span><span class="ep-spacer"></span
+      ><span class="ep-dots"></span><button type="button" class="ep-btn ep-play" aria-pressed="true" aria-label="Pause the animation">❚❚</button
+      ><button type="button" class="ep-btn ep-prev" aria-label="Previous step">←</button
+      ><button type="button" class="ep-btn ep-next" aria-label="Next step">→</button>
+    </div>
+    <div class="ep-stage ep-stack" style="aspect-ratio: {{ include.aspect }}{% if include.max %}; max-width: {{ include.max }}{% endif %}">
+      {%- for i in (1..include.count) -%}
+      <img
+        src="{{ '/assets/img/embodied-programming/steps/' | append: include.name | append: '-' | append: forloop.index0 | append: '.webp' | relative_url }}"
+        alt="{% if forloop.last %}{{ include.alt }}{% endif %}"
+        {%
+        unless
+        forloop.first
+        %}loading="lazy"
+        {%
+        endunless
+        %}decoding="async"
+        draggable="false"
+      />
+      {%- endfor -%}
+    </div>
+    <div class="ep-step" aria-live="polite"><span class="ep-step__n"></span><span class="ep-step__text"></span></div>
+    <ol class="ep-captions">
+      {% for c in ep_caps %}
+      <li>{{ c | strip }}</li>
+      {% endfor %}
+    </ol>
+  </div>
+  {%- if include.caption %}
+  <figcaption class="caption">{{ include.caption }}</figcaption>
+  {%- endif %}
 </figure>

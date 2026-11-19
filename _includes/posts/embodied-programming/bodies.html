@@ -1,0 +1,112 @@
+{%- comment -%} Four bodies, one model: input image, predicted color, depth and Jacobian field for each body. {%- endcomment -%} {%- assign ep_img =
+'/assets/img/embodied-programming/' | relative_url -%} {%- assign ep_vid = '/assets/video/embodied-programming/' | relative_url -%} {%- capture
+ep_cols -%}Input image|Predicted color|Predicted depth|Predicted Jacobian field{%- endcapture -%} {%- assign ep_cols = ep_cols | split: "|" -%} {%-
+assign ep_bodies = "pneu:Pneumatic hand:img,allegro:Allegro hand:vid,hsa:HSA platform:img,poppy:Poppy arm:img" | split: "," -%}
+<figure
+  class="ep-fig ep-tabs l-body"
+  data-ep="tabs"
+  aria-label="For four different bodies, the model recovers color, depth and the Jacobian field from a single image"
+>
+  <div class="ep-card">
+    <div class="ep-bar ep-needs-js">
+      <span class="ep-kicker">Pick a body</span>
+      <div class="ep-chips">
+        {%- for ep_b in ep_bodies -%} {%- assign b = ep_b | split: ":" -%}
+        <button type="button" class="ep-chip" data-i="{{ forloop.index0 }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">
+          <img src="{{ ep_img }}kin_{{ b[0] }}_in.webp" alt="" /><span>{{ b[1] }}</span>
+        </button>
+        {%- endfor -%}
+      </div>
+      <span class="ep-spacer"></span><button type="button" class="ep-btn ep-auto" aria-pressed="true">❚❚ Pause</button>
+    </div>
+    <div class="ep-stage">
+      {%- for ep_b in ep_bodies -%} {%- assign b = ep_b | split: ":" -%} {%- assign ep_first = forloop.first -%}
+      <div class="ep-tabpanel{% if ep_first %} is-on{% endif %}" data-name="{{ b[1] }}">
+        <div class="ep-tiles ep-tiles--c4">
+          <div class="ep-tile">
+            <div class="ep-tile__label">{{ ep_cols[0] }}</div>
+            <div class="ep-tile__media" style="aspect-ratio: 4/3">
+              {%- if b[2] == "vid" -%}<video
+                muted
+                loop
+                playsinline
+                preload="none"
+                {%
+                if
+                ep_first
+                %}src{%
+                else
+                %}data-src{%
+                endif
+                %}="{{ ep_vid }}kin_{{ b[0] }}_in.mp4"
+              ></video>
+              {%- else -%}<img src="{{ ep_img }}kin_{{ b[0] }}_in.webp" alt="{{ b[1] }}, input image" loading="lazy" decoding="async" />{%- endif -%}
+            </div>
+          </div>
+          <div class="ep-tile">
+            <div class="ep-tile__label">{{ ep_cols[1] }}</div>
+            <div class="ep-tile__media" style="aspect-ratio: 4/3">
+              <video
+                muted
+                loop
+                playsinline
+                preload="none"
+                {%
+                if
+                ep_first
+                %}src{%
+                else
+                %}data-src{%
+                endif
+                %}="{{ ep_vid }}kin_{{ b[0] }}_rgb.mp4"
+              ></video>
+            </div>
+          </div>
+          <div class="ep-tile">
+            <div class="ep-tile__label">{{ ep_cols[2] }}</div>
+            <div class="ep-tile__media" style="aspect-ratio: 4/3">
+              <video
+                muted
+                loop
+                playsinline
+                preload="none"
+                {%
+                if
+                ep_first
+                %}src{%
+                else
+                %}data-src{%
+                endif
+                %}="{{ ep_vid }}kin_{{ b[0] }}_depth.mp4"
+              ></video>
+            </div>
+          </div>
+          <div class="ep-tile ep-tile--teal">
+            <div class="ep-tile__label">{{ ep_cols[3] }}</div>
+            <div class="ep-tile__media" style="aspect-ratio: 4/3">
+              <video
+                muted
+                loop
+                playsinline
+                preload="none"
+                {%
+                if
+                ep_first
+                %}src{%
+                else
+                %}data-src{%
+                endif
+                %}="{{ ep_vid }}kin_{{ b[0] }}_jac.mp4"
+              ></video>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%- endfor -%}
+    </div>
+  </div>
+  <figcaption class="caption">
+    Each body learns its own model from its own experience. In the Jacobian field, each color is one command channel, and shows which parts of the
+    body that command moves. HSA: handed shearing auxetics, a soft, compliant wrist.
+  </figcaption>
+</figure>

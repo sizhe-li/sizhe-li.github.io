@@ -1,56 +1,124 @@
 {%- assign ep_img = '/assets/img/embodied-programming/' | relative_url -%}
-<figure class="ep-fig ep-slots l-page" data-ep="slots" aria-label="A shared action placeholder compared with effects in the world and one body program per body">
-<div class="ep-card">
-<div class="ep-bar ep-needs-js"><span class="ep-kicker">Pick a body</span>
-<div class="ep-chips">
-<button type="button" class="ep-chip" data-body="arm" aria-pressed="false"><img src="{{ ep_img }}body_arm.jpg" alt=""><span>Articulated arm</span></button>
-<button type="button" class="ep-chip" data-body="panda" aria-pressed="false"><img src="{{ ep_img }}body_panda.jpg" alt=""><span>Panda arm</span></button>
-<button type="button" class="ep-chip" data-body="allegro" aria-pressed="false"><img src="{{ ep_img }}body_allegro.jpg" alt=""><span>Allegro hand</span></button>
-<button type="button" class="ep-chip" data-body="pneumatic" aria-pressed="false"><img src="{{ ep_img }}body_pneumatic.jpg" alt=""><span>Pneumatic hand</span></button>
-</div>
-<span class="ep-spacer"></span><button type="button" class="ep-btn ep-auto" aria-pressed="true">❚❚ Pause</button></div>
-<div class="ep-stage">
-<div class="ep-cols">
-<div class="ep-col ep-col--std">
-<div class="ep-col__head"><b>Standard approach</b><span>generative action modeling</span></div>
-<div class="ep-band ep-band--grey-hi"><span class="ep-level">High level</span><div class="ep-title">Generative action model</div><div class="ep-scope">shared across robots</div></div>
-<div class="ep-mid">
-<div class="ep-label">Action placeholder<span>one vector, every robot</span></div>
-<div class="ep-slotrow">
-<div class="ep-slotgroup" style="--n: 7;"><span>arm joints</span><div>{% for i in (1..7) %}<i></i>{% endfor %}</div></div>
-<div class="ep-slotgroup" style="--n: 3;"><span>gripper</span><div>{% for i in (1..3) %}<i></i>{% endfor %}</div></div>
-<div class="ep-slotgroup" style="--n: 6;"><span>end-effector</span><div>{% for i in (1..6) %}<i></i>{% endfor %}</div></div>
-<div class="ep-slotgroup" style="--n: 3;"><span>base</span><div>{% for i in (1..3) %}<i></i>{% endfor %}</div></div>
-<div class="ep-slotgroup" style="--n: 5;"><span>reserved</span><div>{% for i in (1..5) %}<i></i>{% endfor %}</div></div>
-<div class="ep-stamp"></div>
-</div>
-</div>
-<div class="ep-band ep-band--grey-lo"><span class="ep-level">Low level</span><div class="ep-title">Fit every robot into slots</div><div class="ep-scope">slots defined ahead of time</div>
-<div class="ep-try ep-needs-js"><img src="{{ ep_img }}body_arm.jpg" alt=""><div class="ep-try__text"><b>Articulated arm</b><span>6 motor commands</span></div><div class="ep-vector"></div></div>
-<div class="ep-verdict ep-needs-js" aria-live="polite"></div>
-</div>
-</div>
-<div class="ep-col ep-col--ours">
-<div class="ep-col__head"><b>This talk</b><span>embodied programming</span></div>
-<div class="ep-band ep-band--crimson"><span class="ep-level">High level</span><div class="ep-title">Visual planning program</div><div class="ep-scope">shared across bodies</div></div>
-<div class="ep-mid">
-<div class="ep-label">Effects in the world<span>generated video plan</span></div>
-<div class="ep-plan"><span class="ep-prompt">“Place the yellow cube on top of the lego block”</span><span class="ep-arrow">→</span><img src="{{ ep_img }}plan_1.jpg" alt="" loading="lazy"><img src="{{ ep_img }}plan_2.jpg" alt="" loading="lazy"><img src="{{ ep_img }}plan_3.jpg" alt="" loading="lazy"></div>
-</div>
-<div class="ep-band ep-band--teal"><span class="ep-level">Low level</span><div class="ep-title">Body programs</div><div class="ep-scope">constructed per body</div>
-<div class="ep-bodies">
-<button type="button" class="ep-body" data-body="pneumatic"><img src="{{ ep_img }}body_pneumatic.jpg" alt="" loading="lazy"><b>Pneumatic hand</b><span>pressure commands</span></button>
-<button type="button" class="ep-body" data-body="arm"><img src="{{ ep_img }}body_arm.jpg" alt="" loading="lazy"><b>Articulated arm</b><span>motor commands</span></button>
-<button type="button" class="ep-body" data-body="panda"><img src="{{ ep_img }}body_panda.jpg" alt="" loading="lazy"><b>Panda arm</b><span>end-effector commands</span></button>
-<button type="button" class="ep-body" data-body="allegro"><img src="{{ ep_img }}body_allegro.jpg" alt="" loading="lazy"><b>Allegro hand</b><span>16 joint commands</span></button>
-</div>
-<div class="ep-out ep-needs-js"><span class="ep-out__label">body program →</span><div class="ep-vector ep-vector--teal"></div></div>
-<div class="ep-verdict ep-verdict--teal ep-needs-js" aria-live="polite"></div>
-</div>
-</div>
-</div>
-<div class="ep-thesis">Embodiment generalization <em>need not be a distinct learning problem.</em></div>
-</div>
-</div>
-<figcaption class="caption">Pick a body. On the left it has to fit a placeholder that was defined ahead of time (a 24-slot schematic, not RDT-1B's exact 128-slot layout). On the right the same video plan goes through that body's own body program.</figcaption>
+<figure
+  class="ep-fig ep-slots l-body"
+  data-ep="slots"
+  aria-label="A shared action placeholder compared with effects in the world and one body program per body"
+>
+  <div class="ep-card">
+    <div class="ep-bar ep-needs-js">
+      <span class="ep-kicker">Pick a body</span>
+      <div class="ep-chips">
+        <button type="button" class="ep-chip" data-body="arm" aria-pressed="false">
+          <img src="{{ ep_img }}body_arm.jpg" alt="" /><span>Articulated arm</span>
+        </button>
+        <button type="button" class="ep-chip" data-body="panda" aria-pressed="false">
+          <img src="{{ ep_img }}body_panda.jpg" alt="" /><span>Panda arm</span>
+        </button>
+        <button type="button" class="ep-chip" data-body="allegro" aria-pressed="false">
+          <img src="{{ ep_img }}body_allegro.jpg" alt="" /><span>Allegro hand</span>
+        </button>
+        <button type="button" class="ep-chip" data-body="pneumatic" aria-pressed="false">
+          <img src="{{ ep_img }}body_pneumatic.jpg" alt="" /><span>Pneumatic hand</span>
+        </button>
+      </div>
+      <span class="ep-spacer"></span><button type="button" class="ep-btn ep-auto" aria-pressed="true">❚❚ Pause</button>
+    </div>
+    <div class="ep-stage">
+      <div class="ep-cols">
+        <div class="ep-col ep-col--std">
+          <div class="ep-col__head"><b>Standard approach</b><span>generative action modeling</span></div>
+          <div class="ep-band ep-band--grey-hi">
+            <span class="ep-level">High level</span>
+            <div class="ep-title">Generative action model</div>
+            <div class="ep-scope">shared across robots</div>
+          </div>
+          <div class="ep-mid">
+            <div class="ep-label">Action placeholder<span>one vector, every robot</span></div>
+            <div class="ep-slotrow">
+              <div class="ep-slotgroup" style="--n: 7">
+                <span>arm joints</span>
+                <div>{% for i in (1..7) %}<i></i>{% endfor %}</div>
+              </div>
+              <div class="ep-slotgroup" style="--n: 3">
+                <span>gripper</span>
+                <div>{% for i in (1..3) %}<i></i>{% endfor %}</div>
+              </div>
+              <div class="ep-slotgroup" style="--n: 6">
+                <span>end-effector</span>
+                <div>{% for i in (1..6) %}<i></i>{% endfor %}</div>
+              </div>
+              <div class="ep-slotgroup" style="--n: 3">
+                <span>base</span>
+                <div>{% for i in (1..3) %}<i></i>{% endfor %}</div>
+              </div>
+              <div class="ep-slotgroup" style="--n: 5">
+                <span>reserved</span>
+                <div>{% for i in (1..5) %}<i></i>{% endfor %}</div>
+              </div>
+              <div class="ep-stamp"></div>
+            </div>
+          </div>
+          <div class="ep-band ep-band--grey-lo">
+            <span class="ep-level">Low level</span>
+            <div class="ep-title">Fit every robot into slots</div>
+            <div class="ep-scope">slots defined ahead of time</div>
+            <div class="ep-try ep-needs-js">
+              <img src="{{ ep_img }}body_arm.jpg" alt="" />
+              <div class="ep-try__text"><b>Articulated arm</b><span>6 motor commands</span></div>
+              <div class="ep-vector"></div>
+            </div>
+            <div class="ep-verdict ep-needs-js" aria-live="polite"></div>
+          </div>
+        </div>
+        <div class="ep-col ep-col--ours">
+          <div class="ep-col__head"><b>This talk</b><span>embodied programming</span></div>
+          <div class="ep-band ep-band--crimson">
+            <span class="ep-level">High level</span>
+            <div class="ep-title">Visual planning program</div>
+            <div class="ep-scope">shared across bodies</div>
+          </div>
+          <div class="ep-mid">
+            <div class="ep-label">Effects in the world<span>generated video plan</span></div>
+            <div class="ep-plan">
+              <span class="ep-prompt">“Place the yellow cube on top of the lego block”</span><span class="ep-arrow">→</span
+              ><img src="{{ ep_img }}plan_1.jpg" alt="" loading="lazy" /><img src="{{ ep_img }}plan_2.jpg" alt="" loading="lazy" /><img
+                src="{{ ep_img }}plan_3.jpg"
+                alt=""
+                loading="lazy"
+              />
+            </div>
+          </div>
+          <div class="ep-band ep-band--teal">
+            <span class="ep-level">Low level</span>
+            <div class="ep-title">Body programs</div>
+            <div class="ep-scope">constructed per body</div>
+            <div class="ep-bodies">
+              <button type="button" class="ep-body" data-body="pneumatic">
+                <img src="{{ ep_img }}body_pneumatic.jpg" alt="" loading="lazy" /><b>Pneumatic hand</b><span>pressure commands</span>
+              </button>
+              <button type="button" class="ep-body" data-body="arm">
+                <img src="{{ ep_img }}body_arm.jpg" alt="" loading="lazy" /><b>Articulated arm</b><span>motor commands</span>
+              </button>
+              <button type="button" class="ep-body" data-body="panda">
+                <img src="{{ ep_img }}body_panda.jpg" alt="" loading="lazy" /><b>Panda arm</b><span>end-effector commands</span>
+              </button>
+              <button type="button" class="ep-body" data-body="allegro">
+                <img src="{{ ep_img }}body_allegro.jpg" alt="" loading="lazy" /><b>Allegro hand</b><span>16 joint commands</span>
+              </button>
+            </div>
+            <div class="ep-out ep-needs-js">
+              <span class="ep-out__label">body program →</span>
+              <div class="ep-vector ep-vector--teal"></div>
+            </div>
+            <div class="ep-verdict ep-verdict--teal ep-needs-js" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+      <div class="ep-thesis">Embodiment generalization <em>need not be a distinct learning problem.</em></div>
+    </div>
+  </div>
+  <figcaption class="caption">
+    Pick a body. On the left it has to fit a placeholder that was defined ahead of time (a 24-slot schematic, not RDT-1B's exact 128-slot layout). On
+    the right the same video plan goes through that body's own body program.
+  </figcaption>
 </figure>

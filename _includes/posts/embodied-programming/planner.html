@@ -1,33 +1,50 @@
-{%- assign ep_img = '/assets/img/embodied-programming/' | relative_url -%}
-{%- assign ep_vid = '/assets/video/embodied-programming/' | relative_url -%}
-<figure class="ep-fig ep-planner l-page" data-ep="planner" aria-label="The video planner: observed frames and an instruction go into pretrained Wan, a video plan comes out">
-<div class="ep-card">
-<div class="ep-bar ep-needs-js"><span class="ep-kicker">Pick an instruction</span>
-<div class="ep-chips">
-<button type="button" class="ep-chip ep-chip--text" data-row="0" aria-pressed="true">“Approach the cup”</button>
-<button type="button" class="ep-chip ep-chip--text" data-row="1" aria-pressed="false">“Approach the lego block”</button>
-<button type="button" class="ep-chip ep-chip--text" data-row="2" aria-pressed="false">“Approach the tennis ball”</button>
-</div></div>
-<div class="ep-stage ep-planner__grid">
-<div>
-<div class="ep-label">Observed frames</div>
-<div class="ep-views"><span>External 1</span><span>External 2</span><span>Wrist</span></div>
-<img class="ep-strip" src="{{ ep_img }}planner_observed.jpg" alt="Three camera views of the scene, tiled into one wide frame">
-<div class="ep-label ep-label--gap">Future frames start as noise</div>
-<img class="ep-strip" src="{{ ep_img }}planner_noise.png" alt="" loading="lazy">
-<div class="ep-instr"><span class="ep-prompt">“Approach the cup”</span></div>
-</div>
-<div class="ep-flow" aria-hidden="true">→</div>
-<div class="ep-model"><span class="ep-pill">Pretrained</span><div class="ep-model__name">Wan</div><div class="ep-model__what">video diffusion transformer</div><div class="ep-model__size">14B parameters</div><div class="ep-model__note">No architecture change.<br>No action head.</div></div>
-<div class="ep-flow" aria-hidden="true">→</div>
-<div>
-<div class="ep-label ep-label--crimson">Generated video plan</div>
-<div class="ep-crop"><video muted playsinline loop preload="auto" src="{{ ep_vid }}vera_instruction_following.mp4"></video><img class="ep-noise" src="{{ ep_img }}planner_noise.png" alt="" loading="lazy"></div>
-<div class="ep-progress"><span></span></div>
-<div class="ep-out__note"></div>
-</div>
-</div>
-<div class="ep-step" aria-live="polite"><span class="ep-step__text">The gripper moves to the cup.</span></div>
-</div>
-<figcaption class="caption">All three plans start from the same camera images. Only the instruction changes. Frames outlined in red are the observed ones.</figcaption>
+{%- assign ep_img = '/assets/img/embodied-programming/' | relative_url -%} {%- assign ep_vid = '/assets/video/embodied-programming/' | relative_url
+-%}
+<figure
+  class="ep-fig ep-planner l-body"
+  data-ep="planner"
+  aria-label="The video planner: observed frames and an instruction go into pretrained Wan, a video plan comes out"
+>
+  <div class="ep-card">
+    <div class="ep-bar ep-needs-js">
+      <span class="ep-kicker">Pick an instruction</span>
+      <div class="ep-chips">
+        <button type="button" class="ep-chip ep-chip--text" data-row="0" aria-pressed="true">“Approach the cup”</button>
+        <button type="button" class="ep-chip ep-chip--text" data-row="1" aria-pressed="false">“Approach the lego block”</button>
+        <button type="button" class="ep-chip ep-chip--text" data-row="2" aria-pressed="false">“Approach the tennis ball”</button>
+      </div>
+    </div>
+    <div class="ep-stage ep-planner__grid">
+      <div>
+        <div class="ep-label">Observed frames</div>
+        <div class="ep-views"><span>External 1</span><span>External 2</span><span>Wrist</span></div>
+        <img class="ep-strip" src="{{ ep_img }}planner_observed.jpg" alt="Three camera views of the scene, tiled into one wide frame" />
+        <div class="ep-label ep-label--gap">Future frames start as noise</div>
+        <img class="ep-strip" src="{{ ep_img }}planner_noise.png" alt="" loading="lazy" />
+        <div class="ep-instr"><span class="ep-prompt">“Approach the cup”</span></div>
+      </div>
+      <div class="ep-flow" aria-hidden="true">→</div>
+      <div class="ep-model">
+        <span class="ep-pill">Pretrained</span>
+        <div class="ep-model__name">Wan</div>
+        <div class="ep-model__what">video diffusion transformer</div>
+        <div class="ep-model__size">14B parameters</div>
+        <div class="ep-model__note">No architecture change.<br />No action head.</div>
+      </div>
+      <div class="ep-flow" aria-hidden="true">→</div>
+      <div>
+        <div class="ep-label ep-label--crimson">Generated video plan</div>
+        <div class="ep-crop">
+          <video muted playsinline loop preload="auto" src="{{ ep_vid }}vera_instruction_following.mp4"></video
+          ><img class="ep-noise" src="{{ ep_img }}planner_noise.png" alt="" loading="lazy" />
+        </div>
+        <div class="ep-progress"><span></span></div>
+        <div class="ep-out__note"></div>
+      </div>
+    </div>
+    <div class="ep-step" aria-live="polite"><span class="ep-step__text">The gripper moves to the cup.</span></div>
+  </div>
+  <figcaption class="caption">
+    All three plans start from the same camera images. Only the instruction changes. Frames outlined in red are the observed ones.
+  </figcaption>
 </figure>
