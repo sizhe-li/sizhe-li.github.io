@@ -9,3 +9,5 @@ assets/plotly/demo.html
 lighthouse_results/**
 _posts/2015-10-20-math.md
 _sass/font-awesome/*.scss
+# formatted differently by the Liquid plugin's parser versions (CI vs. local); al-folio template file
+_layouts/bib.liquid
