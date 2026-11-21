@@ -2026,6 +2026,252 @@ button.ep-line:hover {
   }
 }
 
+/* ---------- instruction following: three plans, one row per instruction ----------
+   The clip is one video with three rows. Each row has a tile (driven by the slide-build stepper): its prompt, and a veil
+   over its part of the video that lifts when the row's step comes. The prompts sit in a column beside their rows; in a
+   narrow figure they move onto the bottom of each row instead. */
+
+.ep-instrs__grid {
+  display: grid;
+  grid-template-columns: minmax(8.5rem, 0.32fr) minmax(0, 1fr);
+  grid-template-rows: auto auto repeat(3, minmax(0, 1fr));
+  column-gap: 0.9rem;
+}
+
+.ep-instrs__head {
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.ep-instrs__head--vid {
+  grid-column: 2;
+}
+
+.ep-instrs__views {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.ep-fig video.ep-instrs__video {
+  display: block;
+  grid-row: 3 / 6;
+  grid-column: 2;
+  width: 100%;
+  aspect-ratio: 720 / 480; /* held before the clip loads */
+  border-radius: 5px;
+  background: var(--ep-grey-lo);
+}
+
+.ep-instrs__row {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(8.5rem, 0.32fr) minmax(0, 1fr);
+  grid-template-columns: subgrid;
+  column-gap: 0.9rem;
+}
+
+.ep-instrs__prompt {
+  grid-row: 1;
+  grid-column: 1;
+  align-self: center;
+}
+
+.ep-instrs__prompt .ep-prompt {
+  font-size: 0.84rem;
+  transition:
+    background 0.4s ease,
+    color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.ep-instrs__veil {
+  grid-row: 1;
+  grid-column: 2;
+  display: none;
+}
+
+/* The reveal. The shared rule fades a whole tile; here the tile stays, its veil lifts, and its prompt comes up. */
+.ep-fig.is-ready .ep-instrs__grid.ep-reveal > .ep-tile {
+  opacity: 1;
+  filter: none;
+}
+
+.ep-fig.is-ready .ep-instrs__veil {
+  display: block;
+  background: rgba(246, 247, 248, 0.94);
+  border-top: 1px solid #fff;
+  transition: opacity 0.6s ease;
+}
+
+/* the first row (the grid's fifth child) has no row above it */
+.ep-fig.is-ready .ep-instrs__row:nth-child(5) .ep-instrs__veil {
+  border-top: 0;
+}
+
+.ep-fig.is-ready .ep-instrs__prompt {
+  opacity: 0.3;
+  transition: opacity 0.5s ease;
+}
+
+.ep-fig.is-ready .ep-instrs__row.is-on .ep-instrs__veil {
+  opacity: 0;
+}
+
+.ep-fig.is-ready .ep-instrs__row.is-on .ep-instrs__prompt {
+  opacity: 1;
+}
+
+.ep-fig.is-ready .ep-instrs__row.is-cur .ep-prompt {
+  background: var(--ep-crimson);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(163, 31, 52, 0.3);
+}
+
+@container (max-width: 479px) {
+  .ep-instrs__grid,
+  .ep-instrs__row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ep-instrs__head {
+    display: none;
+  }
+
+  .ep-instrs__head--vid,
+  .ep-instrs__views {
+    display: grid;
+    grid-column: 1;
+  }
+
+  .ep-fig video.ep-instrs__video,
+  .ep-instrs__veil {
+    grid-column: 1;
+  }
+
+  .ep-instrs__prompt {
+    position: relative;
+    z-index: 1;
+    grid-column: 1;
+    align-self: end;
+    justify-self: center;
+    margin-bottom: 6px;
+  }
+
+  .ep-instrs__prompt .ep-prompt {
+    padding: 0.15rem 0.5rem;
+    font-size: 0.7rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  /* on a phone the prompt sits on the video, so a waiting row shows its prompt clearly over the veil */
+  .ep-fig.is-ready .ep-instrs__prompt {
+    opacity: 0.6;
+  }
+}
+
+/* ---------- plan vs. real execution: one half in focus ----------
+   A side-by-side clip; the half out of focus is dimmed by a veil over it. Clicking a dimmed half brings it forward. */
+
+.ep-focus__heads {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 0.35rem;
+}
+
+.ep-focus__head {
+  padding: 0 0.2rem;
+  text-align: center;
+  transition: opacity 0.4s ease;
+}
+
+.ep-focus__name {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.ep-focus__head--left .ep-focus__name {
+  color: var(--ep-crimson);
+}
+
+.ep-focus__head--right .ep-focus__name {
+  color: var(--ep-teal);
+}
+
+.ep-focus__note {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--ep-muted);
+}
+
+.ep-focus__screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--ep-grey-lo);
+}
+
+.ep-fig .ep-focus__screen video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* the seam between the two halves */
+.ep-focus__screen::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  margin-left: -1.5px;
+  background: #fff;
+}
+
+.ep-focus__veil {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: rgba(246, 247, 248, 0.82);
+  -webkit-backdrop-filter: grayscale(1);
+  backdrop-filter: grayscale(1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+
+.ep-focus__veil--left {
+  left: 0;
+}
+
+.ep-focus__veil--right {
+  right: 0;
+}
+
+.ep-focus[data-shown="right"] .ep-focus__veil--left,
+.ep-focus[data-shown="left"] .ep-focus__veil--right {
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.ep-focus[data-shown="right"] .ep-focus__head--left,
+.ep-focus[data-shown="left"] .ep-focus__head--right {
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+/* a dimmed half hints that it can be brought back */
+.ep-focus[data-shown="right"] .ep-focus__veil--left:hover,
+.ep-focus[data-shown="left"] .ep-focus__veil--right:hover {
+  background: rgba(246, 247, 248, 0.6);
+}
+
 /* ---------- plain figures ----------
    A figure made with the site's own include loads lazily and has no height until then. Its wrapper names the picture's
    shape (style="--ep-hold: 1800 / 829"), which holds the height, so the text below does not jump when it arrives. */

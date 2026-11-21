@@ -1,0 +1,59 @@
+{%- comment -%} A side-by-side clip (left half: the generated plan, right half: the real execution) where one half is in focus and the other is
+dimmed. Buttons switch the focus, and clicking a dimmed half brings it forward. Parameters: src (file in assets/video/embodied-programming), aspect
+("1080/270"), left, right (labels), left_note, right_note (optional, e.g. "camera 1 · camera 2"), focus ("right", "left" or "both"; default "right"),
+kicker, alt, caption. {%- endcomment -%} {%- assign ep_vid = '/assets/video/embodied-programming/' | relative_url -%} {%- assign ep_focus =
+include.focus | default: 'right' -%}
+<figure class="ep-fig ep-focus l-body" data-ep="focus" data-shown="{{ ep_focus }}" aria-label="{{ include.alt }}">
+  <div class="ep-card">
+    <div class="ep-bar ep-needs-js">
+      <span class="ep-kicker">{{ include.kicker | default: 'Focus on' }}</span>
+      <div class="ep-chips">
+        <button
+          type="button"
+          class="ep-chip ep-chip--text"
+          data-focus="right"
+          aria-pressed="{% if ep_focus == 'right' %}true{% else %}false{% endif %}"
+        >
+          {{ include.right }}
+        </button>
+        <button
+          type="button"
+          class="ep-chip ep-chip--text"
+          data-focus="left"
+          aria-pressed="{% if ep_focus == 'left' %}true{% else %}false{% endif %}"
+        >
+          {{ include.left }}
+        </button>
+        <button
+          type="button"
+          class="ep-chip ep-chip--text"
+          data-focus="both"
+          aria-pressed="{% if ep_focus == 'both' %}true{% else %}false{% endif %}"
+        >
+          Both
+        </button>
+      </div>
+    </div>
+    <div class="ep-stage">
+      <div class="ep-focus__heads">
+        <div class="ep-focus__head ep-focus__head--left" data-side="left">
+          <span class="ep-focus__name">{{ include.left }}</span>{% if include.left_note %}<span class="ep-focus__note">{{ include.left_note }}</span
+          >{% endif %}
+        </div>
+        <div class="ep-focus__head ep-focus__head--right" data-side="right">
+          <span class="ep-focus__name">{{ include.right }}</span>{% if include.right_note %}<span class="ep-focus__note"
+            >{{ include.right_note }}</span
+          >{% endif %}
+        </div>
+      </div>
+      <div class="ep-focus__screen" style="aspect-ratio: {{ include.aspect }}">
+        <video src="{{ ep_vid }}{{ include.src }}" data-autoplay muted loop playsinline preload="metadata"></video>
+        <div class="ep-focus__veil ep-focus__veil--left" data-side="left"></div>
+        <div class="ep-focus__veil ep-focus__veil--right" data-side="right"></div>
+      </div>
+    </div>
+  </div>
+  {%- if include.caption %}
+  <figcaption class="caption">{{ include.caption }}</figcaption>
+  {%- endif %}
+</figure>

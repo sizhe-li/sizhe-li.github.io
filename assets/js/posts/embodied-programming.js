@@ -84,6 +84,7 @@
     var text = $(".ep-step__text", fig);
     var num = $(".ep-step__n", fig);
     var stage = $(".ep-stack, .ep-reveal", fig);
+    var restart = $("video[data-restart]", fig); // a clip that starts over at each step, so every step shows it from the top
     var k = 0;
     var timers = [];
     var auto = !REDUCED; // rolls out by itself, on a loop, while it is on screen
@@ -104,6 +105,13 @@
       num.textContent = k + 1 + " / " + n;
       prev.disabled = k === 0;
       next.disabled = k === n - 1;
+      if (restart && restart.readyState > 0) {
+        try {
+          restart.currentTime = 0;
+        } catch (err) {
+          /* not seekable yet */
+        }
+      }
     }
 
     function setAuto(on) {
@@ -1005,6 +1013,33 @@
     fig.classList.add("is-ready");
   }
 
+  /* ------------------------------------------------------------------ plan vs. real execution: one half in focus */
+  function initFocus(fig) {
+    var chips = $$(".ep-chip[data-focus]", fig);
+
+    function focus(side) {
+      fig.setAttribute("data-shown", side);
+      chips.forEach(function (c) {
+        c.setAttribute("aria-pressed", c.getAttribute("data-focus") === side ? "true" : "false");
+      });
+    }
+
+    chips.forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        focus(chip.getAttribute("data-focus"));
+      });
+    });
+    // clicking a dimmed half (its veil or its label) brings it forward
+    $$("[data-side]", fig).forEach(function (el) {
+      el.addEventListener("click", function () {
+        var shown = fig.getAttribute("data-shown");
+        var side = el.getAttribute("data-side");
+        if (shown !== "both" && shown !== side) focus(side);
+      });
+    });
+    fig.classList.add("is-ready");
+  }
+
   /* ------------------------------------------------------------------ gallery clips
      They carry no autoplay attribute, so they are not all downloaded at page load: each plays while it is on screen. */
   function initClips() {
@@ -1292,6 +1327,7 @@
     cmd: initCommands,
     switch: initSwitch,
     tabs: initTabs,
+    focus: initFocus,
     cite: initCite,
   };
 

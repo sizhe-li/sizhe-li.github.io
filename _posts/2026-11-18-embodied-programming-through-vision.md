@@ -16,11 +16,7 @@ bibliography: blogs.bib
 
 <link rel="stylesheet" href="{{ '/assets/css/posts/embodied-programming.css' | relative_url | bust_file_cache }}">
 
-Today I gave a talk at Brown's Carney Institute for Brain Science called _Embodied Programming Through Vision_. Thank you to everyone who came, and to Carney for hosting me. This post is a written version of the talk.
-
-# TL;DR
-
-Robots can learn how their own bodies move from vision alone, by watching themselves execute random commands. A video model can plan what should happen in the world, and a learned body program turns that plan into commands for one particular robot. The planner never needs to know any robot's action coordinates. That is why I think embodiment generalization need not be a distinct learning problem.
+Today I gave a talk at Brown's Carney Institute for Brain Science. Thank you to everyone who came. This post is a written version of the talk.
 
 Prologue
 {: .ep-act}
@@ -60,7 +56,7 @@ Conventional robots avoid this problem by design. A Shadow Hand costs 150,000 to
 {% include posts/embodied-programming/stepper.html name="conventional" count=3 aspect="1400/681" kicker="Conventional robots, click by click" captions=ep_caps alt="A Shadow Hand and a UR5 arm with their prices, the inside of a UR5 actuator, and a rigid arm with a sensor at each joint" caption="Conventional robots are designed to make their modeling and control easy." %}
 {:/nomarkdown}
 
-People, in contrast, are capable embodied programmers. We can learn to teleoperate a new robot within minutes, and the only sensors we need are our eyes. From vision alone, we build a model of the robot and predict how our commands will move it.
+People, in contrast, are capable embodied programmers. We can learn to teleoperate a new robot within minutes. From just looking at the world and interacting with joystick controllers, we build a model of the robot and predict how our commands will move it.
 
 {::nomarkdown}
 {% include posts/embodied-programming/gallery.html items="vid::teleop_losey.mp4::Teleoperating an assistive arm with a joystick;;vid::teleop_pneumatic.mp4::Teleoperating the printed hand" cols=2 aspect="16/9" cover=true alt="People teleoperating a robot arm with a joystick, and teleoperating the pneumatic hand" credit='Left: Losey et al., <a href="https://arxiv.org/abs/2107.02907">Autonomous Robots 2022</a>. Right: Matusik et al., ICRA 2024.' %}
@@ -219,6 +215,12 @@ The instruction decides which plan the model generates. Pick one below: the obse
 {% include posts/embodied-programming/planner.html %}
 {:/nomarkdown}
 
+Here are the three plans, one instruction at a time. They start from the same camera images, and each one goes to the object its instruction names.
+
+{::nomarkdown}
+{% include posts/embodied-programming/instructions.html %}
+{:/nomarkdown}
+
 The body program starts from VGGT<d-cite key="wang2025vggt"></d-cite>, a pretrained multi-view geometry transformer. We remove its geometry heads and add a Jacobian head that predicts, for every pixel, how each command channel moves that pixel. We train it like NJF, from known commands and observed optical flow, but in 2D pixels and without rendering. At test time we invert it: the planned pixel motion goes in, and a command comes out.
 
 {::nomarkdown}
@@ -248,16 +250,11 @@ Does the Jacobian structure still matter once there is a planner? We compared th
 
 ### On real robots
 
-A few runs from our evaluations. These are examples, not controlled comparisons. First, place the yellow cube on top of the lego block. On the left is the generated plan, on the right what the real robot did.
+A few runs from our evaluations. These are examples, not controlled comparisons. First, place the yellow cube on top of the lego block. On the left is the generated plan, on the right what the real robot did. The real robot is in focus; switch to the plan to compare.
 
-<div class="row l-body">
-  <div class="col-sm">
-    <video class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="/assets/video/embodied-programming/vera_yellow_cube_plan_vs_real.mp4" type="video/mp4">
-    </video>
-    <figcaption class="caption">Generated plan (left) and real execution (right).</figcaption>
-  </div>
-</div>
+{::nomarkdown}
+{% include posts/embodied-programming/focus.html src="vera_yellow_cube_plan_vs_real.mp4" aspect="1080/360" left="Generated plan" right="Real execution" kicker="Focus on" alt="The video plan for placing the yellow cube on the lego block, and the real robot doing it" caption="The video plan (left) and the real robot executing it (right)." %}
+{:/nomarkdown}
 
 The same planner also drives a 16-DoF hand. In simulation, only the prompt changes. Here the body program outputs 16 joint commands.
 
@@ -265,16 +262,11 @@ The same planner also drives a 16-DoF hand. In simulation, only the prompt chang
 {% include posts/embodied-programming/allegro-sim.html %}
 {:/nomarkdown}
 
-And on the real hand, with the clockwise prompt. The left two panels are the plan from the video model, and the right two show the real hand executing it.
+And on the real hand, with the clockwise prompt. The generated plan and the real hand are side by side, each from two cameras. The real hand is in focus; switch to the plan to compare.
 
-<div class="row l-body">
-  <div class="col-sm">
-    <video class="img-fluid rounded z-depth-1" autoplay loop muted playsinline>
-      <source src="/assets/video/embodied-programming/vera_allegro_real_plan_vs_real.mp4" type="video/mp4">
-    </video>
-    <figcaption class="caption">Generated plan (left two) and real execution (right two), from two cameras.</figcaption>
-  </div>
-</div>
+{::nomarkdown}
+{% include posts/embodied-programming/focus.html src="vera_allegro_real_plan_vs_real.mp4" aspect="1080/270" left="Generated plan" right="Real execution" left_note="camera 1 · camera 2" right_note="camera 1 · camera 2" kicker="Focus on" alt="The video plan for rotating the cube clockwise, and the real 16-DoF hand executing it, each seen from two cameras" caption="The video plan (left) and the real hand executing it (right), from two cameras each." %}
+{:/nomarkdown}
 
 Push the blue button. At the start, only one of the external cameras can see it, and the orange button is a distractor. The wrist camera first looks at the orange button, then finds the blue one and presses it.
 
