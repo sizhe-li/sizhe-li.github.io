@@ -3,7 +3,7 @@
 <figure
   class="ep-fig ep-planner l-body"
   data-ep="planner"
-  aria-label="The video planner: observed frames and an instruction go into pretrained Wan, a video plan comes out"
+  aria-label="The video planner: observed frames and an instruction go into the video model, a video plan comes out"
 >
   <div class="ep-card">
     <div class="ep-bar ep-needs-js">
@@ -24,12 +24,9 @@
         <div class="ep-instr"><span class="ep-prompt">“Approach the cup”</span></div>
       </div>
       <div class="ep-flow" aria-hidden="true">→</div>
-      <div class="ep-model">
-        <span class="ep-pill">Pretrained</span>
-        <div class="ep-model__name">Wan</div>
-        <div class="ep-model__what">video diffusion transformer</div>
-        <div class="ep-model__size">14B parameters</div>
-        <div class="ep-model__note">No architecture change.<br />No action head.</div>
+      <div class="ep-model ep-model--trained">
+        <div class="ep-model__name">Video model</div>
+        <div class="ep-model__what">pretrained on internet videos, post-trained on robot videos</div>
       </div>
       <div class="ep-flow" aria-hidden="true">→</div>
       <div>

@@ -518,6 +518,22 @@
   color: var(--ep-crimson);
 }
 
+/* a model box with a name and one line on how it was trained (no "Pretrained" tag above it) */
+.ep-model--trained {
+  padding-top: 1rem;
+}
+
+.ep-model--trained .ep-model__name {
+  font-size: 1.15rem;
+  line-height: 1.2;
+}
+
+.ep-model--trained .ep-model__what {
+  margin-top: 0.45rem;
+  font-size: 0.78rem;
+  color: var(--ep-muted);
+}
+
 .ep-model.is-busy {
   animation: ep-pulse 1s ease-in-out infinite;
 }

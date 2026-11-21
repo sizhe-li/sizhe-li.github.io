@@ -1,5 +1,9 @@
 {%- assign ep_img = '/assets/img/embodied-programming/' | relative_url -%}
-<figure class="ep-fig ep-jac l-body" data-ep="jac" aria-label="The body program: pretrained VGGT with its geometry heads replaced by a Jacobian head">
+<figure
+  class="ep-fig ep-jac l-body"
+  data-ep="jac"
+  aria-label="The body program: VGGT, pretrained for 3D geometry and post-trained on robot video-action data with a new Jacobian head"
+>
   <div class="ep-card">
     <div class="ep-bar ep-needs-js">
       <span class="ep-kicker">Command channel</span>
@@ -19,17 +23,13 @@
           <img src="{{ ep_img }}jacobian_views.jpg" alt="Three camera views of a real Panda arm" loading="lazy" />
         </div>
         <div class="ep-flow" aria-hidden="true">→</div>
-        <div class="ep-model ep-model--sm">
-          <span class="ep-pill">Pretrained</span>
+        <div class="ep-model ep-model--sm ep-model--trained">
           <div class="ep-model__name">VGGT</div>
-          <div class="ep-model__what">multi-view geometry transformer</div>
+          <div class="ep-model__what">pretrained for 3D geometry, post-trained on robot video-action data</div>
         </div>
         <div class="ep-flow" aria-hidden="true">→</div>
         <div class="ep-heads">
           <div class="ep-head ep-head--new"><span class="ep-pill ep-pill--new">New</span>Jacobian head</div>
-          <div class="ep-head ep-head--old">depth · point map</div>
-          <div class="ep-head ep-head--old">camera · tracks</div>
-          <div class="ep-heads__note">VGGT's own heads, removed</div>
         </div>
       </div>
       <div class="ep-flow ep-flow--down" aria-hidden="true">↓</div>
